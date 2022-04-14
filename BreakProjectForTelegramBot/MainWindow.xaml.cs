@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BusinessLogicLayer;
 
 namespace BreakProjectForTelegramBot
 {
@@ -23,6 +24,11 @@ namespace BreakProjectForTelegramBot
         public MainWindow()
         {
             InitializeComponent();
+            TextBox newTB = new TextBox();
+            newTB.Height = 20;
+            newTB.Width = 400;
+
+            StackPanel_OptionAnswer.Children.Add(newTB);
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -64,9 +70,76 @@ namespace BreakProjectForTelegramBot
             TextBox newTB = new TextBox();
             newTB.Height = 20; 
             newTB.Width = 400;
-            
 
-            SP.Children.Add(newTB);
+            StackPanel_OptionAnswer.Children.Add(newTB);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            switch (ComboBox_QuestionType.SelectedIndex)
+            {
+                case 0:
+                    {
+                        QuestionInput qi = new QuestionInput(TextBox_questionText.Text);
+
+                    }
+                    break;
+
+                case 1:
+                    {
+                        List<string> questionTextList = new List<string>();
+                       
+                       foreach (TextBox tb in StackPanel_OptionAnswer.Children)
+                        {
+                            questionTextList.Add(tb.Text);
+                        }
+                        QuestionMultiSelect qms = new QuestionMultiSelect(TextBox_questionText.Text,questionTextList);
+
+                    }
+                    break;
+                case 2:
+                    {
+                        QuestionYesNo qyn = new QuestionYesNo(TextBox_questionText.Text);
+                    }
+                    break;
+                case 3:
+                    {
+                        
+                        List<string> questionTextList = new List<string>();
+
+                        foreach (TextBox tb in StackPanel_OptionAnswer.Children)
+                        {
+                            questionTextList.Add(tb.Text);
+                        }
+                        QuestionSingleSelect qms = new QuestionSingleSelect(TextBox_questionText.Text, questionTextList);
+                    }
+                    break;
+                case 4:
+                    {
+                        
+                        List<string> questionTextList = new List<string>();
+
+                        foreach (TextBox tb in StackPanel_OptionAnswer.Children)
+                        {
+                            questionTextList.Add(tb.Text);
+                        }
+                        QuestionSort qms = new QuestionSort(TextBox_questionText.Text, questionTextList);
+                    }
+                    break;
+            }
+
+        }
+
+        private void Button_DeleteOptionAnswer_Click(object sender, RoutedEventArgs e)
+        {
+            if(StackPanel_OptionAnswer.Children.Count - 1 > 0)
+            {
+                StackPanel_OptionAnswer.Children.RemoveAt(StackPanel_OptionAnswer.Children.Count - 1);
+
+            }
+        }
+
+        
+
     }
 }

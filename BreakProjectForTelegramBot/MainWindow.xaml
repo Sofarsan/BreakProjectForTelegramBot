@@ -7,32 +7,42 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TabControl>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="29*"/>
+            <ColumnDefinition Width="171*"/>
+        </Grid.ColumnDefinitions>
+        <TabControl Grid.ColumnSpan="2">
             <TabItem Header="TabItem">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="26*"/>
-                        <ColumnDefinition Width="769*"/>
+                        <ColumnDefinition Width="18*"/>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="13*"/>
+                        <ColumnDefinition Width="755*"/>
                     </Grid.ColumnDefinitions>
-                    <ComboBox x:Name="ComboBox_QuestionType" HorizontalAlignment="Left" Margin="580,58,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged" Grid.Column="1">
+                    <ComboBox x:Name="ComboBox_QuestionType" HorizontalAlignment="Left" Margin="567,58,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged" Grid.Column="3">
                         <ComboBoxItem Content="QuestionInput"/>
                         <ComboBoxItem Content="QuestionMultiSelect"/>
                         <ComboBoxItem Content="QuestionYesNo"/>
                         <ComboBoxItem Content="QuestionSingleSelect"/>
                         <ComboBoxItem Content="QuestionSort"/>
                     </ComboBox>
-                    <TextBox HorizontalAlignment="Left" Margin="25,47,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="542" Height="43" Grid.ColumnSpan="2"/>
-                    <Grid x:Name="Grid_optionAnswer" Margin="25,95,227,10" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True" UseLayoutRounding="False" Grid.ColumnSpan="2">
-                        <Button x:Name="Button_AddOptionAnswer" Content="Button" HorizontalAlignment="Left" Margin="445,13,0,0" VerticalAlignment="Top" Click="Button_AddOptionAnswer_Click"/>
-                        <ScrollBar HorizontalAlignment="Left" Margin="502,69,0,0" VerticalAlignment="Top" Height="208"/>
-                        <StackPanel x:Name="SP" Margin="10,13,102,10" ScrollViewer.HorizontalScrollBarVisibility="Disabled" CanVerticallyScroll="True" MaxHeight="350" Grid.IsSharedSizeScope="True">
-                            <TextBox TextWrapping="Wrap" Text="TextBox" Width="400" Height="20"/>
-                        </StackPanel>
+                    <TextBox x:Name="TextBox_questionText" HorizontalAlignment="Left" Margin="7,47,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="542" Height="43" Grid.ColumnSpan="3" Grid.Column="1"/>
+                    <Grid x:Name="Grid_optionAnswer" Margin="7,95,227,10" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True" UseLayoutRounding="False" Grid.ColumnSpan="3" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="299*"/>
+                            <ColumnDefinition Width="243*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="Button_AddOptionAnswer" Content="ADD" HorizontalAlignment="Left" Margin="141,13,0,0" VerticalAlignment="Top" Click="Button_AddOptionAnswer_Click" Grid.Column="1" Width="57"/>
+                        <ScrollBar HorizontalAlignment="Left" Margin="203,69,0,0" VerticalAlignment="Top" Height="208" Grid.Column="1"/>
+                        <StackPanel x:Name="StackPanel_OptionAnswer" Margin="10,13,102,10" ScrollViewer.HorizontalScrollBarVisibility="Disabled" CanVerticallyScroll="True" MaxHeight="350" Grid.IsSharedSizeScope="True" Grid.ColumnSpan="2"/>
+                        <Button x:Name="Button_DeleteOptionAnswer" Grid.Column="1" Content="DELETE" HorizontalAlignment="Left" Margin="141,57,0,0" VerticalAlignment="Top" Click="Button_DeleteOptionAnswer_Click" Width="60"/>
                     </Grid>
+                    <Button Grid.Column="3" Content="Create" HorizontalAlignment="Left" Margin="599,203,0,0" VerticalAlignment="Top" Height="56" Width="88" Click="Button_Click"/>
 
                 </Grid>
             </TabItem>
-            <TabItem x:Name="AFAF"/>
+            <TabItem Header="Список вопросов" Height="22" Margin="-2,0,-2,0" VerticalAlignment="Bottom"/>
         </TabControl>
     </Grid>
 </Window>
