@@ -2,6 +2,6 @@
 {
     public class AbstractQuestion
     {
-        string _questionText;
+        protected string _questionText;
     }
 }

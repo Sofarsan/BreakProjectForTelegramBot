@@ -24,5 +24,6 @@ namespace BreakProjectForTelegramBot
         {
             InitializeComponent();
         }
+
     }
 }

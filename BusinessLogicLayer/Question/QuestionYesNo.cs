@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer
 {
-    internal class QuestionYesNo : AbstractQuestion
+    public class QuestionYesNo : AbstractQuestion
     {
+        public QuestionYesNo(string questionText)
+        {
+            _questionText = questionText;
+        }
     }
 }

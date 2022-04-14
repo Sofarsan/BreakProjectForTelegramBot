@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer
 {
-    internal class QuestionMultiSelect : AbstractQuestion
+    public class QuestionMultiSelect : AbstractQuestion
     {
+        List<string> OptionAnswer;
+
+        public QuestionMultiSelect(string questionText)
+        {
+            _questionText = questionText;
+            
+        }
     }
 }
