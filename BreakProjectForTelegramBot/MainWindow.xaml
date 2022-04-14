@@ -7,6 +7,32 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <TabControl>
+            <TabItem Header="TabItem">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="26*"/>
+                        <ColumnDefinition Width="769*"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="ComboBox_QuestionType" HorizontalAlignment="Left" Margin="580,58,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged" Grid.Column="1">
+                        <ComboBoxItem Content="QuestionInput"/>
+                        <ComboBoxItem Content="QuestionMultiSelect"/>
+                        <ComboBoxItem Content="QuestionYesNo"/>
+                        <ComboBoxItem Content="QuestionSingleSelect"/>
+                        <ComboBoxItem Content="QuestionSort"/>
+                    </ComboBox>
+                    <TextBox HorizontalAlignment="Left" Margin="25,47,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="542" Height="43" Grid.ColumnSpan="2"/>
+                    <Grid x:Name="Grid_optionAnswer" Margin="25,95,227,10" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True" UseLayoutRounding="False" Grid.ColumnSpan="2">
+                        <Button x:Name="Button_AddOptionAnswer" Content="Button" HorizontalAlignment="Left" Margin="445,13,0,0" VerticalAlignment="Top" Click="Button_AddOptionAnswer_Click"/>
+                        <ScrollBar HorizontalAlignment="Left" Margin="502,69,0,0" VerticalAlignment="Top" Height="208"/>
+                        <StackPanel x:Name="SP" Margin="10,13,102,10" ScrollViewer.HorizontalScrollBarVisibility="Disabled" CanVerticallyScroll="True" MaxHeight="350" Grid.IsSharedSizeScope="True">
+                            <TextBox TextWrapping="Wrap" Text="TextBox" Width="400" Height="20"/>
+                        </StackPanel>
+                    </Grid>
 
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="AFAF"/>
+        </TabControl>
     </Grid>
 </Window>

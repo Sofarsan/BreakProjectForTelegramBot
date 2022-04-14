@@ -7,12 +7,10 @@ using System.Threading.Tasks;
 namespace BusinessLogicLayer
 {
     public class QuestionInput : AbstractQuestion
-    {       
-        public QuestionInput(string questionText) 
-        { 
-            _questionText=questionText;
+    {
+        public QuestionInput(string questionText)
+        {
+            _questionText = questionText;
         }
-
-
     }
 }
