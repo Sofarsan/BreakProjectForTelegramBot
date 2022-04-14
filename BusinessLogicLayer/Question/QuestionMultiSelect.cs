@@ -10,7 +10,7 @@ namespace BusinessLogicLayer
     {
         List<string> _optionAnswer;
 
-        public QuestionMultiSelect(string questionText,List<string> optionAnswer)
+        public QuestionMultiSelect(string questionText, List<string> optionAnswer)
         {
             _questionText = questionText;
             _optionAnswer = optionAnswer;
