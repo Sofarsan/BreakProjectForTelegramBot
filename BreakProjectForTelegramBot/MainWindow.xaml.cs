@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,8 @@ namespace BreakProjectForTelegramBot
     /// </summary>
     public partial class MainWindow : Window
     {
+        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -29,6 +32,8 @@ namespace BreakProjectForTelegramBot
             newTB.Width = 400;
 
             StackPanel_OptionAnswer.Children.Add(newTB);
+
+           
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -139,7 +144,17 @@ namespace BreakProjectForTelegramBot
             }
         }
 
-        
+        public BindingList<User> _toAddUser;
 
+        private void Window_User(object sender, RoutedEventArgs e)
+        {
+            _toAddUser = new BindingList<User>()
+            {
+                new User(){LastName ="Leto"},
+                new User(){Name ="Brew"},
+                new User(){Age =1},
+            };
+            ListUser.ItemsSource = _toAddUser;
+        }
     }
 }
