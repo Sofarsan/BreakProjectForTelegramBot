@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,8 @@ namespace BreakProjectForTelegramBot
     /// </summary>
     public partial class MainWindow : Window
     {
+        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -28,7 +31,7 @@ namespace BreakProjectForTelegramBot
             newTB.Height = 20;
             newTB.Width = 400;
 
-            StackPanel_OptionAnswer.Children.Add(newTB);
+            ListBoxQuestion.Items.Add(newTB);
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -68,10 +71,11 @@ namespace BreakProjectForTelegramBot
         private void Button_AddOptionAnswer_Click(object sender, RoutedEventArgs e)
         {
             TextBox newTB = new TextBox();
-            newTB.Height = 20; 
+            newTB.Height = 20;
             newTB.Width = 400;
 
-            StackPanel_OptionAnswer.Children.Add(newTB);
+            //StackPanel_OptionAnswer.Children.Add(newTB);
+            ListBoxQuestion.Items.Add(newTB);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -89,7 +93,7 @@ namespace BreakProjectForTelegramBot
                     {
                         List<string> questionTextList = new List<string>();
                        
-                       foreach (TextBox tb in StackPanel_OptionAnswer.Children)
+                       foreach (TextBox tb in ListBoxQuestion.Items)
                         {
                             questionTextList.Add(tb.Text);
                         }
@@ -107,7 +111,7 @@ namespace BreakProjectForTelegramBot
                         
                         List<string> questionTextList = new List<string>();
 
-                        foreach (TextBox tb in StackPanel_OptionAnswer.Children)
+                        foreach (TextBox tb in ListBoxQuestion.Items)
                         {
                             questionTextList.Add(tb.Text);
                         }
@@ -119,7 +123,7 @@ namespace BreakProjectForTelegramBot
                         
                         List<string> questionTextList = new List<string>();
 
-                        foreach (TextBox tb in StackPanel_OptionAnswer.Children)
+                        foreach (TextBox tb in ListBoxQuestion.Items)
                         {
                             questionTextList.Add(tb.Text);
                         }
@@ -132,14 +136,24 @@ namespace BreakProjectForTelegramBot
 
         private void Button_DeleteOptionAnswer_Click(object sender, RoutedEventArgs e)
         {
-            if(StackPanel_OptionAnswer.Children.Count - 1 > 0)
+            if(ListBoxQuestion.Items.Count - 1 > 0)
             {
-                StackPanel_OptionAnswer.Children.RemoveAt(StackPanel_OptionAnswer.Children.Count - 1);
+                ListBoxQuestion.Items.RemoveAt(ListBoxQuestion.Items.Count - 1);
 
             }
         }
 
-        
+        public BindingList<User> _toAddUser;
 
+        private void Window_User(object sender, RoutedEventArgs e)
+        {
+            _toAddUser = new BindingList<User>()
+            {
+                new User(){LastName ="Leto",Name="QQQ",Age=232},
+                new User(){LastName ="Человек",Name="Который смеется ",Age=154},
+                new User(){LastName ="Гранде",Name="Евгения",Age=14},
+            };
+            ListUser.ItemsSource = _toAddUser;
+        }
     }
 }
