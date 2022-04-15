@@ -8,12 +8,12 @@ namespace BusinessLogicLayer
 {
     public class QuestionMultiSelect : AbstractQuestion
     {
-        List<string> OptionAnswer;
+        List<string> _optionAnswer;
 
-        public QuestionMultiSelect(string questionText)
+        public QuestionMultiSelect(string questionText,List<string> optionAnswer)
         {
             _questionText = questionText;
-            
+            _optionAnswer = optionAnswer;
         }
     }
 }
