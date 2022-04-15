@@ -150,9 +150,9 @@ namespace BreakProjectForTelegramBot
         {
             _toAddUser = new BindingList<User>()
             {
-                new User(){LastName ="Leto"},
-                new User(){Name ="Brew"},
-                new User(){Age =1},
+                new User(){LastName ="Leto",Name="QQQ",Age=232},
+                new User(){LastName ="Человек",Name="Который смеется ",Age=154},
+                new User(){LastName ="Гранде",Name="Евгения",Age=14},
             };
             ListUser.ItemsSource = _toAddUser;
         }

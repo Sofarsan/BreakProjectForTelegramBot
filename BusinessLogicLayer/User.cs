@@ -9,7 +9,7 @@ namespace BusinessLogicLayer
     public class User
     {           
       
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
         public string? Name { get; set; }
         public int Age { get; set; }
         
