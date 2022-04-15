@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,8 @@ namespace BreakProjectForTelegramBot
     /// </summary>
     public partial class MainWindow : Window
     {
+        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -72,7 +75,7 @@ namespace BreakProjectForTelegramBot
             newTB.Width = 400;
 
             //StackPanel_OptionAnswer.Children.Add(newTB);
-            ListBoxQuestion.Items.Add(newTB);
+            ListBoxQuestion.Items.Add(newTB);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -140,7 +143,17 @@ namespace BreakProjectForTelegramBot
             }
         }
 
-        
+        public BindingList<User> _toAddUser;
 
+        private void Window_User(object sender, RoutedEventArgs e)
+        {
+            _toAddUser = new BindingList<User>()
+            {
+                new User(){LastName ="Leto",Name="QQQ",Age=232},
+                new User(){LastName ="Человек",Name="Который смеется ",Age=154},
+                new User(){LastName ="Гранде",Name="Евгения",Age=14},
+            };
+            ListUser.ItemsSource = _toAddUser;
+        }
     }
 }

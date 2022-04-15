@@ -7,16 +7,11 @@ using System.Threading.Tasks;
 namespace BusinessLogicLayer
 {
     public class User
-    {
-        string _lastName;
-        string _name;
-        int _age;
-
-        public User (string lastName, string name, int age)
-        {
-            _lastName=lastName;
-            _name=name;
-            _age=age;
-        }
+    {           
+      
+        public string? LastName { get; set; }
+        public string? Name { get; set; }
+        public int Age { get; set; }
+        
     }
 }
