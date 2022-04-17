@@ -22,8 +22,7 @@ namespace BreakProjectForTelegramBot
     /// </summary>
     public partial class MainWindow : Window
     {
-        
-
+        Telega telega = new Telega();
         public MainWindow()
         {
             InitializeComponent();
@@ -75,7 +74,8 @@ namespace BreakProjectForTelegramBot
             newTB.Width = 400;
 
             //StackPanel_OptionAnswer.Children.Add(newTB);
-            ListBoxQuestion.Items.Add(newTB);
+            ListBoxQuestion.Items.Add(newTB);
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
