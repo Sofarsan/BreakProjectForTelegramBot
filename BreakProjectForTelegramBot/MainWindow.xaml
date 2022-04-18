@@ -8,21 +8,20 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="383*"/>
+            <RowDefinition Height="51*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="399*"/>
-            <ColumnDefinition Width="401*"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TabControl Grid.ColumnSpan="2">
+        <TabControl Grid.RowSpan="2">
             <TabItem Header="CreateTest" IsSelected="True">
                 <Grid x:Name="Grid" Background="Gainsboro">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="481*"/>
-                        <ColumnDefinition Width="313*"/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Grid x:Name="Grid_optionAnswer" Margin="7,95,302,10" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True" UseLayoutRounding="False" Grid.ColumnSpan="2">
-                        <ComboBox x:Name="ComboBox_QuestionType" HorizontalAlignment="Left" Margin="198,-40,0,0" VerticalAlignment="Top" Width="134" SelectionChanged="ComboBox_SelectionChanged" Height="25" Background="Black" BorderBrush="#FFED1D1D">
+                    <Grid x:Name="Grid_optionAnswer" Margin="7,85,296,10" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True" UseLayoutRounding="False">
+                        <ComboBox x:Name="ComboBox_QuestionType" HorizontalAlignment="Left" Margin="198,-32,0,0" VerticalAlignment="Top" Width="134" SelectionChanged="ComboBox_SelectionChanged" Height="25" Background="Black" BorderBrush="#FFED1D1D">
                             <ComboBoxItem Content="QuestionInput"/>
                             <ComboBoxItem Content="QuestionMultiSelect"/>
                             <ComboBoxItem Content="QuestionYesNo"/>
@@ -35,9 +34,9 @@
                     </Grid>
                     <Button Content="Create" HorizontalAlignment="Left" Margin="417,313,0,0" VerticalAlignment="Top" Height="42" Width="64" Click="Button_Click"/>
                     <TextBox x:Name="TextBox_questionText" HorizontalAlignment="Left" Margin="7,85,0,0" TextWrapping="Wrap" Text="Введите текст вопроса..." VerticalAlignment="Top" Width="474" Height="84" TextDecorations="{x:Null}" FontStyle="Italic" FontWeight="Normal"/>
-                    <TextBlock TextWrapping="Wrap" Margin="10,53,281,324" FontSize="17"><Run Text="Выберите тип вопроса"/><Run Language="ru-ru" Text=":"/></TextBlock>
+                    <TextBlock TextWrapping="Wrap" Margin="10,52,594,325" FontSize="17"><Run Text="Выберите тип вопроса"/><Run Language="ru-ru" Text=":"/></TextBlock>
                     <TextBox x:Name="TestNameTextBox" HorizontalAlignment="Left" Height="29" Margin="93,10,0,0" TextWrapping="Wrap" Text="Write test name..." VerticalAlignment="Top" Width="192" FontSize="17" TextChanged="TextBox_TextChanged" FontStyle="Italic"/>
-                    <Button x:Name="AddTitleButton" Content="Add title" Margin="292,10,96,365" Click="AddTitleButton_Click"/>
+                    <Button Content="AddTitle" x:Name="AddTitleButton" HorizontalAlignment="Left" Height="27" Margin="299,12,0,0" VerticalAlignment="Top" Width="78" Click="AddTitleButton_Click"/>
                 </Grid>
             </TabItem>
 
