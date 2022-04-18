@@ -39,36 +39,14 @@ namespace BreakProjectForTelegramBot
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            switch (ComboBox_QuestionType.SelectedIndex)
+            if (ComboBox_QuestionType.SelectedIndex < 2)
             {
-                case 0:
-                    {
-                        Grid_optionAnswer.Visibility = Visibility.Hidden;
-                    }
-                    break;
-
-                case 1:
-                    {
-                        Grid_optionAnswer.Visibility = Visibility.Visible;
-                    }
-                    break;
-                case 2:
-                    {
-                        Grid_optionAnswer.Visibility = Visibility.Hidden;
-                    }
-                    break;
-                case 3:
-                    {
-                        Grid_optionAnswer.Visibility = Visibility.Visible;
-                    }
-                    break;
-                case 4:
-                    {
-                        Grid_optionAnswer.Visibility = Visibility.Visible;
-                    }
-                    break;
+                Grid_optionAnswer.Visibility = Visibility.Hidden;
             }
-
+            else
+            {
+                Grid_optionAnswer.Visibility = Visibility.Visible;
+            }
         }
 
         private void Button_AddOptionAnswer_Click(object sender, RoutedEventArgs e)
@@ -77,77 +55,32 @@ namespace BreakProjectForTelegramBot
             newTB.Height = 20;
             newTB.Width = 400;
 
-            //StackPanel_OptionAnswer.Children.Add(newTB);
             ListBoxQuestion.Items.Add(newTB);
 
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            switch (ComboBox_QuestionType.SelectedIndex)
+            if (ComboBox_QuestionType.SelectedIndex < 2)
             {
-                case 0:
-                    {
 
-                        _actual.AddQuestion(new QuestionIWithoutOptionAnswer(
-                            ComboBox_QuestionType.SelectedItem.ToString(),
-                            TextBox_questionText.Text));
-
-
-                    }
-                    break;
-
-                case 1:
-                    {
-                        List<string> questionTextList = new List<string>();
-
-                        foreach (TextBox tb in ListBoxQuestion.Items)
-                        {
-                            questionTextList.Add(tb.Text);
-                        }
-                        _actual.AddQuestion(new QuestionIWithOptionAnswer(
-                             ComboBox_QuestionType.SelectedItem.ToString(),
-                             TextBox_questionText.Text, questionTextList));
-
-                    }
-                    break;
-                case 2:
-                    {
-                        _actual.AddQuestion(new QuestionIWithoutOptionAnswer(
-                            ComboBox_QuestionType.SelectedItem.ToString(),
-                            TextBox_questionText.Text));
-                    }
-                    break;
-                case 3:
-                    {
-
-                        List<string> questionTextList = new List<string>();
-
-                        foreach (TextBox tb in ListBoxQuestion.Items)
-                        {
-                            questionTextList.Add(tb.Text);
-                        }
-                        _actual.AddQuestion(new QuestionIWithOptionAnswer(
-                            ComboBox_QuestionType.SelectedItem.ToString(),
-                            TextBox_questionText.Text, questionTextList));
-                    }
-                    break;
-                case 4:
-                    {
-
-                        List<string> questionTextList = new List<string>();
-
-                        foreach (TextBox tb in ListBoxQuestion.Items)
-                        {
-                            questionTextList.Add(tb.Text);
-                        }
-                        _actual.AddQuestion(new QuestionIWithOptionAnswer(
-                            ComboBox_QuestionType.SelectedItem.ToString(),
-                            TextBox_questionText.Text, questionTextList));
-                    }
-                    break;
+                _actual.AddQuestion(new QuestionIWithoutOptionAnswer(
+                    ComboBox_QuestionType.SelectedItem.ToString(),
+                    TextBox_questionText.Text));
             }
+            else
+            {
+                List<string> questionTextList = new List<string>();
 
+                foreach (TextBox tb in ListBoxQuestion.Items)
+                {
+                    questionTextList.Add(tb.Text);
+                }
+                _actual.AddQuestion(new QuestionIWithOptionAnswer(
+                     ComboBox_QuestionType.SelectedItem.ToString(),
+                     TextBox_questionText.Text, questionTextList));
+
+            }
         }
 
         private void Button_DeleteOptionAnswer_Click(object sender, RoutedEventArgs e)
@@ -172,22 +105,13 @@ namespace BreakProjectForTelegramBot
             ListUser.ItemsSource = _toAddUser;
         }
 
-        private void ListBoxQuestion_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
 
         private void AddTitleButton_Click(object sender, RoutedEventArgs e)
         {
             ComboBox_ChooseTest.Items.Add(TestNameTextBox.Text);
             ComboBox_ChooseTest.SelectedItem = TestNameTextBox.Text;
-
-            _tests.Add(new Test(TestNameTextBox.Text));
+            _actual = new Test(TestNameTextBox.Text);
+            _tests.Add(_actual);
 
         }
 

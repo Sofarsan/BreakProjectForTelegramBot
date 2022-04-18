@@ -23,19 +23,19 @@
                     <Grid x:Name="Grid_optionAnswer" Margin="7,85,296,10" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True" UseLayoutRounding="False">
                         <Button x:Name="Button_DeleteOptionAnswer" Content="DELETE" HorizontalAlignment="Left" Margin="415,141,0,0" VerticalAlignment="Top" Click="Button_DeleteOptionAnswer_Click" Width="60"/>
                         <Button x:Name="Button_AddOptionAnswer" Content="ADD" HorizontalAlignment="Left" Margin="415,104,0,0" VerticalAlignment="Top" Click="Button_AddOptionAnswer_Click" Width="60" RenderTransformOrigin="0.483,0.804" />
-                        <ListBox x:Name="ListBoxQuestion" HorizontalAlignment="Left" Margin="0,104,0,39" Width="397" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ListBoxQuestion_SelectionChanged"/>
+                        <ListBox x:Name="ListBoxQuestion" HorizontalAlignment="Left" Margin="0,104,0,39" Width="397" d:ItemsSource="{d:SampleData ItemCount=5}" />
                     </Grid>
                     <ComboBox x:Name="ComboBox_QuestionType" HorizontalAlignment="Left" Margin="243,50,0,0" VerticalAlignment="Top" Width="134" SelectionChanged="ComboBox_SelectionChanged" Height="25" Background="Black" BorderBrush="#FFED1D1D">
                         <ComboBoxItem Content="QuestionInput"/>
-                        <ComboBoxItem Content="QuestionMultiSelect"/>
                         <ComboBoxItem Content="QuestionYesNo"/>
+                        <ComboBoxItem Content="QuestionMultiSelect"/>
                         <ComboBoxItem Content="QuestionSingleSelect"/>
                         <ComboBoxItem Content="QuestionSort"/>
                     </ComboBox>
                     <Button Content="Create" HorizontalAlignment="Left" Margin="417,313,0,0" VerticalAlignment="Top" Height="42" Width="64" Click="Button_Click"/>
                     <TextBox x:Name="TextBox_questionText" HorizontalAlignment="Left" Margin="7,85,0,0" TextWrapping="Wrap" Text="Введите текст вопроса..." VerticalAlignment="Top" Width="474" Height="84" TextDecorations="{x:Null}" FontStyle="Italic" FontWeight="Normal"/>
                     <TextBlock TextWrapping="Wrap" Margin="10,52,594,325" FontSize="17"><Run Text="Выберите тип вопроса"/><Run Language="ru-ru" Text=":"/></TextBlock>
-                    <TextBox x:Name="TestNameTextBox" HorizontalAlignment="Left" Height="29" Margin="93,10,0,0" TextWrapping="Wrap" Text="Write test name..." VerticalAlignment="Top" Width="192" FontSize="17" TextChanged="TextBox_TextChanged" FontStyle="Italic"/>
+                    <TextBox x:Name="TestNameTextBox" HorizontalAlignment="Left" Height="29" Margin="93,10,0,0" TextWrapping="Wrap" Text="Write test name..." VerticalAlignment="Top" Width="192" FontSize="17"  FontStyle="Italic"/>
                     <Button Content="AddTitle" x:Name="AddTitleButton" HorizontalAlignment="Left" Height="27" Margin="299,12,0,0" VerticalAlignment="Top" Width="78" Click="AddTitleButton_Click"/>
                     <ComboBox x:Name="ComboBox_ChooseTest" HorizontalAlignment="Left" Margin="603,17,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_ChooseTest_SelectionChanged"/>
                 </Grid>
