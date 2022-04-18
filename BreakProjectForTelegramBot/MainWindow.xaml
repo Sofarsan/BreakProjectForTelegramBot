@@ -44,6 +44,7 @@
                         <DataGridTextColumn Binding="{Binding Path=LastName}" IsReadOnly="True" Header="LastName" Width="110"/>
                         <DataGridTextColumn Binding="{Binding Path=Name}" IsReadOnly="True" Header="Name" Width="110"/>
                         <DataGridTextColumn Binding="{Binding Path=Age}" IsReadOnly="True" Header="Age" Width="110"/>
+                        <DataGridTextColumn Binding="{Binding Path=Job}" IsReadOnly="True" Header="Job" Width="110"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>

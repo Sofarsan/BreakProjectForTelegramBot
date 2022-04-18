@@ -75,7 +75,8 @@ namespace BreakProjectForTelegramBot
             newTB.Width = 400;
 
             //StackPanel_OptionAnswer.Children.Add(newTB);
-            ListBoxQuestion.Items.Add(newTB);
+            ListBoxQuestion.Items.Add(newTB);
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -143,15 +144,16 @@ namespace BreakProjectForTelegramBot
             }
         }
 
-        public BindingList<User> _toAddUser;
+        private BindingList<User> _toAddUser;
 
         private void Window_User(object sender, RoutedEventArgs e)
         {
             _toAddUser = new BindingList<User>()
             {
-                new User(){LastName ="Leto",Name="QQQ",Age=232},
-                new User(){LastName ="Человек",Name="Который смеется ",Age=154},
-                new User(){LastName ="Гранде",Name="Евгения",Age=14},
+                new User(){LastName ="Leto",Name="QQQ",Age=232, Job="student",Group=""},
+                new User(){LastName ="Человек",Name="Который смеется ",Age=154, Job="manager and student",Group=""},
+                new User(){LastName ="Гранде",Name="Евгения",Age=14,Job="actor",Group=""},
+                new User(){LastName ="МУ-МУ",Name="Собака",Age=25,Job="journalist",Group=""},
             };
             ListUser.ItemsSource = _toAddUser;
         }
