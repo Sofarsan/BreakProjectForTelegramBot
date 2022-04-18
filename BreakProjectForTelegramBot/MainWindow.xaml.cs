@@ -22,7 +22,8 @@ namespace BreakProjectForTelegramBot
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+        List<Test> tests = new List<Test>();
+        Test actual;
 
         public MainWindow()
         {
@@ -85,7 +86,8 @@ namespace BreakProjectForTelegramBot
             {
                 case 0:
                     {
-                        QuestionInput qi = new QuestionInput(TextBox_questionText.Text);
+                      
+                        actual.AddQuestion(new QuestionInput(TextBox_questionText.Text));
 
 
                     }
@@ -99,13 +101,13 @@ namespace BreakProjectForTelegramBot
                         {
                             questionTextList.Add(tb.Text);
                         }
-                        QuestionMultiSelect qms = new QuestionMultiSelect(TextBox_questionText.Text,questionTextList);
+                        actual.AddQuestion( new QuestionMultiSelect(TextBox_questionText.Text,questionTextList));
 
                     }
                     break;
                 case 2:
                     {
-                        QuestionYesNo qyn = new QuestionYesNo(TextBox_questionText.Text);
+                        actual.AddQuestion( new QuestionYesNo(TextBox_questionText.Text));
                     }
                     break;
                 case 3:
@@ -117,7 +119,7 @@ namespace BreakProjectForTelegramBot
                         {
                             questionTextList.Add(tb.Text);
                         }
-                        QuestionSingleSelect qms = new QuestionSingleSelect(TextBox_questionText.Text, questionTextList);
+                        actual.AddQuestion(new QuestionSingleSelect(TextBox_questionText.Text, questionTextList));
                     }
                     break;
                 case 4:
@@ -129,7 +131,7 @@ namespace BreakProjectForTelegramBot
                         {
                             questionTextList.Add(tb.Text);
                         }
-                        QuestionSort qms = new QuestionSort(TextBox_questionText.Text, questionTextList);
+                        actual.AddQuestion( new QuestionSort(TextBox_questionText.Text, questionTextList));
                     }
                     break;
             }
@@ -167,12 +169,25 @@ namespace BreakProjectForTelegramBot
         {
 
         }
-        private string name = "";
+        
         private void AddTitleButton_Click(object sender, RoutedEventArgs e)
         {
-            name= TestNameTextBox.Text;
+            ComboBox_ChooseTest.Items.Add(TestNameTextBox.Text);
+
+            tests.Add(new Test(TestNameTextBox.Text));
+
         }
 
+        private void ComboBox_ChooseTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            foreach (Test test in tests)
+            {
+                if(test._name == ComboBox_ChooseTest.SelectedItem)
+                {
+                    actual = test;
 
+                }
+            }
+        }
     }
 }

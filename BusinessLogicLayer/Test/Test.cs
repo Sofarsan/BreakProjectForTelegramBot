@@ -8,10 +8,12 @@ namespace BusinessLogicLayer
 {
     public class Test
     {
+        public string _name { get; set; }
         List<AbstractQuestion> questionList { get; set; }
 
-        public Test()
+        public Test(string name)
         {
+            _name = name;
             questionList = new List<AbstractQuestion>();
         }
         public void AddQuestion(AbstractQuestion question)
