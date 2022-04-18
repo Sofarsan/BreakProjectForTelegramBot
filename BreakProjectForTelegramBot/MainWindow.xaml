@@ -7,32 +7,40 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="400*"/>
-            <ColumnDefinition Width="400*"/>
+            <ColumnDefinition Width="399*"/>
+            <ColumnDefinition Width="401*"/>
         </Grid.ColumnDefinitions>
         <TabControl Grid.ColumnSpan="2">
             <TabItem Header="CreateTest" IsSelected="True">
-                <Grid Background="#FFE5E5E5">
-                    <ComboBox x:Name="ComboBox_QuestionType" HorizontalAlignment="Left" Margin="567,58,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged" Grid.Column="3">
-                        <ComboBoxItem Content="QuestionInput"/>
-                        <ComboBoxItem Content="QuestionMultiSelect"/>
-                        <ComboBoxItem Content="QuestionYesNo"/>
-                        <ComboBoxItem Content="QuestionSingleSelect"/>
-                        <ComboBoxItem Content="QuestionSort"/>
-                    </ComboBox>
-                    <TextBox x:Name="TextBox_questionText" HorizontalAlignment="Left" Margin="7,47,0,0" TextWrapping="Wrap" Text="Введите название теста..." VerticalAlignment="Top" Width="542" Height="43" Grid.ColumnSpan="3" Grid.Column="1" TextDecorations="{x:Null}" FontStyle="Italic" FontWeight="Normal"/>
-                    <Grid x:Name="Grid_optionAnswer" Margin="7,95,227,10" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True" UseLayoutRounding="False" Grid.ColumnSpan="3" Grid.Column="1">
-                        <Button x:Name="Button_DeleteOptionAnswer" Grid.Column="1" Content="DELETE" HorizontalAlignment="Left" Margin="480,50,0,0" VerticalAlignment="Top" Click="Button_DeleteOptionAnswer_Click" Width="60"/>
-                        <Button x:Name="Button_AddOptionAnswer" Content="ADD" HorizontalAlignment="Left" Margin="480,15,0,0" VerticalAlignment="Top" Click="Button_AddOptionAnswer_Click" Grid.Column="1" Width="60" />
+                <Grid x:Name="Grid" Background="Gainsboro">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="481*"/>
+                        <ColumnDefinition Width="313*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid x:Name="Grid_optionAnswer" Margin="7,95,302,10" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True" UseLayoutRounding="False" Grid.ColumnSpan="2">
+                        <ComboBox x:Name="ComboBox_QuestionType" HorizontalAlignment="Left" Margin="198,-40,0,0" VerticalAlignment="Top" Width="134" SelectionChanged="ComboBox_SelectionChanged" Height="25" Background="Black" BorderBrush="#FFED1D1D">
+                            <ComboBoxItem Content="QuestionInput"/>
+                            <ComboBoxItem Content="QuestionMultiSelect"/>
+                            <ComboBoxItem Content="QuestionYesNo"/>
+                            <ComboBoxItem Content="QuestionSingleSelect"/>
+                            <ComboBoxItem Content="QuestionSort"/>
+                        </ComboBox>
+                        <Button x:Name="Button_DeleteOptionAnswer" Content="DELETE" HorizontalAlignment="Left" Margin="415,141,0,0" VerticalAlignment="Top" Click="Button_DeleteOptionAnswer_Click" Width="60"/>
+                        <Button x:Name="Button_AddOptionAnswer" Content="ADD" HorizontalAlignment="Left" Margin="415,104,0,0" VerticalAlignment="Top" Click="Button_AddOptionAnswer_Click" Width="60" RenderTransformOrigin="0.483,0.804" />
+                        <ListBox x:Name="ListBoxQuestion" HorizontalAlignment="Left" Margin="0,104,0,39" Width="397" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ListBoxQuestion_SelectionChanged"/>
                     </Grid>
-                    <Button Grid.Column="3" Content="Create" HorizontalAlignment="Left" Margin="599,203,0,0" VerticalAlignment="Top" Height="56" Width="88" Click="Button_Click"/>
-                    <ListBox x:Name="ListBoxQuestion" HorizontalAlignment="Left" Height="250" Margin="7,106,0,0" VerticalAlignment="Top" Width="415" d:ItemsSource="{d:SampleData ItemCount=5}">
-                            
-                    </ListBox>
+                    <Button Content="Create" HorizontalAlignment="Left" Margin="417,313,0,0" VerticalAlignment="Top" Height="42" Width="64" Click="Button_Click"/>
+                    <TextBox x:Name="TextBox_questionText" HorizontalAlignment="Left" Margin="7,85,0,0" TextWrapping="Wrap" Text="Введите текст вопроса..." VerticalAlignment="Top" Width="474" Height="84" TextDecorations="{x:Null}" FontStyle="Italic" FontWeight="Normal"/>
+                    <TextBlock TextWrapping="Wrap" Margin="10,53,281,324" FontSize="17"><Run Text="Выберите тип вопроса"/><Run Language="ru-ru" Text=":"/></TextBlock>
+                    <TextBox x:Name="TestNameTextBox" HorizontalAlignment="Left" Height="29" Margin="93,10,0,0" TextWrapping="Wrap" Text="Write test name..." VerticalAlignment="Top" Width="192" FontSize="17" TextChanged="TextBox_TextChanged" FontStyle="Italic"/>
+                    <Button x:Name="AddTitleButton" Content="Add title" Margin="292,10,96,365" Click="AddTitleButton_Click"/>
                 </Grid>
             </TabItem>
-            
+
             <TabItem Header="Список" Height="22" Margin="-2,0,-2,0" VerticalAlignment="Bottom">
 
             </TabItem>
@@ -49,6 +57,6 @@
             </TabItem>
         </TabControl>
     </Grid>
-    
+
 
 </Window>

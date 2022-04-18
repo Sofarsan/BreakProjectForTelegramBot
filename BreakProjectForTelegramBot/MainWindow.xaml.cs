@@ -75,7 +75,8 @@ namespace BreakProjectForTelegramBot
             newTB.Width = 400;
 
             //StackPanel_OptionAnswer.Children.Add(newTB);
-            ListBoxQuestion.Items.Add(newTB);
+            ListBoxQuestion.Items.Add(newTB);
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -85,6 +86,7 @@ namespace BreakProjectForTelegramBot
                 case 0:
                     {
                         QuestionInput qi = new QuestionInput(TextBox_questionText.Text);
+
 
                     }
                     break;
@@ -154,6 +156,21 @@ namespace BreakProjectForTelegramBot
                 new User(){LastName ="Гранде",Name="Евгения",Age=14},
             };
             ListUser.ItemsSource = _toAddUser;
+        }
+
+        private void ListBoxQuestion_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+        private string name = "";
+        private void AddTitleButton_Click(object sender, RoutedEventArgs e)
+        {
+            name= TestNameTextBox.Text;
         }
     }
 }
