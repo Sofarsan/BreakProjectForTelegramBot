@@ -28,11 +28,6 @@ namespace BreakProjectForTelegramBot
         public MainWindow()
         {
             InitializeComponent();
-            TextBox newTB = new TextBox();
-            newTB.Height = 20;
-            newTB.Width = 400;
-
-            ListBoxQuestion.Items.Add(newTB);
 
             ComboBox_QuestionType.SelectedIndex = 1;
         }
@@ -52,8 +47,12 @@ namespace BreakProjectForTelegramBot
         private void Button_AddOptionAnswer_Click(object sender, RoutedEventArgs e)
         {
             TextBox newTB = new TextBox();
-            newTB.Height = 20;
+            newTB.Height = 30;
             newTB.Width = 400;
+            newTB.AcceptsReturn = true;
+            newTB.TextWrapping = TextWrapping.Wrap;
+
+            
 
             ListBoxQuestion.Items.Add(newTB);
 

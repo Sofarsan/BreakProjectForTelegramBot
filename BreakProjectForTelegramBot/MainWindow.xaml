@@ -23,7 +23,7 @@
                     <Grid x:Name="Grid_optionAnswer" Margin="7,85,296,10" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True" UseLayoutRounding="False">
                         <Button x:Name="Button_DeleteOptionAnswer" Content="DELETE" HorizontalAlignment="Left" Margin="415,141,0,0" VerticalAlignment="Top" Click="Button_DeleteOptionAnswer_Click" Width="60"/>
                         <Button x:Name="Button_AddOptionAnswer" Content="ADD" HorizontalAlignment="Left" Margin="415,104,0,0" VerticalAlignment="Top" Click="Button_AddOptionAnswer_Click" Width="60" RenderTransformOrigin="0.483,0.804" />
-                        <ListBox x:Name="ListBoxQuestion" HorizontalAlignment="Left" Margin="0,104,0,39" Width="397" d:ItemsSource="{d:SampleData ItemCount=5}" />
+                        <ListBox x:Name="ListBoxQuestion" HorizontalAlignment="Left" Margin="0,104,0,39" Width="397" d:ItemsSource="{d:SampleData ItemCount=5}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" />
                     </Grid>
                     <ComboBox x:Name="ComboBox_QuestionType" HorizontalAlignment="Left" Margin="243,50,0,0" VerticalAlignment="Top" Width="134" SelectionChanged="ComboBox_SelectionChanged" Height="25" Background="Black" BorderBrush="#FFED1D1D">
                         <ComboBoxItem Content="QuestionInput"/>
