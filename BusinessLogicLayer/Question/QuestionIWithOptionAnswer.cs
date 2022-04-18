@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer
 {
-    public class QuestionSort : AbstractQuestion
+    public class QuestionIWithOptionAnswer : AbstractQuestion
     {
+        
         List<string> _optionAnswer;
 
-        public QuestionSort(string questionText, List<string> optionAnswer)
+        public QuestionIWithOptionAnswer(string type, string questionText,List<string> optionAnswer)
         {
+            _type = type;
             _questionText = questionText;
             _optionAnswer = optionAnswer;
         }

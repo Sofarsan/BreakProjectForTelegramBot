@@ -22,7 +22,9 @@ namespace BreakProjectForTelegramBot
     /// </summary>
     public partial class MainWindow : Window
     {
-        Telega telega = new Telega();
+        private List<Test> _tests = new List<Test>();
+        private Test _actual;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -31,6 +33,8 @@ namespace BreakProjectForTelegramBot
             newTB.Width = 400;
 
             ListBoxQuestion.Items.Add(newTB);
+
+            ComboBox_QuestionType.SelectedIndex = 1;
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -84,7 +88,11 @@ namespace BreakProjectForTelegramBot
             {
                 case 0:
                     {
-                        QuestionInput qi = new QuestionInput(TextBox_questionText.Text);
+
+                        _actual.AddQuestion(new QuestionIWithoutOptionAnswer(
+                            ComboBox_QuestionType.SelectedItem.ToString(),
+                            TextBox_questionText.Text));
+
 
                     }
                     break;
@@ -92,42 +100,50 @@ namespace BreakProjectForTelegramBot
                 case 1:
                     {
                         List<string> questionTextList = new List<string>();
-                       
-                       foreach (TextBox tb in ListBoxQuestion.Items)
+
+                        foreach (TextBox tb in ListBoxQuestion.Items)
                         {
                             questionTextList.Add(tb.Text);
                         }
-                        QuestionMultiSelect qms = new QuestionMultiSelect(TextBox_questionText.Text,questionTextList);
+                        _actual.AddQuestion(new QuestionIWithOptionAnswer(
+                             ComboBox_QuestionType.SelectedItem.ToString(),
+                             TextBox_questionText.Text, questionTextList));
 
                     }
                     break;
                 case 2:
                     {
-                        QuestionYesNo qyn = new QuestionYesNo(TextBox_questionText.Text);
+                        _actual.AddQuestion(new QuestionIWithoutOptionAnswer(
+                            ComboBox_QuestionType.SelectedItem.ToString(),
+                            TextBox_questionText.Text));
                     }
                     break;
                 case 3:
                     {
-                        
+
                         List<string> questionTextList = new List<string>();
 
                         foreach (TextBox tb in ListBoxQuestion.Items)
                         {
                             questionTextList.Add(tb.Text);
                         }
-                        QuestionSingleSelect qms = new QuestionSingleSelect(TextBox_questionText.Text, questionTextList);
+                        _actual.AddQuestion(new QuestionIWithOptionAnswer(
+                            ComboBox_QuestionType.SelectedItem.ToString(),
+                            TextBox_questionText.Text, questionTextList));
                     }
                     break;
                 case 4:
                     {
-                        
+
                         List<string> questionTextList = new List<string>();
 
                         foreach (TextBox tb in ListBoxQuestion.Items)
                         {
                             questionTextList.Add(tb.Text);
                         }
-                        QuestionSort qms = new QuestionSort(TextBox_questionText.Text, questionTextList);
+                        _actual.AddQuestion(new QuestionIWithOptionAnswer(
+                            ComboBox_QuestionType.SelectedItem.ToString(),
+                            TextBox_questionText.Text, questionTextList));
                     }
                     break;
             }
@@ -136,7 +152,7 @@ namespace BreakProjectForTelegramBot
 
         private void Button_DeleteOptionAnswer_Click(object sender, RoutedEventArgs e)
         {
-            if(ListBoxQuestion.Items.Count - 1 > 0)
+            if (ListBoxQuestion.Items.Count - 1 > 0)
             {
                 ListBoxQuestion.Items.RemoveAt(ListBoxQuestion.Items.Count - 1);
 
@@ -154,6 +170,37 @@ namespace BreakProjectForTelegramBot
                 new User(){LastName ="Гранде",Name="Евгения",Age=14},
             };
             ListUser.ItemsSource = _toAddUser;
+        }
+
+        private void ListBoxQuestion_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void AddTitleButton_Click(object sender, RoutedEventArgs e)
+        {
+            ComboBox_ChooseTest.Items.Add(TestNameTextBox.Text);
+            ComboBox_ChooseTest.SelectedItem = TestNameTextBox.Text;
+
+            _tests.Add(new Test(TestNameTextBox.Text));
+
+        }
+
+        private void ComboBox_ChooseTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            foreach (Test test in _tests)
+            {
+                if (test._name == ComboBox_ChooseTest.SelectedItem)
+                {
+                    _actual = test;
+
+                }
+            }
         }
     }
 }
