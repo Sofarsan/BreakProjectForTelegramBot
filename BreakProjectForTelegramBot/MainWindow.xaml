@@ -28,11 +28,11 @@
                     </Grid>
                     <Button Grid.Column="3" Content="Create" HorizontalAlignment="Left" Margin="599,203,0,0" VerticalAlignment="Top" Height="56" Width="88" Click="Button_Click"/>
                     <ListBox x:Name="ListBoxQuestion" HorizontalAlignment="Left" Height="250" Margin="7,106,0,0" VerticalAlignment="Top" Width="415" d:ItemsSource="{d:SampleData ItemCount=5}">
-                            
+
                     </ListBox>
                 </Grid>
             </TabItem>
-            
+
             <TabItem Header="Список" Height="22" Margin="-2,0,-2,0" VerticalAlignment="Bottom">
 
             </TabItem>
@@ -48,8 +48,25 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
+            <TabItem Header="Группы юзеров">
+                <Grid Background="#FF4EDC9E">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="112*"/>
+                        <ColumnDefinition Width="63*"/>
+                        <ColumnDefinition Width="74*"/>
+                        <ColumnDefinition Width="515*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox x:Name="ouiy" HorizontalAlignment="Left" Height="150" Margin="7,6,0,0" VerticalAlignment="Top" Width="309" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.ColumnSpan="6">
+                    </ListBox >
+                    <TextBox x:Name="AddGroupName" HorizontalAlignment="Left" Margin="8,166,0,0" TextWrapping="Wrap" Text="Введите название Группы" VerticalAlignment="Top" Width="195" Height="30" Grid.ColumnSpan="4" TextDecorations="{x:Null}" FontStyle="Italic" FontWeight="Normal"/>
+                    <Button Grid.Column="4" Content="Add New Group" HorizontalAlignment="Left" Margin="17,167,0,0" VerticalAlignment="Top" Height="30" Width="95" Click="Button_Click" Grid.ColumnSpan="2"/>
+                    <ListBox x:Name="ouiy_Copy" HorizontalAlignment="Left" Height="150" Margin="90,6,0,0" VerticalAlignment="Top" Width="309" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.Column="5"/>
+                </Grid>
+            </TabItem>
         </TabControl>
     </Grid>
-    
+
 
 </Window>
