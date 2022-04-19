@@ -1,19 +1,8 @@
-﻿using System;
+﻿using BusinessLogicLayer;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using BusinessLogicLayer;
 
 namespace BreakProjectForTelegramBot
 {
@@ -32,6 +21,22 @@ namespace BreakProjectForTelegramBot
             ComboBox_QuestionType.SelectedIndex = 1;
         }
 
+        private void ListQuestionsUpdate()
+        {
+            ListQuestions.Items.Clear();
+            if (_actual is not null && (_actual.GetListQuestion() is not null))
+            {
+                List<AbstractQuestion> AqList = _actual.GetListQuestion();
+
+                for (int i = 0; i < AqList.Count; i++)
+                {
+                    Button BListQ = new Button();
+                    BListQ.Content = i;
+                    ListQuestions.Items.Add(BListQ);
+                }
+            }
+;
+        }
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ComboBox_QuestionType.SelectedIndex < 2)
@@ -52,7 +57,7 @@ namespace BreakProjectForTelegramBot
             newTB.AcceptsReturn = true;
             newTB.TextWrapping = TextWrapping.Wrap;
 
-            
+
 
             ListBoxQuestion.Items.Add(newTB);
 
@@ -78,8 +83,8 @@ namespace BreakProjectForTelegramBot
                 _actual.AddQuestion(new QuestionIWithOptionAnswer(
                      ComboBox_QuestionType.SelectedItem.ToString(),
                      TextBox_questionText.Text, questionTextList));
-
             }
+
         }
 
         private void Button_DeleteOptionAnswer_Click(object sender, RoutedEventArgs e)
@@ -124,6 +129,12 @@ namespace BreakProjectForTelegramBot
 
                 }
             }
+            ListQuestionsUpdate();
+        }
+
+        private void ButtonEdit_Click(object sender, RoutedEventArgs e)
+        {
+            ButtonEdit.Content = "Save";
         }
     }
 }

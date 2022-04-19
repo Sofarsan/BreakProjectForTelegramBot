@@ -20,6 +20,10 @@ namespace BusinessLogicLayer
         {
             questionList.Add(question);
         }
+        public List<AbstractQuestion> GetListQuestion()
+        {
+          return questionList;
+        }
 
     }
 }
