@@ -1,8 +1,6 @@
-﻿using System;
+﻿using BusinessLogicLayer;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -66,6 +64,25 @@ namespace BreakProjectForTelegramBot
             ListBox_BotMessages.Items.Refresh();
         }
 
+        private void ListQuestionsUpdate()
+        {
+            ListQuestions.Items.Clear();
+            if (_actual is not null && (_actual.GetListQuestion() is not null))
+            {
+                List<AbstractQuestion> AqList = _actual.GetListQuestion();
+
+                for (int i = 0; i < AqList.Count; i++)
+                {
+                    TextBox newTB = new TextBox();
+                    newTB.Text = i.ToString();
+                    newTB.IsReadOnlyCaretVisible = true;
+                    newTB.Height = 30;
+                    newTB.Width = 100;
+                    ListQuestions.Items.Add(newTB);
+                }
+            }
+;
+        }
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ComboBox_QuestionType.SelectedIndex < 2)
@@ -86,20 +103,20 @@ namespace BreakProjectForTelegramBot
             newTB.AcceptsReturn = true;
             newTB.TextWrapping = TextWrapping.Wrap;
 
-            
+
 
             ListBoxQuestion.Items.Add(newTB);
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Create_Click(object sender, RoutedEventArgs e)
         {
             if (ComboBox_QuestionType.SelectedIndex < 2)
             {
 
-                _actual.AddQuestion(new QuestionIWithoutOptionAnswer(
-                    ComboBox_QuestionType.SelectedItem.ToString(),
-                    TextBox_questionText.Text));
+                _actual.AddQuestion(new QuestionWithoutOptionAnswer(
+                   ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString(),
+                    TextBox_questionText.Text)); ;
             }
             else
             {
@@ -109,11 +126,12 @@ namespace BreakProjectForTelegramBot
                 {
                     questionTextList.Add(tb.Text);
                 }
-                _actual.AddQuestion(new QuestionIWithOptionAnswer(
-                     ComboBox_QuestionType.SelectedItem.ToString(),
+                _actual.AddQuestion(new QuestionWithOptionAnswer(
+                     ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString(),
                      TextBox_questionText.Text, questionTextList));
-
             }
+            ListQuestionsUpdate();
+
         }
 
         private void Button_DeleteOptionAnswer_Click(object sender, RoutedEventArgs e)
@@ -142,10 +160,9 @@ namespace BreakProjectForTelegramBot
         private void AddTitleButton_Click(object sender, RoutedEventArgs e)
         {
             ComboBox_ChooseTest.Items.Add(TestNameTextBox.Text);
-            ComboBox_ChooseTest.SelectedItem = TestNameTextBox.Text;
             _actual = new Test(TestNameTextBox.Text);
             _tests.Add(_actual);
-
+            ComboBox_ChooseTest.SelectedItem = TestNameTextBox.Text;
         }
 
         private void ComboBox_ChooseTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -158,6 +175,46 @@ namespace BreakProjectForTelegramBot
 
                 }
             }
+            ListQuestionsUpdate();
+        }
+
+        private void ButtonEdit_Click(object sender, RoutedEventArgs e)
+        {
+            ButtonEdit.Content = "Save";
+        }
+
+        private void ListQuestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            List<AbstractQuestion> AqList = _actual.GetListQuestion();
+            ComboBox_QuestionType.Text = AqList[ListQuestions.SelectedIndex]._type;
+            if (AqList[ListQuestions.SelectedIndex]._type == "QuestionInput" ||
+                AqList[ListQuestions.SelectedIndex]._type == "QuestionYesNo")
+            {
+                TextBox_questionText.Text = AqList[ListQuestions.SelectedIndex]._questionText;
+
+            }
+            else
+            {
+                ListBoxQuestion.Items.Clear();
+                QuestionWithOptionAnswer qwoa = (QuestionWithOptionAnswer)AqList[ListQuestions.SelectedIndex];
+                TextBox_questionText.Text = AqList[ListQuestions.SelectedIndex]._questionText;
+                
+                foreach(string str in qwoa._optionAnswer)
+                {
+                    TextBox newTB = new TextBox();
+                    newTB.Height = 30;
+                    newTB.Width = 400;
+                    newTB.AcceptsReturn = true;
+                    newTB.TextWrapping = TextWrapping.Wrap;
+                    newTB.Text = str;
+                    ListBoxQuestion.Items.Add(newTB);
+                }
+            }
+           
+
+            //AqList[ListQuestions.SelectedIndex];
+            //ListQuestions.SelectedIndex;
+
         }
     }
 }

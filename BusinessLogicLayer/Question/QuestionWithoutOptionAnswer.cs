@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer
 {
-    public class QuestionIWithoutOptionAnswer : AbstractQuestion
+    public class QuestionWithoutOptionAnswer : AbstractQuestion
     {
-        public QuestionIWithoutOptionAnswer(string type, string questionText)
+        public QuestionWithoutOptionAnswer(string type, string questionText)
         {
             _type = type;
             _questionText = questionText;
