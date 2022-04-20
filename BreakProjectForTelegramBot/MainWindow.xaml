@@ -8,8 +8,8 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="383*"/>
-            <RowDefinition Height="51*"/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -17,9 +17,6 @@
         <TabControl Grid.RowSpan="2">
             <TabItem Header="CreateTest" IsSelected="True">
                 <Grid x:Name="Grid" Background="Gainsboro">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
                     <Grid x:Name="Grid_optionAnswer" Margin="7,85,296,10" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True" UseLayoutRounding="False">
                         <Button x:Name="Button_DeleteOptionAnswer" Content="DELETE" HorizontalAlignment="Left" Margin="415,141,0,0" VerticalAlignment="Top" Click="Button_DeleteOptionAnswer_Click" Width="60"/>
                         <Button x:Name="Button_AddOptionAnswer" Content="ADD" HorizontalAlignment="Left" Margin="415,104,0,0" VerticalAlignment="Top" Click="Button_AddOptionAnswer_Click" Width="60" RenderTransformOrigin="0.483,0.804" />
@@ -42,8 +39,21 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Список" Height="22" Margin="-2,0,-2,0" VerticalAlignment="Bottom">
-
+            <TabItem Header="Ботик" Height="22" Margin="-2,0,-2,0" VerticalAlignment="Bottom">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <ListBox x:Name="ListBox_BotMessages" Margin="20" Grid.Column="1" Grid.RowSpan="2" d:ItemsSource="{d:SampleData ItemCount=5}" Background="#FFB2DE9F"/>
+                    <Button Content="SEND"  Grid.Row="1" Margin="95, 20, 95, 115" Background="#FFC6ECB6" FontSize="24" FontWeight="Bold" Click="ButtonSend_Click"/>
+                    <Button Content="START BOT"  Grid.Row="1" Margin="95, 115, 95, 20" Background="#FFC6ECB6" FontSize="24" FontWeight="Bold" Click="ButtonStart_Click"/>
+                    <TextBox x:Name="TextBox_Send" Text="Пишу в бота..." Margin="55,40,55,0" Height="150" VerticalAlignment="Top" HorizontalAlignment="Center" Width="287" FontStyle="Italic" Background="#FFFBE9E9" />
+                </Grid>
             </TabItem>
             <TabItem Header="Список вопросов" Height="22" Margin="-2,0,-2,0" VerticalAlignment="Bottom">
             </TabItem>
@@ -70,6 +80,8 @@
                     <TextBox x:Name="WriteName" HorizontalAlignment="Left" Margin="400,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="198" Height="27" TextDecorations="{x:Null}" FontWeight="Normal" Grid.Column="1"/>
                 </Grid>
             </TabItem>
+            <Grid/>
+            <Grid/>
         </TabControl>
     </Grid>
 
