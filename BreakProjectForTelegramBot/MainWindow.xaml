@@ -40,7 +40,7 @@
                     <ComboBox x:Name="ComboBox_ChooseTest" HorizontalAlignment="Left" Margin="357,58,0,0" VerticalAlignment="Top" Width="124" SelectionChanged="ComboBox_ChooseTest_SelectionChanged" Height="25"/>
                     <TextBlock TextWrapping="Wrap" Margin="261,57,0,0" FontSize="15" HorizontalAlignment="Left" Width="91" Height="27" VerticalAlignment="Top" Text="Choose test:"/>
                     <Button Content="Edit" x:Name="ButtonEdit" HorizontalAlignment="Left" Height="27" Margin="672,12,0,0" VerticalAlignment="Top" Width="78" Click="ButtonEdit_Click" Background="#FF526BD0" FontSize="15"/>
-                    <ListBox x:Name="ListQuestions" HorizontalAlignment="Left" Height="273" Margin="557,82,0,0" VerticalAlignment="Top" Width="214" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+                    <ListBox x:Name="ListQuestions" HorizontalAlignment="Left" Height="273" Margin="557,82,0,0" VerticalAlignment="Top" Width="214" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ListQuestions_SelectionChanged"/>
                 </Grid>
             </TabItem>
 
