@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading; //для таймера
 using BusinessLogicLayer;
+using System;
 
 namespace BreakProjectForTelegramBot
 {
