@@ -1,6 +1,7 @@
 ﻿using BusinessLogicLayer;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -66,7 +67,7 @@ namespace BreakProjectForTelegramBot
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Create_Click(object sender, RoutedEventArgs e)
         {
             if (ComboBox_QuestionType.SelectedIndex < 2)
             {
@@ -87,6 +88,7 @@ namespace BreakProjectForTelegramBot
                      ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString(),
                      TextBox_questionText.Text, questionTextList));
             }
+            ListQuestionsUpdate();
 
         }
 
@@ -116,10 +118,9 @@ namespace BreakProjectForTelegramBot
         private void AddTitleButton_Click(object sender, RoutedEventArgs e)
         {
             ComboBox_ChooseTest.Items.Add(TestNameTextBox.Text);
-            ComboBox_ChooseTest.SelectedItem = TestNameTextBox.Text;
             _actual = new Test(TestNameTextBox.Text);
             _tests.Add(_actual);
-
+            ComboBox_ChooseTest.SelectedItem = TestNameTextBox.Text;
         }
 
         private void ComboBox_ChooseTest_SelectionChanged(object sender, SelectionChangedEventArgs e)

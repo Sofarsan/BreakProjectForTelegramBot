@@ -32,7 +32,7 @@
                         <ComboBoxItem Content="QuestionSingleSelect"/>
                         <ComboBoxItem Content="QuestionSort"/>
                     </ComboBox>
-                    <Button Content="Create" HorizontalAlignment="Left" Margin="417,313,0,0" VerticalAlignment="Top" Height="42" Width="64" Click="Button_Click"/>
+                    <Button x:Name="Button_Create" Content="Create" HorizontalAlignment="Left" Margin="417,313,0,0" VerticalAlignment="Top" Height="42" Width="64" Click="Button_Create_Click"/>
                     <TextBox x:Name="TextBox_questionText" HorizontalAlignment="Left" Margin="7,85,0,0" TextWrapping="Wrap" Text="Write the question..." VerticalAlignment="Top" Width="474" Height="84" TextDecorations="{x:Null}" FontStyle="Italic" FontWeight="Normal"/>
                     <TextBlock TextWrapping="Wrap" Margin="10,58,0,0" FontSize="15" HorizontalAlignment="Left" Width="114" Height="27" VerticalAlignment="Top" Text="Choose type Q:"/>
                     <TextBox x:Name="TestNameTextBox" HorizontalAlignment="Left" Height="29" Margin="93,10,0,0" TextWrapping="Wrap" Text="Write test name..." VerticalAlignment="Top" Width="192" FontSize="17"  FontStyle="Italic"/>
