@@ -8,8 +8,8 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="383*"/>
-            <RowDefinition Height="51*"/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -17,9 +17,6 @@
         <TabControl Grid.RowSpan="2">
             <TabItem Header="CreateTest" IsSelected="True">
                 <Grid x:Name="Grid" Background="Gainsboro">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
                     <Grid x:Name="Grid_optionAnswer" Margin="7,85,296,10" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True" UseLayoutRounding="False">
                         <Button x:Name="Button_DeleteOptionAnswer" Content="DELETE" HorizontalAlignment="Left" Margin="415,141,0,0" VerticalAlignment="Top" Click="Button_DeleteOptionAnswer_Click" Width="60"/>
                         <Button x:Name="Button_AddOptionAnswer" Content="ADD" HorizontalAlignment="Left" Margin="415,104,0,0" VerticalAlignment="Top" Click="Button_AddOptionAnswer_Click" Width="60" RenderTransformOrigin="0.483,0.804" />
@@ -44,8 +41,21 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Список" Height="22" Margin="-2,0,-2,0" VerticalAlignment="Bottom">
-
+            <TabItem Header="Ботик" Height="22" Margin="-2,0,-2,0" VerticalAlignment="Bottom">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <ListBox x:Name="ListBox_BotMessages" Margin="20" Grid.Column="1" Grid.RowSpan="2" d:ItemsSource="{d:SampleData ItemCount=5}" Background="#FFB2DE9F"/>
+                    <Button Content="SEND"  Grid.Row="1" Margin="95, 20, 95, 115" Background="#FFC6ECB6" FontSize="24" FontWeight="Bold" Click="ButtonSend_Click"/>
+                    <Button Content="START BOT"  Grid.Row="1" Margin="95, 115, 95, 20" Background="#FFC6ECB6" FontSize="24" FontWeight="Bold" Click="ButtonStart_Click"/>
+                    <TextBox x:Name="TextBox_Send" Text="Пишу в бота..." Margin="55,40,55,0" Height="150" VerticalAlignment="Top" HorizontalAlignment="Center" Width="287" FontStyle="Italic" Background="#FFFBE9E9" />
+                </Grid>
             </TabItem>
             <TabItem Header="Список вопросов" Height="22" Margin="-2,0,-2,0" VerticalAlignment="Bottom">
             </TabItem>
@@ -58,6 +68,22 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
+            <TabItem Header="Группы юзеров" Height="22" FontSize="12" Margin="-2,0,-2,0" VerticalAlignment="Bottom">
+                <Grid x:Name="GridGroup" Background="#FFEFEFEF" RenderTransformOrigin="0.501,0.465" Margin="0,0,-1,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="17*"/>
+                        <ColumnDefinition Width="777*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox x:Name="UsersGroup" Background="#FF67E07F" HorizontalAlignment="Right" Margin="0,22,479,0" Width="302" d:ItemsSource="{d:SampleData ItemCount=5}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Height="148" VerticalAlignment="Top" Grid.ColumnSpan="2" />
+                    <Button x:Name="AddNewGroup" Content="Add new group" HorizontalAlignment="Right" Height="27" Margin="0,179,477,0" VerticalAlignment="Top" Width="90" Grid.Column="1"/>
+                    <TextBox x:Name="WriteNamenewGroup" HorizontalAlignment="Left" Margin="15,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="198" Height="27" TextDecorations="{x:Null}" FontWeight="Normal" Grid.ColumnSpan="2"/>
+                    <ListBox x:Name="UsersinGroup" Background="#FF67E07F" HorizontalAlignment="Left" Margin="400,22,0,0" Width="302" d:ItemsSource="{d:SampleData ItemCount=5}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Height="148" VerticalAlignment="Top" Grid.Column="1" />
+                    <Button x:Name="AddNewUserinGroup" Content="Add new User" HorizontalAlignment="Right" Height="28" Margin="0,179,81,0" VerticalAlignment="Top" Width="90" Grid.Column="1"/>
+                    <TextBox x:Name="WriteName" HorizontalAlignment="Left" Margin="400,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="198" Height="27" TextDecorations="{x:Null}" FontWeight="Normal" Grid.Column="1"/>
+                </Grid>
+            </TabItem>
+            <Grid/>
+            <Grid/>
         </TabControl>
     </Grid>
 

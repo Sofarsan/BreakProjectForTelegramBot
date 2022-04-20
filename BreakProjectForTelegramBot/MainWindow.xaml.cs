@@ -4,6 +4,15 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System.Windows.Threading; //для таймера
+using BusinessLogicLayer;
 
 namespace BreakProjectForTelegramBot
 {
@@ -12,14 +21,47 @@ namespace BreakProjectForTelegramBot
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Telega _telega;
+        private const string _token = "5331081992:AAEmEzmU2lWqKLn9mgYCYbcNnPSLVDEHHQM";
+        private List<string> _labels;
+
         private List<Test> _tests = new List<Test>();
         private Test _actual;
+        private DispatcherTimer _timer;
 
         public MainWindow()
         {
+            _telega = new Telega(_token, OnMessages);
+            _labels = new List<string>();
             InitializeComponent();
+            ListBox_BotMessages.ItemsSource = _labels;
+
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += OnTick;
+            _timer.Start();
 
             ComboBox_QuestionType.SelectedIndex = 1;
+        }
+
+        public void OnMessages(string s)
+        {
+            _labels.Add(s);
+        }
+
+        private void ButtonStart_Click(object sender, RoutedEventArgs e)
+        {
+            _telega.Start();
+        }
+
+        private void ButtonSend_Click(object sender, RoutedEventArgs e)
+        {
+            _telega.Send(TextBox_Send.Text);
+        }
+
+        private void OnTick(object sender, EventArgs e)
+        {
+            ListBox_BotMessages.Items.Refresh();
         }
 
         private void ListQuestionsUpdate()
