@@ -7,17 +7,11 @@ using System.Threading.Tasks;
 namespace BusinessLogicLayer
 {
     public class User
-    {
-
+    {           
+      
         public string? LastName { get; set; }
-        public User(string nameUser)
-        {
-            LastName = nameUser;
-        }
-        public override string ToString()
-        {
-            return LastName;
-        }
-
+        public string? Name { get; set; }
+        public int Age { get; set; }
+        
     }
 }
