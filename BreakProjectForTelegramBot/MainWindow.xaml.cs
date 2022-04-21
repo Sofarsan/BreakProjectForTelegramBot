@@ -30,6 +30,11 @@ namespace BreakProjectForTelegramBot
         private Test _actual;
         private DispatcherTimer _timer;
 
+        UserGroup groupOne = UsersMock.GetGroupNumberOne();
+        UserGroup groupTwo = UsersMock.GetGroupNumberTwo();
+        UserGroup groupTree = UsersMock.GetGroupNumberTree();
+        List<UserGroup> groups = new List<UserGroup>();
+
         public MainWindow()
         {
             _telega = new Telega(_token, OnMessages);
@@ -43,6 +48,12 @@ namespace BreakProjectForTelegramBot
             _timer.Start();
 
             ComboBox_QuestionType.SelectedIndex = 1;
+
+            groups.Add(groupOne);
+            groups.Add(groupTwo);
+            groups.Add(groupTree);
+
+            WriteNamenewGroup.ItemsSource = groups;
         }
 
         public void OnMessages(string s)
@@ -150,9 +161,9 @@ namespace BreakProjectForTelegramBot
         {
             _toAddUser = new BindingList<User>()
             {
-                new User(){LastName ="Leto",Name="QQQ",Age=232},
-                new User(){LastName ="Человек",Name="Который смеется ",Age=154},
-                new User(){LastName ="Гранде",Name="Евгения",Age=14},
+                //new User(){LastName ="Leto",Name="QQQ",Age=232},
+                //new User(){LastName ="Человек",Name="Который смеется ",Age=154},
+                //new User(){LastName ="Гранде",Name="Евгения",Age=14},
             };
             ListUser.ItemsSource = _toAddUser;
         }
@@ -211,11 +222,48 @@ namespace BreakProjectForTelegramBot
                     ListBoxQuestion.Items.Add(newTB);
                 }
             }
-           
+        }
 
-            //AqList[ListQuestions.SelectedIndex];
-            //ListQuestions.SelectedIndex;
+        private void WriteNamenewGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UserGroup groupOfUser = (UserGroup)WriteNamenewGroup.SelectedItem;
+            if (groupOfUser == null || groupOfUser.Users.Count == 0)
+            {
+                UsersinGroup.ItemsSource = null;
+            }
+            else
+            {
+                UsersinGroup.ItemsSource = groupOfUser.Users;
+            }
 
         }
+
+        private void AddNewGroup_Click(object sender, RoutedEventArgs e)
+        {
+            if (Group.Text == "")
+            {
+                MessageBox.Show("Введите название группы");
+            }
+
+        }
+
+        private void ChangeUserName_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddNewUserinGroup_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void UsersinGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (UsersinGroup.SelectedItem != null)
+            {
+                WriteName.IsEnabled = true;
+            }
+        }
     }
+
 }
