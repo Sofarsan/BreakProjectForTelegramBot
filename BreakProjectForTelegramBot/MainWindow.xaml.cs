@@ -123,26 +123,35 @@ namespace BreakProjectForTelegramBot
 
         private void Button_Create_Click(object sender, RoutedEventArgs e)
         {
-            if (ComboBox_QuestionType.SelectedIndex < 2)
+            if (_actual != null)
             {
+                if (ComboBox_QuestionType.SelectedIndex < 2)
+                {
 
-                _actual.AddQuestion(new QuestionWithoutOptionAnswer(
-                   ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString(),
-                    TextBox_questionText.Text)); ;
+                    _actual.AddQuestion(new QuestionWithoutOptionAnswer(
+                       ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString(),
+                        TextBox_questionText.Text)); ;
+                }
+                else
+                {
+                    List<string> questionTextList = new List<string>();
+
+                    foreach (TextBox tb in ListBoxQuestion.Items)
+                    {
+                        questionTextList.Add(tb.Text);
+                    }
+                    _actual.AddQuestion(new QuestionWithOptionAnswer(
+                         ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString(),
+                         TextBox_questionText.Text, questionTextList));
+                }
+                ListQuestionsUpdate();
             }
             else
             {
-                List<string> questionTextList = new List<string>();
-
-                foreach (TextBox tb in ListBoxQuestion.Items)
-                {
-                    questionTextList.Add(tb.Text);
-                }
-                _actual.AddQuestion(new QuestionWithOptionAnswer(
-                     ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString(),
-                     TextBox_questionText.Text, questionTextList));
+                MessageBox.Show("Ты что дурачек ?", "Прекрати", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            ListQuestionsUpdate();
+
+
 
         }
 
@@ -210,8 +219,8 @@ namespace BreakProjectForTelegramBot
                 ListBoxQuestion.Items.Clear();
                 QuestionWithOptionAnswer qwoa = (QuestionWithOptionAnswer)AqList[ListQuestions.SelectedIndex];
                 TextBox_questionText.Text = AqList[ListQuestions.SelectedIndex]._questionText;
-                
-                foreach(string str in qwoa._optionAnswer)
+
+                foreach (string str in qwoa._optionAnswer)
                 {
                     TextBox newTB = new TextBox();
                     newTB.Height = 30;
