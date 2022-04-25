@@ -96,6 +96,12 @@ namespace BreakProjectForTelegramBot
             }
 ;
         }
+
+        private void newBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ListQuestions.SelectedItem = sender;
+        }
+
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ComboBox_QuestionType.SelectedIndex < 2)
@@ -124,27 +130,27 @@ namespace BreakProjectForTelegramBot
 
         private void Button_Create_Click(object sender, RoutedEventArgs e)
         {
-            if (ComboBox_QuestionType.SelectedIndex < 2)
+            if(_actual!= null)
             {
-                List<string> questionTextList = new List<string>();
+               
+                    List<string> questionTextList = new List<string>();
 
-                foreach (TextBox tb in ListBoxQuestion.Items)
-                {
-                    questionTextList.Add(tb.Text);
-                }
-                _actual.AddQuestion(new QuestionWithOptionAnswer(
-                     ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString(),
-                     TextBox_questionText.Text, questionTextList));
-                ListQuestionsUpdate();
+                    foreach (TextBox tb in ListBoxQuestion.Items)
+                    {
+                        questionTextList.Add(tb.Text);
+                    }
+                    _actual.AddQuestion(new QuestionWithOptionAnswer(
+                         ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString(),
+                         TextBox_questionText.Text, questionTextList));
+                    ListQuestionsUpdate();
+                
+
             }
+            
             else
             {
                 MessageBox_Warning();
             }
-        }
-
-
-
         }
 
         private void Button_DeleteOptionAnswer_Click(object sender, RoutedEventArgs e)
@@ -186,10 +192,7 @@ namespace BreakProjectForTelegramBot
 
         }
 
-        private void newBtn_Click(object sender, EventArgs e)
-        {
-            ListQuestions.SelectedItem = sender;
-        }
+       
         private void ComboBox_ChooseTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             foreach (Test test in _tests)
@@ -316,10 +319,12 @@ namespace BreakProjectForTelegramBot
             if (TextBox_questionText.Text == "Write the question...")
                 TextBox_questionText.Text = "";
         }
-
         private void MessageBox_Warning()
         {
             MessageBox.Show("Ты что дурачек ?", "Прекрати", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
+
+
     }
+
 }
