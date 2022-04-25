@@ -126,13 +126,6 @@ namespace BreakProjectForTelegramBot
         {
             if (ComboBox_QuestionType.SelectedIndex < 2)
             {
-
-                _actual.AddQuestion(new QuestionWithoutOptionAnswer(
-                   ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString(),
-                    TextBox_questionText.Text)); ;
-            }
-            else
-            {
                 List<string> questionTextList = new List<string>();
 
                 foreach (TextBox tb in ListBoxQuestion.Items)
@@ -142,8 +135,15 @@ namespace BreakProjectForTelegramBot
                 _actual.AddQuestion(new QuestionWithOptionAnswer(
                      ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString(),
                      TextBox_questionText.Text, questionTextList));
+                ListQuestionsUpdate();
             }
-            ListQuestionsUpdate();
+            else
+            {
+                MessageBox_Warning();
+            }
+        }
+
+
 
         }
 
@@ -172,10 +172,18 @@ namespace BreakProjectForTelegramBot
 
         private void AddTitleButton_Click(object sender, RoutedEventArgs e)
         {
-            ComboBox_ChooseTest.Items.Add(TestNameTextBox.Text);
-            _actual = new Test(TestNameTextBox.Text);
-            _tests.Add(_actual);
-            ComboBox_ChooseTest.SelectedItem = TestNameTextBox.Text;
+            if (TestNameTextBox.Text.Length > 0)
+            {
+                ComboBox_ChooseTest.Items.Add(TestNameTextBox.Text);
+                _actual = new Test(TestNameTextBox.Text);
+                _tests.Add(_actual);
+                ComboBox_ChooseTest.SelectedItem = TestNameTextBox.Text;
+            }
+            else
+            {
+                MessageBox_Warning();
+            }
+
         }
 
         private void newBtn_Click(object sender, EventArgs e)
@@ -197,20 +205,10 @@ namespace BreakProjectForTelegramBot
 
         private void ListQuestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ListQuestions.SelectedIndex == -1)
+            if(ListQuestions.SelectedIndex!=-1)
             {
-                // Question list is not in focus
-                return;
-            }
-            List<AbstractQuestion> AqList = _actual.GetListQuestion();
-            ComboBox_QuestionType.Text = AqList[ListQuestions.SelectedIndex]._type;
-            if (AqList[ListQuestions.SelectedIndex]._type == "QuestionInput" ||
-                AqList[ListQuestions.SelectedIndex]._type == "QuestionYesNo")
-            {
-                TextBox_questionText.Text = AqList[ListQuestions.SelectedIndex]._questionText;
-            }
-            else
-            {
+                List<AbstractQuestion> AqList = _actual.GetListQuestion();
+                ComboBox_QuestionType.Text = AqList[ListQuestions.SelectedIndex]._type;
                 ListBoxQuestion.Items.Clear();
                 QuestionWithOptionAnswer qwoa = (QuestionWithOptionAnswer)AqList[ListQuestions.SelectedIndex];
                 TextBox_questionText.Text = AqList[ListQuestions.SelectedIndex]._questionText;
@@ -226,6 +224,17 @@ namespace BreakProjectForTelegramBot
                     ListBoxQuestion.Items.Add(newTB);
                 }
             }
+            
+            //if (AqList[ListQuestions.SelectedIndex]._type == "QuestionInput" ||
+            //    AqList[ListQuestions.SelectedIndex]._type == "QuestionYesNo")
+            //{
+            //    TextBox_questionText.Text = AqList[ListQuestions.SelectedIndex]._questionText;
+
+            //}
+            //else
+            //{
+                
+            //}
         }
 
         private void WriteNamenewGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -296,5 +305,21 @@ namespace BreakProjectForTelegramBot
             ListQuestionsUpdate();
         }
 
+        private void TestNameTextBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (TestNameTextBox.Text == "Write test name...")
+                TestNameTextBox.Text = "";
+        }
+
+        private void TextBox_questionText_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (TextBox_questionText.Text == "Write the question...")
+                TextBox_questionText.Text = "";
+        }
+
+        private void MessageBox_Warning()
+        {
+            MessageBox.Show("Ты что дурачек ?", "Прекрати", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
     }
 }

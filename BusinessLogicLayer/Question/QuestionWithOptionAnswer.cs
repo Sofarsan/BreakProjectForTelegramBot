@@ -11,7 +11,7 @@ namespace BusinessLogicLayer
         
        public List<string> _optionAnswer;
 
-        public QuestionWithOptionAnswer(string type, string questionText,List<string> optionAnswer)
+        public QuestionWithOptionAnswer(string type, string questionText, List<string> optionAnswer)
         {
             _type = type;
             _questionText = questionText;
