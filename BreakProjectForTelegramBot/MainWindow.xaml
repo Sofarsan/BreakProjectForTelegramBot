@@ -21,8 +21,8 @@
                         <Button x:Name="Button_DeleteOptionAnswer" Content="DELETE" HorizontalAlignment="Left" Margin="415,141,0,0" VerticalAlignment="Top" Click="Button_DeleteOptionAnswer_Click" Width="60"/>
                         <Button x:Name="Button_AddOptionAnswer" Content="ADD" HorizontalAlignment="Left" Margin="415,104,0,0" VerticalAlignment="Top" Click="Button_AddOptionAnswer_Click" Width="60" RenderTransformOrigin="0.483,0.804" />
                         <ListBox x:Name="ListBoxQuestion" HorizontalAlignment="Left" Margin="0,104,0,0" Width="397" d:ItemsSource="{d:SampleData ItemCount=5}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Height="166" VerticalAlignment="Top" />
-                        <Button x:Name="Button_SaveQ" Content="Save" HorizontalAlignment="Left" Margin="415,201,0,0" VerticalAlignment="Top" Click="Button_SaveQ_Click" Width="60"/>
                     </Grid>
+                    <Button x:Name="Button_SaveQ" Content="Save" HorizontalAlignment="Left" Margin="634,360,0,0" VerticalAlignment="Top" Click="Button_SaveQ_Click" Width="60"/>
                     <ComboBox x:Name="ComboBox_QuestionType" HorizontalAlignment="Left" Margin="124,58,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged" Height="25" Background="Black" BorderBrush="#FFED1D1D">
                         <ComboBoxItem Content="QuestionInput"/>
                         <ComboBoxItem Content="QuestionYesNo"/>
