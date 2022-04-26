@@ -30,6 +30,7 @@ namespace BreakProjectForTelegramBot
         private Test _actual;
         private DispatcherTimer _timer;
 
+        UserGroup _unallocated = new UserGroup("Другие");
         UserGroup groupOne = UsersMock.GetGroupNumberOne();
         UserGroup groupTwo = UsersMock.GetGroupNumberTwo();
         UserGroup groupTree = UsersMock.GetGroupNumberTree();
@@ -42,6 +43,7 @@ namespace BreakProjectForTelegramBot
             InitializeComponent();
             ListBox_BotMessages.ItemsSource = _labels;
 
+
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += OnTick;
@@ -49,11 +51,12 @@ namespace BreakProjectForTelegramBot
 
             ComboBox_QuestionType.SelectedIndex = 1;
 
+            WriteNamenewGroup.ItemsSource = groups;
             groups.Add(groupOne);
             groups.Add(groupTwo);
             groups.Add(groupTree);
+            groups.Add(_unallocated);
 
-            WriteNamenewGroup.ItemsSource = groups;
         }
 
         public void OnMessages(string s)
@@ -123,35 +126,26 @@ namespace BreakProjectForTelegramBot
 
         private void Button_Create_Click(object sender, RoutedEventArgs e)
         {
-            if (_actual != null)
+            if (ComboBox_QuestionType.SelectedIndex < 2)
             {
-                if (ComboBox_QuestionType.SelectedIndex < 2)
-                {
 
-                    _actual.AddQuestion(new QuestionWithoutOptionAnswer(
-                       ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString(),
-                        TextBox_questionText.Text)); ;
-                }
-                else
-                {
-                    List<string> questionTextList = new List<string>();
-
-                    foreach (TextBox tb in ListBoxQuestion.Items)
-                    {
-                        questionTextList.Add(tb.Text);
-                    }
-                    _actual.AddQuestion(new QuestionWithOptionAnswer(
-                         ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString(),
-                         TextBox_questionText.Text, questionTextList));
-                }
-                ListQuestionsUpdate();
+                _actual.AddQuestion(new QuestionWithoutOptionAnswer(
+                   ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString(),
+                    TextBox_questionText.Text)); ;
             }
             else
             {
-                MessageBox.Show("Ты что дурачек ?", "Прекрати", MessageBoxButton.OK, MessageBoxImage.Warning);
+                List<string> questionTextList = new List<string>();
+
+                foreach (TextBox tb in ListBoxQuestion.Items)
+                {
+                    questionTextList.Add(tb.Text);
+                }
+                _actual.AddQuestion(new QuestionWithOptionAnswer(
+                     ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString(),
+                     TextBox_questionText.Text, questionTextList));
             }
-
-
+            ListQuestionsUpdate();
 
         }
 
@@ -164,17 +158,17 @@ namespace BreakProjectForTelegramBot
             }
         }
 
-        public BindingList<User> _toAddUser;
+        //public BindingList<User> _toAddUser;
 
         private void Window_User(object sender, RoutedEventArgs e)
         {
-            _toAddUser = new BindingList<User>()
-            {
-                //new User(){LastName ="Leto",Name="QQQ",Age=232},
-                //new User(){LastName ="Человек",Name="Который смеется ",Age=154},
-                //new User(){LastName ="Гранде",Name="Евгения",Age=14},
-            };
-            ListUser.ItemsSource = _toAddUser;
+            //_toAddUser = new BindingList<User>()
+            //{
+            //    //new User(){LastName ="Leto",Name="QQQ",Age=232},
+            //    //new User(){LastName ="Человек",Name="Который смеется ",Age=154},
+            //    //new User(){LastName ="Гранде",Name="Евгения",Age=14},
+            //};
+            //ListUser.ItemsSource = _toAddUser;
         }
 
 
@@ -219,8 +213,8 @@ namespace BreakProjectForTelegramBot
                 ListBoxQuestion.Items.Clear();
                 QuestionWithOptionAnswer qwoa = (QuestionWithOptionAnswer)AqList[ListQuestions.SelectedIndex];
                 TextBox_questionText.Text = AqList[ListQuestions.SelectedIndex]._questionText;
-
-                foreach (string str in qwoa._optionAnswer)
+                
+                foreach(string str in qwoa._optionAnswer)
                 {
                     TextBox newTB = new TextBox();
                     newTB.Height = 30;
@@ -233,19 +227,7 @@ namespace BreakProjectForTelegramBot
             }
         }
 
-        private void WriteNamenewGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            UserGroup groupOfUser = (UserGroup)WriteNamenewGroup.SelectedItem;
-            if (groupOfUser == null || groupOfUser.Users.Count == 0)
-            {
-                UsersinGroup.ItemsSource = null;
-            }
-            else
-            {
-                UsersinGroup.ItemsSource = groupOfUser.Users;
-            }
-
-        }
+       
 
         private void AddNewGroup_Click(object sender, RoutedEventArgs e)
         {
@@ -253,6 +235,10 @@ namespace BreakProjectForTelegramBot
             {
                 MessageBox.Show("Введите название группы");
             }
+            UserGroup userNewGroup =new UserGroup(Group.Text);
+            groups.Add(userNewGroup);
+            WriteNamenewGroup.Items.Refresh();
+
 
         }
 
@@ -272,6 +258,20 @@ namespace BreakProjectForTelegramBot
             {
                 WriteName.IsEnabled = true;
             }
+        }
+
+        private void WriteNamenewGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UserGroup groupOfUser = (UserGroup)WriteNamenewGroup.SelectedItem;
+            if (groupOfUser == null || groupOfUser.Users.Count == 0)
+            {
+                UsersinGroup.ItemsSource = null;
+            }
+            else
+            {
+                UsersinGroup.ItemsSource = groupOfUser.Users;
+            }
+
         }
     }
 
