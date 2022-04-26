@@ -8,6 +8,7 @@ namespace BusinessLogicLayer
 {
     public class OptionAnswer
     {
+        
         public string Text { get; set; } = string.Empty;
         public bool? IsValid { get; set; } = false;
 

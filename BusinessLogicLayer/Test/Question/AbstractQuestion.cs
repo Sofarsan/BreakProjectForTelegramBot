@@ -9,6 +9,6 @@ namespace BusinessLogicLayer
     public class AbstractQuestion
     {
         public string _questionText;
-        public string _type;
+        public QuestionType _type;
     }
 }

@@ -152,7 +152,7 @@ namespace BreakProjectForTelegramBot
                     CheckBox cBox = (CheckBox)tb.Children[0];
 
                     bool? value = cBox.IsChecked;
-                    OptionAnswer oAnswer = new OptionAnswer(tBox.Text, value.Value) ;
+                    OptionAnswer oAnswer = new OptionAnswer(tBox.Text, value.Value);
                     questionTextList.Add(oAnswer);
                 }
                 _actual.AddQuestion(new QuestionWithOptionAnswer(
@@ -224,7 +224,7 @@ namespace BreakProjectForTelegramBot
             if (ListQuestions.SelectedIndex != -1)
             {
                 List<AbstractQuestion> AqList = _actual.GetListQuestion();
-                ComboBox_QuestionType.Text = AqList[ListQuestions.SelectedIndex]._type;
+                ComboBox_QuestionType.Text = AqList[ListQuestions.SelectedIndex]._type.ToString();
                 ListBoxQuestion.Items.Clear();
                 QuestionWithOptionAnswer qwoa = (QuestionWithOptionAnswer)AqList[ListQuestions.SelectedIndex];
                 TextBox_questionText.Text = AqList[ListQuestions.SelectedIndex]._questionText;
@@ -281,7 +281,7 @@ namespace BreakProjectForTelegramBot
             groups.Add(_add);
             ComboBox_AddGroup.SelectedItem = Group.Text;
 
-            UserGroup userNewGroup = new UserGroup(Group.Text);            
+            UserGroup userNewGroup = new UserGroup(Group.Text);
             WriteNamenewGroup.Items.Refresh();
         }
 
@@ -311,9 +311,9 @@ namespace BreakProjectForTelegramBot
             }
             List<AbstractQuestion> AqList = _actual.GetListQuestion();
 
-            ComboBox_QuestionType.Text = AqList[ListQuestions.SelectedIndex]._type;
-            if (AqList[ListQuestions.SelectedIndex]._type == "QuestionInput" ||
-                AqList[ListQuestions.SelectedIndex]._type == "QuestionYesNo")
+            ComboBox_QuestionType.Text = AqList[ListQuestions.SelectedIndex]._type.ToString();
+            if (AqList[ListQuestions.SelectedIndex]._type == QuestionType.QuestionInput ||
+                AqList[ListQuestions.SelectedIndex]._type == QuestionType.QuestionYesNo)
             {
                 AqList[ListQuestions.SelectedIndex]._questionText = TextBox_questionText.Text;
             }
@@ -323,18 +323,23 @@ namespace BreakProjectForTelegramBot
                 AqList[ListQuestions.SelectedIndex]._questionText = TextBox_questionText.Text;
 
                 qwoa._optionAnswer.Clear();
-                foreach (WrapPanel wPanel in ListBoxQuestion.Items)
+
+                 if (AqList[ListQuestions.SelectedIndex]._type == QuestionType.QuestionSingleSelect)
                 {
-                    TextBox tBox = (TextBox)wPanel.Children[1];
-                    CheckBox cBox = (CheckBox)wPanel.Children[0];
-
-                    bool? value = cBox.IsChecked;
-
-                    // todo: instantiate OptoinAnswer and set isValid and question text
-                    OptionAnswer oAnswer = new OptionAnswer(tBox.Text, value) ;
-                    qwoa._optionAnswer.Add(oAnswer);
 
                 }
+                
+                 foreach (WrapPanel wPanel in ListBoxQuestion.Items)
+                    {
+                        TextBox tBox = (TextBox)wPanel.Children[1];
+                        CheckBox cBox = (CheckBox)wPanel.Children[0];
+
+                        bool? value = cBox.IsChecked;
+
+                        // todo: instantiate OptoinAnswer and set isValid and question text
+                        OptionAnswer oAnswer = new OptionAnswer(tBox.Text, value);
+                        qwoa._optionAnswer.Add(oAnswer);
+                    }
             }
             ListQuestionsUpdate();
         }
@@ -355,7 +360,7 @@ namespace BreakProjectForTelegramBot
             MessageBox.Show("Ты что дурачек ?", "Прекрати", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
-        
+
     }
 
 }
