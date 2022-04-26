@@ -92,9 +92,7 @@ namespace BreakProjectForTelegramBot
                     newBtn.Width = 200;
                     ListQuestions.Items.Add(newBtn);
                 }
-
             }
-;
         }
 
         private void newBtn_Click(object sender, RoutedEventArgs e)
@@ -118,35 +116,45 @@ namespace BreakProjectForTelegramBot
         {
             TextBox newTB = new TextBox();
             newTB.Height = 30;
-            newTB.Width = 400;
+            newTB.Width = 350;
             newTB.AcceptsReturn = true;
             newTB.TextWrapping = TextWrapping.Wrap;
 
+            WrapPanel listItem = new WrapPanel();
+            CheckBox checkBox = new CheckBox();
+            checkBox.Height = 30;
+            checkBox.Width = 40;
+            ScaleTransform scale = new ScaleTransform(1.3, 1.3);
+            checkBox.RenderTransformOrigin = new Point(-0.5, -0.5);
+            checkBox.RenderTransform = scale;
 
+            listItem.Children.Add(checkBox);
+            listItem.Children.Add(newTB);
 
-            ListBoxQuestion.Items.Add(newTB);
-
+            ListBoxQuestion.Items.Add(listItem);
         }
 
         private void Button_Create_Click(object sender, RoutedEventArgs e)
         {
-            if(_actual!= null)
+            if (_actual != null)
             {
-               
-                    List<string> questionTextList = new List<string>();
 
-                    foreach (TextBox tb in ListBoxQuestion.Items)
-                    {
-                        questionTextList.Add(tb.Text);
-                    }
-                    _actual.AddQuestion(new QuestionWithOptionAnswer(
-                         ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString(),
-                         TextBox_questionText.Text, questionTextList));
-                    ListQuestionsUpdate();
-                
+                List<OptionAnswer> questionTextList = new List<OptionAnswer>();
 
+                foreach (WrapPanel tb in ListBoxQuestion.Items)
+                {
+                    TextBox tBox = (TextBox)tb.Children[1];
+                    CheckBox cBox = (CheckBox)tb.Children[0];
+
+                    bool? value = cBox.IsChecked;
+                    OptionAnswer oAnswer = new OptionAnswer(tBox.Text, value.Value) ;
+                    questionTextList.Add(oAnswer);
+                }
+                _actual.AddQuestion(new QuestionWithOptionAnswer(
+                     ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString(),
+                     TextBox_questionText.Text, questionTextList));
+                ListQuestionsUpdate();
             }
-            
             else
             {
                 MessageBox_Warning();
@@ -192,7 +200,7 @@ namespace BreakProjectForTelegramBot
 
         }
 
-       
+
         private void ComboBox_ChooseTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             foreach (Test test in _tests)
@@ -208,7 +216,7 @@ namespace BreakProjectForTelegramBot
 
         private void ListQuestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(ListQuestions.SelectedIndex!=-1)
+            if (ListQuestions.SelectedIndex != -1)
             {
                 List<AbstractQuestion> AqList = _actual.GetListQuestion();
                 ComboBox_QuestionType.Text = AqList[ListQuestions.SelectedIndex]._type;
@@ -216,28 +224,30 @@ namespace BreakProjectForTelegramBot
                 QuestionWithOptionAnswer qwoa = (QuestionWithOptionAnswer)AqList[ListQuestions.SelectedIndex];
                 TextBox_questionText.Text = AqList[ListQuestions.SelectedIndex]._questionText;
 
-                foreach (string str in qwoa._optionAnswer)
+                foreach (OptionAnswer oAnswer in qwoa._optionAnswer)
                 {
                     TextBox newTB = new TextBox();
                     newTB.Height = 30;
                     newTB.Width = 400;
                     newTB.AcceptsReturn = true;
                     newTB.TextWrapping = TextWrapping.Wrap;
-                    newTB.Text = str;
-                    ListBoxQuestion.Items.Add(newTB);
+                    newTB.Text = oAnswer.Text;
+
+                    WrapPanel listItem = new WrapPanel();
+                    CheckBox checkBox = new CheckBox();
+                    checkBox.Height = 30;
+                    checkBox.Width = 40;
+                    ScaleTransform scale = new ScaleTransform(1.3, 1.3);
+                    checkBox.RenderTransformOrigin = new Point(-0.5, -0.5);
+                    checkBox.RenderTransform = scale;
+                    checkBox.IsChecked = oAnswer.IsValid;
+
+                    listItem.Children.Add(checkBox);
+                    listItem.Children.Add(newTB);
+
+                    ListBoxQuestion.Items.Add(listItem);
                 }
             }
-            
-            //if (AqList[ListQuestions.SelectedIndex]._type == "QuestionInput" ||
-            //    AqList[ListQuestions.SelectedIndex]._type == "QuestionYesNo")
-            //{
-            //    TextBox_questionText.Text = AqList[ListQuestions.SelectedIndex]._questionText;
-
-            //}
-            //else
-            //{
-                
-            //}
         }
 
         private void WriteNamenewGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -288,6 +298,7 @@ namespace BreakProjectForTelegramBot
                 return;
             }
             List<AbstractQuestion> AqList = _actual.GetListQuestion();
+
             ComboBox_QuestionType.Text = AqList[ListQuestions.SelectedIndex]._type;
             if (AqList[ListQuestions.SelectedIndex]._type == "QuestionInput" ||
                 AqList[ListQuestions.SelectedIndex]._type == "QuestionYesNo")
@@ -300,9 +311,17 @@ namespace BreakProjectForTelegramBot
                 AqList[ListQuestions.SelectedIndex]._questionText = TextBox_questionText.Text;
 
                 qwoa._optionAnswer.Clear();
-                foreach (TextBox str in ListBoxQuestion.Items)
+                foreach (WrapPanel wPanel in ListBoxQuestion.Items)
                 {
-                    qwoa._optionAnswer.Add(str.Text);
+                    TextBox tBox = (TextBox)wPanel.Children[1];
+                    CheckBox cBox = (CheckBox)wPanel.Children[0];
+
+                    bool? value = cBox.IsChecked;
+
+                    // todo: instantiate OptoinAnswer and set isValid and question text
+                    OptionAnswer oAnswer = new OptionAnswer(tBox.Text, value) ;
+                    qwoa._optionAnswer.Add(oAnswer);
+
                 }
             }
             ListQuestionsUpdate();
