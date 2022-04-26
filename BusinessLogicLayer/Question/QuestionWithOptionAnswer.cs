@@ -8,10 +8,12 @@ namespace BusinessLogicLayer
 {
     public class QuestionWithOptionAnswer : AbstractQuestion
     {
-        
-       public List<string> _optionAnswer;
 
-        public QuestionWithOptionAnswer(string type, string questionText, List<string> optionAnswer)
+        // todo: create class OptionAnswer with isValid parameter and text
+        // public List<OptionAnswer> _optionAnswer;
+        public List<OptionAnswer> _optionAnswer;
+
+        public QuestionWithOptionAnswer(string type, string questionText, List<OptionAnswer> optionAnswer)
         {
             _type = type;
             _questionText = questionText;

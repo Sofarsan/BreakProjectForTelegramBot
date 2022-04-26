@@ -10,6 +10,5 @@ namespace BusinessLogicLayer
     {
         public string _questionText;
         public string _type;
-
     }
 }
