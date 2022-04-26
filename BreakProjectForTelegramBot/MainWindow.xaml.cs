@@ -30,10 +30,13 @@ namespace BreakProjectForTelegramBot
         private Test _actual;
         private DispatcherTimer _timer;
 
+
+        UserGroup _unallocated = new UserGroup("Другие");
         UserGroup groupOne = UsersMock.GetGroupNumberOne();
         UserGroup groupTwo = UsersMock.GetGroupNumberTwo();
         UserGroup groupTree = UsersMock.GetGroupNumberTree();
         List<UserGroup> groups = new List<UserGroup>();
+        private UserGroup _add;
 
         public MainWindow()
         {
@@ -42,6 +45,7 @@ namespace BreakProjectForTelegramBot
             InitializeComponent();
             ListBox_BotMessages.ItemsSource = _labels;
 
+
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += OnTick;
@@ -49,11 +53,12 @@ namespace BreakProjectForTelegramBot
 
             ComboBox_QuestionType.SelectedIndex = 1;
 
+            WriteNamenewGroup.ItemsSource = groups;
             groups.Add(groupOne);
             groups.Add(groupTwo);
             groups.Add(groupTree);
+            groups.Add(_unallocated);
 
-            WriteNamenewGroup.ItemsSource = groups;
         }
 
         public void OnMessages(string s)
@@ -170,17 +175,17 @@ namespace BreakProjectForTelegramBot
             }
         }
 
-        public BindingList<User> _toAddUser;
+        //public BindingList<User> _toAddUser;
 
         private void Window_User(object sender, RoutedEventArgs e)
         {
-            _toAddUser = new BindingList<User>()
-            {
-                //new User(){LastName ="Leto",Name="QQQ",Age=232},
-                //new User(){LastName ="Человек",Name="Который смеется ",Age=154},
-                //new User(){LastName ="Гранде",Name="Евгения",Age=14},
-            };
-            ListUser.ItemsSource = _toAddUser;
+            //_toAddUser = new BindingList<User>()
+            //{
+            //    //new User(){LastName ="Leto",Name="QQQ",Age=232},
+            //    //new User(){LastName ="Человек",Name="Который смеется ",Age=154},
+            //    //new User(){LastName ="Гранде",Name="Евгения",Age=14},
+            //};
+            //ListUser.ItemsSource = _toAddUser;
         }
 
 
@@ -261,7 +266,6 @@ namespace BreakProjectForTelegramBot
             {
                 UsersinGroup.ItemsSource = groupOfUser.Users;
             }
-
         }
 
         private void AddNewGroup_Click(object sender, RoutedEventArgs e)
@@ -271,6 +275,14 @@ namespace BreakProjectForTelegramBot
                 MessageBox.Show("Введите название группы");
             }
 
+
+            ComboBox_AddGroup.Items.Add(Group.Text);
+            _add = new UserGroup(Group.Text);
+            groups.Add(_add);
+            ComboBox_AddGroup.SelectedItem = Group.Text;
+
+            UserGroup userNewGroup = new UserGroup(Group.Text);            
+            WriteNamenewGroup.Items.Refresh();
         }
 
         private void ChangeUserName_Click(object sender, RoutedEventArgs e)
@@ -343,7 +355,7 @@ namespace BreakProjectForTelegramBot
             MessageBox.Show("Ты что дурачек ?", "Прекрати", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
-
+        
     }
 
 }
