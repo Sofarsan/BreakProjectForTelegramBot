@@ -10,6 +10,7 @@ namespace BusinessLogicLayer
     {
         public string NameGroup { get; set; }
         public List<User> Users { get; set; }
+        
         public UserGroup(string nameGroup)
         {
             NameGroup = nameGroup;
@@ -25,5 +26,6 @@ namespace BusinessLogicLayer
         {
             return NameGroup;
         }
+        
     }
 }

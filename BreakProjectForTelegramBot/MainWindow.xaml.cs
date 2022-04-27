@@ -266,6 +266,7 @@ namespace BreakProjectForTelegramBot
             {
                 UsersinGroup.ItemsSource = groupOfUser.Users;
             }
+            
         }
 
         private void AddNewGroup_Click(object sender, RoutedEventArgs e)
@@ -283,6 +284,16 @@ namespace BreakProjectForTelegramBot
 
             UserGroup userNewGroup = new UserGroup(Group.Text);
             WriteNamenewGroup.Items.Refresh();
+        }
+
+        private void ChangeNameGroup_Click(object sender, RoutedEventArgs e)
+        {
+            UserGroup ug = (UserGroup)WriteNamenewGroup.SelectedItem;
+            ug.NameGroup = NewNameGroup.Text;
+            WriteNamenewGroup.Items.Refresh();         
+            NewNameGroup.Clear();
+
+            
         }
 
         private void ChangeUserName_Click(object sender, RoutedEventArgs e)
