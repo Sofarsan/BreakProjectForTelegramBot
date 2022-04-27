@@ -12,7 +12,7 @@ namespace BusinessLogicLayer
         public string Text { get; set; } = string.Empty;
         public bool? IsValid { get; set; } = false;
 
-        public OptionAnswer(string Text, bool? IsValid)
+        public OptionAnswer(string Text, bool? IsValid = false)
         {
             this.IsValid = IsValid;
             this.Text = Text;

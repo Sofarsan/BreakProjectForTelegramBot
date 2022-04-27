@@ -26,6 +26,8 @@ namespace BreakProjectForTelegramBot
         private const string _token = "5331081992:AAEmEzmU2lWqKLn9mgYCYbcNnPSLVDEHHQM";
         private List<string> _labels;
 
+        private QuestionMock qm;
+
         private List<Test> _tests = new List<Test>();
         private Test _actual;
         private DispatcherTimer _timer;
@@ -371,7 +373,11 @@ namespace BreakProjectForTelegramBot
             MessageBox.Show("Ты что дурачек ?", "Прекрати", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
+        public async void Button_SendQuestion_Click(object sender, RoutedEventArgs e)
+        {
+            _telega.SendQuestion(QuestionMock.getQuestion());
 
+        }
     }
 
 }

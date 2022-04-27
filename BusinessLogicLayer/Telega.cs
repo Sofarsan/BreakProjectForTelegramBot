@@ -31,6 +31,7 @@ namespace BusinessLogicLayer
             _client.StartReceiving(HandleResive, HandleError);
         }
 
+
         public async void Send(string s)
         {
             foreach (var id in _id)
@@ -44,10 +45,30 @@ namespace BusinessLogicLayer
                             },
                             new []
                             {
-                                 new KeyboardButton("No"),                       
+                                 new KeyboardButton("No"),
                             }
                       });
                 await _client.SendTextMessageAsync(new ChatId(id), s, replyMarkup: replyKeyboard);
+            }
+        }
+
+        public async void SendQuestion(QuestionWithOptionAnswer question)
+        {
+            List<String> oA = question.GetOptionAnswerStringList();
+            List<KeyboardButton> optionAnswers = new List<KeyboardButton>();
+            
+
+            foreach(string str in oA)
+            {
+                optionAnswers.Add(str);
+            }
+          
+            foreach (var id in _id)
+            {
+                
+                    ReplyKeyboardMarkup replyKeyboard = new ReplyKeyboardMarkup(optionAnswers);
+
+                await _client.SendTextMessageAsync(new ChatId(id), question._questionText, replyMarkup: replyKeyboard);
             }
         }
 

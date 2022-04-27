@@ -62,9 +62,10 @@
                     <Button Content="SEND"  Grid.Row="1" Margin="95, 20, 95, 115" Background="#FFC6ECB6" FontSize="24" FontWeight="Bold" Click="ButtonSend_Click"/>
                     <Button Content="START BOT"  Grid.Row="1" Margin="95, 115, 95, 20" Background="#FFC6ECB6" FontSize="24" FontWeight="Bold" Click="ButtonStart_Click"/>
                     <TextBox x:Name="TextBox_Send" Text="Пишу в бота..." Margin="55,40,55,0" Height="150" VerticalAlignment="Top" HorizontalAlignment="Center" Width="287" FontStyle="Italic" Background="#FFFBE9E9" />
+                    <Button x:Name="Button_SendQuestion" Content="SendQuestion" Margin="323,87,0,0" Grid.Row="1" VerticalAlignment="Top" Height="42" Click="Button_SendQuestion_Click"/>
                 </Grid>
             </TabItem>
-           
+
             <TabItem Header="Список юзеров" Height="22" FontSize="12" Margin="-2,0,-2,0" VerticalAlignment="Bottom">
                 <DataGrid x:Name="ListUser" Loaded="Window_User" AutoGenerateColumns ="False">
                     <DataGrid.Columns>
@@ -109,7 +110,7 @@
                         </Button.RenderTransform>
                     </Button>
                     <ComboBox x:Name="ComboBox_AddGroup" Grid.Column="2" Margin="351,220,0,0" HorizontalAlignment="Left" Width="187" Height="25" VerticalAlignment="Top" >
-                       
+
                     </ComboBox>
                     <Button x:Name="AddNewUserinGroup" Content="Add to Group" HorizontalAlignment="Left" Height="27" Margin="551,221,0,0" VerticalAlignment="Top" Width="103" Grid.Column="2" Click="AddNewUserinGroup_Click"/>
                 </Grid>
