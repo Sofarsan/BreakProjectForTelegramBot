@@ -31,11 +31,14 @@ namespace BreakProjectForTelegramBot
         private DispatcherTimer _timer;
 
 
-        UserGroup _unallocated = new UserGroup("Другие");
-        UserGroup groupOne = UsersMock.GetGroupNumberOne();
-        UserGroup groupTwo = UsersMock.GetGroupNumberTwo();
-        UserGroup groupTree = UsersMock.GetGroupNumberTree();
-        List<UserGroup> groups = new List<UserGroup>();
+        List<UserGroup> groups = new List<UserGroup>()
+        {
+            UsersMock.GetGroupNumberOne(),
+            UsersMock.GetGroupNumberTwo(),
+            UsersMock.GetGroupNumberTree(),
+            new UserGroup("Другие")
+
+        };
         private UserGroup _add;
 
         public MainWindow()
@@ -54,10 +57,7 @@ namespace BreakProjectForTelegramBot
             ComboBox_QuestionType.SelectedIndex = 1;
 
             WriteNamenewGroup.ItemsSource = groups;
-            groups.Add(groupOne);
-            groups.Add(groupTwo);
-            groups.Add(groupTree);
-            groups.Add(_unallocated);
+            ComboBox_AddGroup.ItemsSource = groups;
 
         }
 
@@ -266,6 +266,7 @@ namespace BreakProjectForTelegramBot
             {
                 UsersinGroup.ItemsSource = groupOfUser.Users;
             }
+            
         }
 
         private void AddNewGroup_Click(object sender, RoutedEventArgs e)
@@ -276,7 +277,7 @@ namespace BreakProjectForTelegramBot
             }
 
 
-            ComboBox_AddGroup.Items.Add(Group.Text);
+           // ComboBox_AddGroup.Items.Add(Group.Text);
             _add = new UserGroup(Group.Text);
             groups.Add(_add);
             ComboBox_AddGroup.SelectedItem = Group.Text;
@@ -294,6 +295,16 @@ namespace BreakProjectForTelegramBot
             {
                 MessageBox_Warning();
             }
+        }
+
+        private void ChangeNameGroup_Click(object sender, RoutedEventArgs e)
+        {
+            UserGroup ug = (UserGroup)WriteNamenewGroup.SelectedItem;
+            ug.NameGroup = NewNameGroup.Text;
+            WriteNamenewGroup.Items.Refresh();         
+            NewNameGroup.Clear();
+
+            
         }
 
         private void ChangeUserName_Click(object sender, RoutedEventArgs e)
