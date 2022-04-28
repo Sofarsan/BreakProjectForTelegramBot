@@ -1,4 +1,4 @@
-﻿using BusinessLogicLayer;
+using BusinessLogicLayer;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
@@ -35,10 +35,11 @@ namespace BreakProjectForTelegramBot
 
         List<UserGroup> groups = new List<UserGroup>()
         {
+            new UserGroup("Другие"),
             UsersMock.GetGroupNumberOne(),
             UsersMock.GetGroupNumberTwo(),
-            UsersMock.GetGroupNumberTree(),
-            new UserGroup("Другие")
+            UsersMock.GetGroupNumberTree()
+            
 
         };
         private UserGroup _add;
@@ -107,6 +108,30 @@ namespace BreakProjectForTelegramBot
             ListQuestions.SelectedItem = sender;
         }
 
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox chk = (CheckBox)sender;
+
+            //string? selectedQuestionType = ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString();
+
+            if (ComboBox_QuestionType.SelectedIndex + 1 == (int)QuestionType.QuestionSingleSelect)
+            {
+                foreach (WrapPanel wrap in ListBoxQuestion.Items)
+                {
+
+                    CheckBox cBox = (CheckBox)wrap.Children[0];
+                    if (cBox == chk)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        cBox.IsChecked = false;
+                    }
+                }
+            }
+        }
+
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ComboBox_QuestionType.SelectedIndex < 2)
@@ -135,6 +160,7 @@ namespace BreakProjectForTelegramBot
             checkBox.RenderTransformOrigin = new Point(-0.5, -0.5);
             checkBox.RenderTransform = scale;
 
+            checkBox.Checked += CheckBox_Checked;
             listItem.Children.Add(checkBox);
             listItem.Children.Add(newTB);
 
@@ -249,6 +275,7 @@ namespace BreakProjectForTelegramBot
                     checkBox.RenderTransform = scale;
                     checkBox.IsChecked = oAnswer.IsValid;
 
+                    checkBox.Checked += CheckBox_Checked;
                     listItem.Children.Add(checkBox);
                     listItem.Children.Add(newTB);
 
@@ -268,7 +295,7 @@ namespace BreakProjectForTelegramBot
             {
                 UsersinGroup.ItemsSource = groupOfUser.Users;
             }
-            
+
         }
 
         private void AddNewGroup_Click(object sender, RoutedEventArgs e)
@@ -279,7 +306,7 @@ namespace BreakProjectForTelegramBot
             }
 
 
-           // ComboBox_AddGroup.Items.Add(Group.Text);
+            // ComboBox_AddGroup.Items.Add(Group.Text);
             _add = new UserGroup(Group.Text);
             groups.Add(_add);
             ComboBox_AddGroup.SelectedItem = Group.Text;
@@ -287,15 +314,31 @@ namespace BreakProjectForTelegramBot
             UserGroup userNewGroup = new UserGroup(Group.Text);
             WriteNamenewGroup.Items.Refresh();
         }
+        private void DeleteUserinGroup_Click(object sender, RoutedEventArgs e)
+        {
+            if (ComboBox_AddGroup.Text != "Другие")
+            {               
+                foreach(User user in ((UserGroup)ComboBox_AddGroup.SelectedItem).Users)
+                {
+                    groups[0].AddUser(user);
+
+                }
+                groups.Remove((UserGroup)ComboBox_AddGroup.SelectedItem);
+                ComboBox_AddGroup.Items.Refresh();
+                WriteNamenewGroup.Items.Refresh();
+            }
+            else
+            {
+                MessageBox_Warning();
+            }
+        }
 
         private void ChangeNameGroup_Click(object sender, RoutedEventArgs e)
         {
             UserGroup ug = (UserGroup)WriteNamenewGroup.SelectedItem;
             ug.NameGroup = NewNameGroup.Text;
-            WriteNamenewGroup.Items.Refresh();         
+            WriteNamenewGroup.Items.Refresh();
             NewNameGroup.Clear();
-
-            
         }
 
         private void ChangeUserName_Click(object sender, RoutedEventArgs e)
@@ -337,22 +380,18 @@ namespace BreakProjectForTelegramBot
 
                 qwoa._optionAnswer.Clear();
 
-                 if (AqList[ListQuestions.SelectedIndex]._type == QuestionType.QuestionSingleSelect)
+
+                foreach (WrapPanel wPanel in ListBoxQuestion.Items)
                 {
+                    TextBox tBox = (TextBox)wPanel.Children[1];
+                    CheckBox cBox = (CheckBox)wPanel.Children[0];
 
+                    bool? value = cBox.IsChecked;
+
+                    OptionAnswer oAnswer = new OptionAnswer(tBox.Text, value);
+                    qwoa._optionAnswer.Add(oAnswer);
                 }
-                
-                 foreach (WrapPanel wPanel in ListBoxQuestion.Items)
-                    {
-                        TextBox tBox = (TextBox)wPanel.Children[1];
-                        CheckBox cBox = (CheckBox)wPanel.Children[0];
 
-                        bool? value = cBox.IsChecked;
-
-                        // todo: instantiate OptoinAnswer and set isValid and question text
-                        OptionAnswer oAnswer = new OptionAnswer(tBox.Text, value);
-                        qwoa._optionAnswer.Add(oAnswer);
-                    }
             }
             ListQuestionsUpdate();
         }
@@ -370,7 +409,7 @@ namespace BreakProjectForTelegramBot
         }
         private void MessageBox_Warning()
         {
-            MessageBox.Show("Ты что дурачек ?", "Прекрати", MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show("Ты что дурачек ?", "Stop", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
         public async void Button_SendQuestion_Click(object sender, RoutedEventArgs e)
@@ -379,5 +418,4 @@ namespace BreakProjectForTelegramBot
 
         }
     }
-
 }

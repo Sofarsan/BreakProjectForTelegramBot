@@ -22,6 +22,12 @@ namespace BusinessLogicLayer
             Users.Add(user);
         }
 
+        public void DeleteUser(User user)
+        {
+
+            Users.Remove(user);
+        }
+
         public override string ToString()
         {
             return NameGroup;
