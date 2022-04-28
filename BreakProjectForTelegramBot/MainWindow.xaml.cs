@@ -284,6 +284,17 @@ namespace BreakProjectForTelegramBot
             UserGroup userNewGroup = new UserGroup(Group.Text);
             WriteNamenewGroup.Items.Refresh();
         }
+        private void DeleteUserinGroup_Click(object sender, RoutedEventArgs e)
+        {
+            if (ComboBox_AddGroup.Text != "Другие")
+            {
+                ComboBox_AddGroup.Items.Remove(ComboBox_AddGroup.SelectedItem);
+            }
+            else
+            {
+                MessageBox_Warning();
+            }
+        }
 
         private void ChangeUserName_Click(object sender, RoutedEventArgs e)
         {
@@ -360,7 +371,7 @@ namespace BreakProjectForTelegramBot
             MessageBox.Show("Ты что дурачек ?", "Прекрати", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
-
+        
     }
 
 }
