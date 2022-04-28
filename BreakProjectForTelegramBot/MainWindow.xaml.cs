@@ -1,4 +1,4 @@
-﻿using BusinessLogicLayer;
+using BusinessLogicLayer;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
@@ -311,6 +311,17 @@ namespace BreakProjectForTelegramBot
             UserGroup userNewGroup = new UserGroup(Group.Text);
             WriteNamenewGroup.Items.Refresh();
         }
+        private void DeleteUserinGroup_Click(object sender, RoutedEventArgs e)
+        {
+            if (ComboBox_AddGroup.Text != "Другие")
+            {
+                ComboBox_AddGroup.Items.Remove(ComboBox_AddGroup.SelectedItem);
+            }
+            else
+            {
+                MessageBox_Warning();
+            }
+        }
 
         private void ChangeNameGroup_Click(object sender, RoutedEventArgs e)
         {
@@ -318,8 +329,6 @@ namespace BreakProjectForTelegramBot
             ug.NameGroup = NewNameGroup.Text;
             WriteNamenewGroup.Items.Refresh();
             NewNameGroup.Clear();
-
-
         }
 
         private void ChangeUserName_Click(object sender, RoutedEventArgs e)
@@ -377,7 +386,6 @@ namespace BreakProjectForTelegramBot
             ListQuestionsUpdate();
         }
 
-
         private void TestNameTextBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (TestNameTextBox.Text == "Write test name...")
@@ -395,4 +403,3 @@ namespace BreakProjectForTelegramBot
         }
     }
 }
-
