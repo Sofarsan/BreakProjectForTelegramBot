@@ -33,10 +33,11 @@ namespace BreakProjectForTelegramBot
 
         List<UserGroup> groups = new List<UserGroup>()
         {
+            new UserGroup("Другие"),
             UsersMock.GetGroupNumberOne(),
             UsersMock.GetGroupNumberTwo(),
-            UsersMock.GetGroupNumberTree(),
-            new UserGroup("Другие")
+            UsersMock.GetGroupNumberTree()
+            
 
         };
         private UserGroup _add;
@@ -314,8 +315,15 @@ namespace BreakProjectForTelegramBot
         private void DeleteUserinGroup_Click(object sender, RoutedEventArgs e)
         {
             if (ComboBox_AddGroup.Text != "Другие")
-            {
-                ComboBox_AddGroup.Items.Remove(ComboBox_AddGroup.SelectedItem);
+            {               
+                foreach(User user in ((UserGroup)ComboBox_AddGroup.SelectedItem).Users)
+                {
+                    groups[0].AddUser(user);
+
+                }
+                groups.Remove((UserGroup)ComboBox_AddGroup.SelectedItem);
+                ComboBox_AddGroup.Items.Refresh();
+                WriteNamenewGroup.Items.Refresh();
             }
             else
             {
@@ -399,7 +407,7 @@ namespace BreakProjectForTelegramBot
         }
         private void MessageBox_Warning()
         {
-            MessageBox.Show("Ты что дурачек ?", "Прекрати", MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show("Ты что дурачек ?", "Stop", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
 }
