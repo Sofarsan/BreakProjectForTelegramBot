@@ -59,7 +59,6 @@ namespace BreakProjectForTelegramBot
             ComboBox_QuestionType.SelectedIndex = 1;
 
             WriteNamenewGroup.ItemsSource = groups;
-            ComboBox_AddGroup.ItemsSource = groups;
         }
 
         /// <summary>
@@ -256,7 +255,14 @@ namespace BreakProjectForTelegramBot
         }
         private void ComboBoxTimer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+            //    foreach (Test test in _tests)
+            //    {
+            //        if (test._timer == ComboBoxTimer.SelectedItem)
+            //        {
+            //            _actual = test;
+            //        }
+            //    }
+            //    ListQuestionsUpdate();
         }
 
         private void ListQuestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -317,26 +323,22 @@ namespace BreakProjectForTelegramBot
                 MessageBox.Show("Введите название группы");
             }
 
-
             // ComboBox_AddGroup.Items.Add(Group.Text);
             _add = new UserGroup(Group.Text);
             groups.Add(_add);
-            ComboBox_AddGroup.SelectedItem = Group.Text;
 
             UserGroup userNewGroup = new UserGroup(Group.Text);
             WriteNamenewGroup.Items.Refresh();
         }
-        private void DeleteUserinGroup_Click(object sender, RoutedEventArgs e)
+        private void DeleteGroup_Click(object sender, RoutedEventArgs e)
         {
-            if (ComboBox_AddGroup.Text != "Другие")
+            if (((UserGroup)WriteNamenewGroup.SelectedItem).NameGroup != "Другие")
             {
-                foreach (User user in ((UserGroup)ComboBox_AddGroup.SelectedItem).Users)
+                foreach (User user in ((UserGroup)WriteNamenewGroup.SelectedItem).Users)
                 {
                     groups[0].AddUser(user);
-
                 }
-                groups.Remove((UserGroup)ComboBox_AddGroup.SelectedItem);
-                ComboBox_AddGroup.Items.Refresh();
+                groups.Remove((UserGroup)WriteNamenewGroup.SelectedItem);
                 WriteNamenewGroup.Items.Refresh();
             }
             else
@@ -344,6 +346,7 @@ namespace BreakProjectForTelegramBot
                 MessageBox_Warning();
             }
         }
+
 
         private void ChangeNameGroup_Click(object sender, RoutedEventArgs e)
         {
@@ -358,9 +361,9 @@ namespace BreakProjectForTelegramBot
 
         }
 
-        private void AddNewUserinGroup_Click(object sender, RoutedEventArgs e)
+        private void AddNewUserInGroup_Click(object sender, RoutedEventArgs e)
         {
-
+            //DataGridListUser.SelectedItems
         }
 
         private void UsersInGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -433,6 +436,15 @@ namespace BreakProjectForTelegramBot
         private void Refresh_Click(object sender, RoutedEventArgs e)
         {
             RefreshListOfUsers();
+        }
+
+        private void DeleteUser_Click(object sender, RoutedEventArgs e)
+        {
+            IEditableCollectionView items = UsersInGroup.Items;
+            if (items.CanRemove)
+            {
+                items.Remove(UsersInGroup.SelectedItem);
+            }
         }
     }
 }

@@ -5,44 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BreakProjectForTelegramBot"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="453" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TabControl Grid.RowSpan="2">
+        <TabControl>
             <TabItem Header="CreateTest" IsSelected="True">
                 <Grid x:Name="Grid" Background="Gainsboro">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="171*"/>
+                        <ColumnDefinition Width="9*"/>
+                        <ColumnDefinition Width="614*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid x:Name="Grid_optionAnswer" Margin="7,85,296,10" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True" UseLayoutRounding="False">
+                    <Grid x:Name="Grid_optionAnswer" Margin="7,85,296,10" ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.IsSharedSizeScope="True" ScrollViewer.CanContentScroll="True" UseLayoutRounding="False" Grid.ColumnSpan="3">
                         <Button x:Name="Button_DeleteOptionAnswer" Content="DELETE" HorizontalAlignment="Left" Margin="415,141,0,0" VerticalAlignment="Top" Click="Button_DeleteOptionAnswer_Click" Width="60"/>
                         <Button x:Name="Button_AddOptionAnswer" Content="ADD" HorizontalAlignment="Left" Margin="415,104,0,0" VerticalAlignment="Top" Click="Button_AddOptionAnswer_Click" Width="60" RenderTransformOrigin="0.483,0.804" />
                         <ListBox x:Name="ListBoxQuestion" HorizontalAlignment="Left" Margin="-6,104,0,0" Width="395" d:ItemsSource="{d:SampleData ItemCount=5}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Height="166" VerticalAlignment="Top" />
                     </Grid>
-                    <Button x:Name="Button_SaveQ" Content="Save" HorizontalAlignment="Left" Margin="634,360,0,0" VerticalAlignment="Top" Click="Button_SaveQ_Click" Width="60"/>
-                    <ComboBox x:Name="ComboBox_QuestionType" HorizontalAlignment="Left" Margin="124,58,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged" Height="25" Background="Black" BorderBrush="#FFED1D1D">
+                    <Button x:Name="Button_SaveQ" Content="Save" HorizontalAlignment="Left" Margin="454,360,0,0" VerticalAlignment="Top" Click="Button_SaveQ_Click" Width="60" Grid.Column="2"/>
+                    <ComboBox x:Name="ComboBox_QuestionType" HorizontalAlignment="Left" Margin="124,58,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged" Height="25" Background="Black" BorderBrush="#FFED1D1D" Grid.ColumnSpan="3">
                         <ComboBoxItem Content="QuestionInput"/>
                         <ComboBoxItem Content="QuestionYesNo"/>
                         <ComboBoxItem Content="QuestionMultiSelect"/>
                         <ComboBoxItem Content="QuestionSingleSelect"/>
                         <ComboBoxItem Content="QuestionSort"/>
                     </ComboBox>
-                    <TextBox x:Name="TextBox_questionText" HorizontalAlignment="Left" Margin="0,101,0,0" TextWrapping="Wrap" Text="Write the question..." VerticalAlignment="Top" Width="397" Height="84" TextDecorations="{x:Null}" FontStyle="Italic" FontWeight="Normal" PreviewMouseLeftButtonDown="TextBox_questionText_PreviewMouseLeftButtonDown"/>
-                    <TextBox x:Name="TestNameTextBox" HorizontalAlignment="Left" Height="29" Margin="93,10,0,0" TextWrapping="Wrap" Text="Write test name..." VerticalAlignment="Top" Width="192" FontSize="17"  FontStyle="Italic" PreviewMouseLeftButtonDown="TestNameTextBox_PreviewMouseLeftButtonDown" />
-                    <Button x:Name="Button_Create" Content="Create" HorizontalAlignment="Left" Margin="423,313,0,0" VerticalAlignment="Top" Height="42" Width="59" Click="Button_Create_Click"/>
+                    <TextBox x:Name="TextBox_questionText" HorizontalAlignment="Left" Margin="0,101,0,0" TextWrapping="Wrap" Text="Write the question..." VerticalAlignment="Top" Width="397" Height="84" TextDecorations="{x:Null}" FontStyle="Italic" FontWeight="Normal" PreviewMouseLeftButtonDown="TextBox_questionText_PreviewMouseLeftButtonDown" Grid.ColumnSpan="3"/>
+                    <TextBox x:Name="TestNameTextBox" HorizontalAlignment="Left" Height="29" Margin="93,10,0,0" TextWrapping="Wrap" Text="Write test name..." VerticalAlignment="Top" Width="192" FontSize="17"  FontStyle="Italic" PreviewMouseLeftButtonDown="TestNameTextBox_PreviewMouseLeftButtonDown" Grid.ColumnSpan="3" />
+                    <Button x:Name="Button_Create" Content="Create" HorizontalAlignment="Left" Margin="243,313,0,0" VerticalAlignment="Top" Height="42" Width="59" Click="Button_Create_Click" Grid.Column="2"/>
                     <TextBlock TextWrapping="Wrap" Margin="10,58,0,0" FontSize="15" HorizontalAlignment="Left" Width="114" Height="27" VerticalAlignment="Top" Text="Choose type Q:"/>
-                    <Button Content="AddTitle" x:Name="AddTitleButton" HorizontalAlignment="Left" Height="27" Margin="299,12,0,0" VerticalAlignment="Top" Width="78" Click="AddTitleButton_Click"/>
-                    <ComboBox x:Name="ComboBox_ChooseTest" HorizontalAlignment="Left" Margin="357,58,0,0" VerticalAlignment="Top" Width="124" SelectionChanged="ComboBox_ChooseTest_SelectionChanged" Height="25"/>
-                    <TextBlock TextWrapping="Wrap" Margin="261,57,0,0" FontSize="15" HorizontalAlignment="Left" Width="91" Height="27" VerticalAlignment="Top" Text="Choose test:"/>
-                    <ListBox x:Name="ListQuestions" HorizontalAlignment="Left" Height="273" Margin="557,82,0,0" VerticalAlignment="Top" Width="214" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ListQuestions_SelectionChanged"/>
-                    <TextBlock TextWrapping="Wrap" Margin="397,88,0,0" FontSize="15" HorizontalAlignment="Left" Width="111" Height="56" VerticalAlignment="Top" Text="Choose test's time:" TextAlignment="Center"/>
-                    <ComboBox x:Name="ComboBoxTimer" Margin="419,132,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="79">
+                    <Button Content="AddTitle" x:Name="AddTitleButton" HorizontalAlignment="Left" Height="27" Margin="119,12,0,0" VerticalAlignment="Top" Width="78" Click="AddTitleButton_Click" Grid.Column="2"/>
+                    <ComboBox x:Name="ComboBox_ChooseTest" HorizontalAlignment="Left" Margin="177,58,0,0" VerticalAlignment="Top" Width="124" SelectionChanged="ComboBox_ChooseTest_SelectionChanged" Height="25" Grid.Column="2"/>
+                    <TextBlock TextWrapping="Wrap" Margin="81,57,0,0" FontSize="15" HorizontalAlignment="Left" Width="91" Height="27" VerticalAlignment="Top" Text="Choose test:" Grid.Column="2"/>
+                    <ListBox x:Name="ListQuestions" HorizontalAlignment="Left" Height="273" Margin="377,82,0,0" VerticalAlignment="Top" Width="214" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ListQuestions_SelectionChanged" Grid.Column="2"/>
+                    <TextBlock TextWrapping="Wrap" Margin="217,88,0,0" FontSize="15" HorizontalAlignment="Left" Width="111" Height="56" VerticalAlignment="Top" Text="Choose test's time:" TextAlignment="Center" Grid.Column="2"/>
+                    <ComboBox x:Name="ComboBoxTimer" Margin="239,132,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="79" Grid.Column="2">
                         <ComboBoxItem>
                             None
                         </ComboBoxItem>
@@ -92,64 +93,52 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Список юзеров" Height="22" FontSize="12" Margin="-2,0,-2,0" VerticalAlignment="Bottom">
+            <TabItem Header="Список юзеров" Height="22" FontSize="12" Margin="-2,0,-2,0" VerticalAlignment="Top">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="112*"/>
                         <ColumnDefinition Width="109*"/>
-                        <ColumnDefinition Width="111*"/>
-                        <ColumnDefinition Width="462*"/>
+                        <ColumnDefinition Width="573*"/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid x:Name="DataGridListUser" Loaded="Window_User" AutoGenerateColumns ="False" Grid.ColumnSpan="3">
+                    <DataGrid x:Name="DataGridListUser" Loaded="Window_User" AutoGenerateColumns ="False" Grid.ColumnSpan="3" SelectionMode="Extended" Margin="0,33,462,0" Height="352" VerticalAlignment="Top">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Path=LastName}" IsReadOnly="True" Header="LastName" Width="110"/>
                             <DataGridTextColumn Binding="{Binding Path=FirstName}" IsReadOnly="True" Header="FirstName" Width="110"/>
                             <DataGridTextColumn Binding="{Binding Path=Id}" IsReadOnly="True" Header="Id" Width="110"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button x:Name="Refresh" Content="Refresh" HorizontalAlignment="Left" Height="22" Margin="344,1,0,0" VerticalAlignment="Top" Width="79" Click="Refresh_Click" Grid.Column="3"/>
-
-                </Grid>
-            </TabItem>
-            <TabItem Header="Группы юзеров" FontSize="12" Margin="-2,0,-2,0">
-                <Grid x:Name="GridGroup" Background="#FFEFEFEF" RenderTransformOrigin="0.501,0.465" Margin="0,0,-1,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="17*"/>
-                        <ColumnDefinition Width="49*"/>
-                        <ColumnDefinition Width="729*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBox x:Name="Group" HorizontalAlignment="Left" Margin="15,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="187" Height="27" TextDecorations="{x:Null}" FontWeight="Normal" Grid.ColumnSpan="3"/>
-                    <Button x:Name="AddNewGroup" Content="Create new Group" Height="26" Margin="149,179,0,0" VerticalAlignment="Top" Grid.Column="2" Click="AddNewGroup_Click" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="103">
+                    <Button x:Name="Refresh" Content="Refresh" HorizontalAlignment="Left" Height="22" Margin="10,6,0,0" VerticalAlignment="Top" Width="79" Click="Refresh_Click" Grid.Column="1"/>
+                    <TextBox x:Name="Group" HorizontalAlignment="Left" Margin="121,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" Height="25" TextDecorations="{x:Null}" FontWeight="Normal" Grid.Column="2" />
+                    <ListBox x:Name="WriteNamenewGroup" HorizontalAlignment="Left" Margin="121,74,0,0" Width="280" d:ItemsSource="{d:SampleData ItemCount=5}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Height="130" VerticalAlignment="Top" Background="#FF67DE8F" SelectionChanged="WriteNamenewGroup_SelectionChanged" Grid.Column="2"/>
+                    <Button x:Name="ChangeUserName" Content="Change User Name" HorizontalAlignment="Left" Height="20" Margin="413,288,0,0" VerticalAlignment="Top" Width="130" Grid.Column="2" Click="ChangeUserName_Click"/>
+                    <TextBox x:Name="WriteName" HorizontalAlignment="Left" Margin="413,257,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" Height="25" TextDecorations="{x:Null}" FontWeight="Normal" Grid.Column="2"/>
+                    <ListBox x:Name="UsersInGroup" HorizontalAlignment="Left" Margin="121,253,0,0" Width="280" d:ItemsSource="{d:SampleData ItemCount=5}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Height="130" VerticalAlignment="Top" Background="#FF67DE8F" SelectionChanged="UsersInGroup_SelectionChanged" Grid.Column="2" />
+                    <TextBox x:Name="NewNameGroup" HorizontalAlignment="Left" Margin="413,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" Height="26" TextDecorations="{x:Null}" FontWeight="Normal" Grid.Column="2"/>
+                    <Button x:Name="ChangeNameGroup" Content="Change Name" Height="20" Margin="413,106,0,0" VerticalAlignment="Top" Grid.Column="2" Click="ChangeNameGroup_Click" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="130">
                         <Button.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="-0.541"/>
+                                <SkewTransform AngleX="0.221"/>
+                                <RotateTransform Angle="-0.441"/>
                                 <TranslateTransform/>
                             </TransformGroup>
                         </Button.RenderTransform>
                     </Button>
-                    <ListBox x:Name="WriteNamenewGroup" HorizontalAlignment="Left" Margin="3,22,0,0" Width="297" d:ItemsSource="{d:SampleData ItemCount=5}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Height="140" VerticalAlignment="Top" Grid.Column="1" Background="#FF67DE8F"  Grid.ColumnSpan="2" SelectionChanged="WriteNamenewGroup_SelectionChanged"/>
-                    <Button x:Name="ChangeUserName" Content="Change User Name" FontSize="11" HorizontalAlignment="Left" Height="27" Margin="549,179,0,0" VerticalAlignment="Top" Width="103" Grid.Column="2" Click="ChangeUserName_Click"/>
-                    <TextBox x:Name="WriteName" HorizontalAlignment="Left" Margin="351,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="187" Height="27" TextDecorations="{x:Null}" FontWeight="Normal" Grid.Column="2"/>
-                    <ListBox x:Name="UsersInGroup" HorizontalAlignment="Left" Margin="351,22,0,0" Width="305" d:ItemsSource="{d:SampleData ItemCount=5}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Height="140" VerticalAlignment="Top" Grid.Column="2" Background="#FF67DE8F" SelectionChanged="UsersInGroup_SelectionChanged" />
-                    <TextBox x:Name="NewNameGroup" HorizontalAlignment="Left" Margin="15,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="187" Height="26" TextDecorations="{x:Null}" FontWeight="Normal" Grid.ColumnSpan="3"/>
-                    <Button x:Name="ChangeNameGroup" Content="Change Name" Height="26" Margin="148,220,0,0" VerticalAlignment="Top" Grid.Column="2" Click="ChangeNameGroup_Click" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="103">
+                    <Button x:Name="AddNewUserinGroup" Content="Add to Group" HorizontalAlignment="Left" Height="25" Margin="204,216,0,0" VerticalAlignment="Top" Width="130" Grid.Column="2" Click="AddNewUserInGroup_Click"/>
+                    <Button x:Name="DeleteUserinGroup" Content="Delete group" Grid.Column="2"  Height="25" Width="130" HorizontalAlignment="Left" Margin="413,177,0,0" VerticalAlignment="Top" Click="DeleteGroup_Click"/>
+                    <Button x:Name="AddNewGroup" Content="Create new Group" Height="25" Margin="301,36,0,0" VerticalAlignment="Top" Grid.Column="2" Click="AddNewGroup_Click" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="99">
                         <Button.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="-0.541"/>
+                                <SkewTransform AngleX="0.221"/>
+                                <RotateTransform Angle="-0.441"/>
                                 <TranslateTransform/>
                             </TransformGroup>
                         </Button.RenderTransform>
                     </Button>
-                    <ComboBox x:Name="ComboBox_AddGroup" Grid.Column="2" Margin="351,220,0,0" HorizontalAlignment="Left" Width="187" Height="25" VerticalAlignment="Top" >
+                    <Button x:Name="DeleteUserinGroup_Copy" Content="Delete user" Grid.Column="2"  Height="25" Width="130" HorizontalAlignment="Left" Margin="413,358,0,0" VerticalAlignment="Top" Click="DeleteUser_Click"/>
 
-                    </ComboBox>
-                    <Button x:Name="AddNewUserinGroup" Content="Add to Group" HorizontalAlignment="Left" Height="27" Margin="551,221,0,0" VerticalAlignment="Top" Width="103" Grid.Column="2" Click="AddNewUserinGroup_Click"/>
-                    <Button x:Name="DeleteUserinGroup" Content="Delete" Grid.Column="2"  Height="27" Width="103" HorizontalAlignment="Left" Margin="149,273,0,0" VerticalAlignment="Top" Click="DeleteUserinGroup_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>
