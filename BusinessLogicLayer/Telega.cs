@@ -17,23 +17,26 @@ namespace BusinessLogicLayer
     {
         private TelegramBotClient _client;
         private Action<string> _onMessage;
-        private List<long> _id;
+        public List<User> UserList { get; private set; }
+
+
 
         public Telega(string token, Action<string> OnMessege)
         {
             _client = new TelegramBotClient(token);
             _onMessage = OnMessege;
-            _id = new List<long>();
+            UserList = new List<User>();
         }
 
         public void Start()
         {
-            _client.StartReceiving(HandleResive, HandleError);
+            _client.StartReceiving(HandleReceive, HandleError);
         }
+
 
         public async void Send(string s)
         {
-            foreach (var id in _id)
+            foreach (User user in UserList)
             {
                 ReplyKeyboardMarkup replyKeyboard = new ReplyKeyboardMarkup(
                       new[]
@@ -44,21 +47,46 @@ namespace BusinessLogicLayer
                             },
                             new []
                             {
-                                 new KeyboardButton("No"),                       
+                                 new KeyboardButton("No"),
                             }
                       });
-                await _client.SendTextMessageAsync(new ChatId(id), s, replyMarkup: replyKeyboard);
+                await _client.SendTextMessageAsync(new ChatId(user.Id), s, replyMarkup: replyKeyboard);
             }
         }
 
-        private async Task HandleResive(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
-        {   
+        public async void SendQuestion(QuestionWithOptionAnswer question)
+        {
+            List<String> oA = question.GetOptionAnswerStringList();
+            List<KeyboardButton> optionAnswers = new List<KeyboardButton>();
+
+
+            foreach (string str in oA)
+            {
+                optionAnswers.Add(str);
+            }
+
+            foreach (User user in UserList)
+            {
+
+                ReplyKeyboardMarkup replyKeyboard = new ReplyKeyboardMarkup(optionAnswers);
+
+                await _client.SendTextMessageAsync(new ChatId(user.Id), question._questionText, replyMarkup: replyKeyboard);
+            }
+        }
+
+        private async Task HandleReceive(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
+        {
             if (update.Message != null && update.Message.Text != null)
             {
-                
-                if (!_id.Contains(update.Message.Chat.Id))
+                List<string> users = new List<string>();
+
+                // todo: append to the list of users
+                // if message = "/register" => append to the list of users
+
+                if (UserList.Where(u => u.Id == update.Message.Chat.Id).ToArray().Length == 0)
                 {
-                    _id.Add(update.Message.Chat.Id);
+                    User user = new User(update.Message.Chat.LastName, update.Message.Chat.FirstName, update.Message.Chat.Id);
+                    UserList.Add(user);
                 }
                 string s = update.Message.Chat.FirstName + " "
                     + update.Message.Chat.LastName + " "
@@ -67,7 +95,7 @@ namespace BusinessLogicLayer
             }
         }
         private Task HandleError(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
-        { 
+        {
             return Task.CompletedTask;
         }
     }

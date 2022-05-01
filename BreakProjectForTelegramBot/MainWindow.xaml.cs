@@ -26,6 +26,8 @@ namespace BreakProjectForTelegramBot
         private const string _token = "5331081992:AAEmEzmU2lWqKLn9mgYCYbcNnPSLVDEHHQM";
         private List<string> _labels;
 
+        private QuestionMock qm;
+
         private List<Test> _tests = new List<Test>();
         private Test _actual;
         private DispatcherTimer _timer;
@@ -37,9 +39,8 @@ namespace BreakProjectForTelegramBot
             UsersMock.GetGroupNumberOne(),
             UsersMock.GetGroupNumberTwo(),
             UsersMock.GetGroupNumberTree()
-            
-
         };
+
         private UserGroup _add;
 
         public MainWindow()
@@ -58,8 +59,19 @@ namespace BreakProjectForTelegramBot
             ComboBox_QuestionType.SelectedIndex = 1;
 
             WriteNamenewGroup.ItemsSource = groups;
-            ComboBox_AddGroup.ItemsSource = groups;
+        }
 
+        /// <summary>
+        /// Refresh list of users in the UI according to the users currently connected
+        /// to our bot
+        /// </summary>
+        public void RefreshListOfUsers()
+        {
+            DataGridListUser.Items.Clear();
+            foreach (User user in _telega.UserList)
+            {
+                DataGridListUser.Items.Add(user);
+            }
         }
 
         public void OnMessages(string s)
@@ -169,7 +181,6 @@ namespace BreakProjectForTelegramBot
         {
             if (_actual != null)
             {
-
                 List<OptionAnswer> questionTextList = new List<OptionAnswer>();
 
                 foreach (WrapPanel tb in ListBoxQuestion.Items)
@@ -197,7 +208,6 @@ namespace BreakProjectForTelegramBot
             if (ListBoxQuestion.Items.Count - 1 > 0)
             {
                 ListBoxQuestion.Items.RemoveAt(ListBoxQuestion.Items.Count - 1);
-
             }
         }
 
@@ -228,7 +238,6 @@ namespace BreakProjectForTelegramBot
             {
                 MessageBox_Warning();
             }
-
         }
 
 
@@ -243,6 +252,17 @@ namespace BreakProjectForTelegramBot
                 }
             }
             ListQuestionsUpdate();
+        }
+        private void ComboBoxTimer_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //    foreach (Test test in _tests)
+            //    {
+            //        if (test._timer == ComboBoxTimer.SelectedItem)
+            //        {
+            //            _actual = test;
+            //        }
+            //    }
+            //    ListQuestionsUpdate();
         }
 
         private void ListQuestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -287,11 +307,11 @@ namespace BreakProjectForTelegramBot
             UserGroup groupOfUser = (UserGroup)WriteNamenewGroup.SelectedItem;
             if (groupOfUser == null || groupOfUser.Users.Count == 0)
             {
-                UsersinGroup.ItemsSource = null;
+                UsersInGroup.ItemsSource = null;
             }
             else
             {
-                UsersinGroup.ItemsSource = groupOfUser.Users;
+                UsersInGroup.ItemsSource = groupOfUser.Users;
             }
 
         }
@@ -303,26 +323,22 @@ namespace BreakProjectForTelegramBot
                 MessageBox.Show("Введите название группы");
             }
 
-
             // ComboBox_AddGroup.Items.Add(Group.Text);
             _add = new UserGroup(Group.Text);
             groups.Add(_add);
-            ComboBox_AddGroup.SelectedItem = Group.Text;
 
             UserGroup userNewGroup = new UserGroup(Group.Text);
             WriteNamenewGroup.Items.Refresh();
         }
-        private void DeleteUserinGroup_Click(object sender, RoutedEventArgs e)
+        private void DeleteGroup_Click(object sender, RoutedEventArgs e)
         {
-            if (ComboBox_AddGroup.Text != "Другие")
-            {               
-                foreach(User user in ((UserGroup)ComboBox_AddGroup.SelectedItem).Users)
+            if (((UserGroup)WriteNamenewGroup.SelectedItem).NameGroup != "Другие")
+            {
+                foreach (User user in ((UserGroup)WriteNamenewGroup.SelectedItem).Users)
                 {
                     groups[0].AddUser(user);
-
                 }
-                groups.Remove((UserGroup)ComboBox_AddGroup.SelectedItem);
-                ComboBox_AddGroup.Items.Refresh();
+                groups.Remove((UserGroup)WriteNamenewGroup.SelectedItem);
                 WriteNamenewGroup.Items.Refresh();
             }
             else
@@ -330,6 +346,7 @@ namespace BreakProjectForTelegramBot
                 MessageBox_Warning();
             }
         }
+
 
         private void ChangeNameGroup_Click(object sender, RoutedEventArgs e)
         {
@@ -344,14 +361,14 @@ namespace BreakProjectForTelegramBot
 
         }
 
-        private void AddNewUserinGroup_Click(object sender, RoutedEventArgs e)
+        private void AddNewUserInGroup_Click(object sender, RoutedEventArgs e)
         {
-
+            //DataGridListUser.SelectedItems
         }
 
-        private void UsersinGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void UsersInGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (UsersinGroup.SelectedItem != null)
+            if (UsersInGroup.SelectedItem != null)
             {
                 WriteName.IsEnabled = true;
             }
@@ -408,6 +425,26 @@ namespace BreakProjectForTelegramBot
         private void MessageBox_Warning()
         {
             MessageBox.Show("Ты что дурачек ?", "Stop", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+
+        public async void Button_SendQuestion_Click(object sender, RoutedEventArgs e)
+        {
+            _telega.SendQuestion(QuestionMock.getQuestion());
+
+        }
+
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshListOfUsers();
+        }
+
+        private void DeleteUser_Click(object sender, RoutedEventArgs e)
+        {
+            IEditableCollectionView items = UsersInGroup.Items;
+            if (items.CanRemove)
+            {
+                items.Remove(UsersInGroup.SelectedItem);
+            }
         }
     }
 }

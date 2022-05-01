@@ -19,5 +19,16 @@ namespace BusinessLogicLayer
             _questionText = questionText;
             _optionAnswer = optionAnswer;
         }
+        public List<String> GetOptionAnswerStringList()
+        {
+            List<string> OptionAnswerList = new List<string>();
+            foreach(var optionAnswer in _optionAnswer)
+            {
+                OptionAnswerList.Add(optionAnswer.Text);
+            }
+
+
+            return OptionAnswerList;
+        }
     }
 }

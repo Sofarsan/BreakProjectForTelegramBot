@@ -8,16 +8,21 @@ namespace BusinessLogicLayer
 {
     public class User
     {
-
         public string? LastName { get; set; }
-        public User(string nameUser)
+        public string? FirstName { get; set; }
+        public long Id { get; set; }
+        public User(string lastNameUser, string firstNameUser, long ids)
         {
-            LastName = nameUser;
+            LastName = lastNameUser;
+            FirstName = firstNameUser;
+            Id = ids;
         }
         public override string ToString()
         {
-            return LastName;
+            return FirstName + ", " + LastName;
         }
+        
+       
 
     }
 }
