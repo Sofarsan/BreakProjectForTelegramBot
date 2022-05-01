@@ -101,7 +101,7 @@
                         <ColumnDefinition Width="573*"/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid x:Name="DataGridListUser" Loaded="Window_User" AutoGenerateColumns ="False" Grid.ColumnSpan="3" SelectionMode="Extended" Margin="0,33,462,0" Height="352" VerticalAlignment="Top">
+                    <DataGrid x:Name="DataGridListUser" Loaded="Window_User" AutoGenerateColumns ="False" Grid.ColumnSpan="3" SelectionMode="Extended" Margin="0,33,462,22">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Path=LastName}" IsReadOnly="True" Header="LastName" Width="110"/>
                             <DataGridTextColumn Binding="{Binding Path=FirstName}" IsReadOnly="True" Header="FirstName" Width="110"/>
@@ -126,7 +126,7 @@
                         </Button.RenderTransform>
                     </Button>
                     <Button x:Name="AddNewUserinGroup" Content="Add to Group" HorizontalAlignment="Left" Height="25" Margin="204,216,0,0" VerticalAlignment="Top" Width="130" Grid.Column="2" Click="AddNewUserInGroup_Click"/>
-                    <Button x:Name="DeleteUserinGroup" Content="Delete group" Grid.Column="2"  Height="25" Width="130" HorizontalAlignment="Left" Margin="413,177,0,0" VerticalAlignment="Top" Click="DeleteGroup_Click"/>
+                    <Button x:Name="DeleteUserinGroup" Content="Delete group" Grid.Column="2"  Height="25" Width="130" HorizontalAlignment="Left" Margin="413,174,0,0" VerticalAlignment="Top" Click="DeleteGroup_Click"/>
                     <Button x:Name="AddNewGroup" Content="Create new Group" Height="25" Margin="301,36,0,0" VerticalAlignment="Top" Grid.Column="2" Click="AddNewGroup_Click" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="99">
                         <Button.RenderTransform>
                             <TransformGroup>
