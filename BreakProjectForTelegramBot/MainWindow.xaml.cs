@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading; //для таймера
 using BusinessLogicLayer;
 using System;
+using System.Collections.ObjectModel;
 
 namespace BreakProjectForTelegramBot
 {
@@ -33,7 +34,7 @@ namespace BreakProjectForTelegramBot
         private DispatcherTimer _timer;
 
 
-        List<UserGroup> groups = new List<UserGroup>()
+        ObservableCollection<UserGroup> groups = new ObservableCollection<UserGroup>()
         {
             new UserGroup("Другие"),
             UsersMock.GetGroupNumberOne(),
@@ -59,6 +60,7 @@ namespace BreakProjectForTelegramBot
             ComboBox_QuestionType.SelectedIndex = 1;
 
             WriteNamenewGroup.ItemsSource = groups;
+            WriteNamenewGroup.DataContext = this;
         }
 
         /// <summary>
@@ -363,7 +365,13 @@ namespace BreakProjectForTelegramBot
 
         private void AddNewUserInGroup_Click(object sender, RoutedEventArgs e)
         {
-            //DataGridListUser.SelectedItems
+            int index = WriteNamenewGroup.SelectedIndex;
+
+            foreach (User user in DataGridListUser.Items)
+            {
+                groups[index].Users.Add(user);
+            }
+            UsersInGroup.Items.Refresh();
         }
 
         private void UsersInGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
