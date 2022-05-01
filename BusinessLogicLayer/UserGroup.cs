@@ -18,7 +18,6 @@ namespace BusinessLogicLayer
         }
         public void AddUser(User user)
         {
-
             Users.Add(user);
         }
 

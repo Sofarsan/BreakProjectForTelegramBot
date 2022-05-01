@@ -39,9 +39,8 @@ namespace BreakProjectForTelegramBot
             UsersMock.GetGroupNumberOne(),
             UsersMock.GetGroupNumberTwo(),
             UsersMock.GetGroupNumberTree()
-            
-
         };
+
         private UserGroup _add;
 
         public MainWindow()
@@ -61,7 +60,19 @@ namespace BreakProjectForTelegramBot
 
             WriteNamenewGroup.ItemsSource = groups;
             ComboBox_AddGroup.ItemsSource = groups;
+        }
 
+        /// <summary>
+        /// Refresh list of users in the UI according to the users currently connected
+        /// to our bot
+        /// </summary>
+        public void RefreshListOfUsers()
+        {
+            DataGridListUser.Items.Clear();
+            foreach (User user in _telega.UserList)
+            {
+                DataGridListUser.Items.Add(user);
+            }
         }
 
         public void OnMessages(string s)
@@ -171,7 +182,6 @@ namespace BreakProjectForTelegramBot
         {
             if (_actual != null)
             {
-
                 List<OptionAnswer> questionTextList = new List<OptionAnswer>();
 
                 foreach (WrapPanel tb in ListBoxQuestion.Items)
@@ -199,7 +209,6 @@ namespace BreakProjectForTelegramBot
             if (ListBoxQuestion.Items.Count - 1 > 0)
             {
                 ListBoxQuestion.Items.RemoveAt(ListBoxQuestion.Items.Count - 1);
-
             }
         }
 
@@ -230,7 +239,6 @@ namespace BreakProjectForTelegramBot
             {
                 MessageBox_Warning();
             }
-
         }
 
 
@@ -245,6 +253,10 @@ namespace BreakProjectForTelegramBot
                 }
             }
             ListQuestionsUpdate();
+        }
+        private void ComboBoxTimer_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
         }
 
         private void ListQuestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -289,11 +301,11 @@ namespace BreakProjectForTelegramBot
             UserGroup groupOfUser = (UserGroup)WriteNamenewGroup.SelectedItem;
             if (groupOfUser == null || groupOfUser.Users.Count == 0)
             {
-                UsersinGroup.ItemsSource = null;
+                UsersInGroup.ItemsSource = null;
             }
             else
             {
-                UsersinGroup.ItemsSource = groupOfUser.Users;
+                UsersInGroup.ItemsSource = groupOfUser.Users;
             }
 
         }
@@ -317,8 +329,8 @@ namespace BreakProjectForTelegramBot
         private void DeleteUserinGroup_Click(object sender, RoutedEventArgs e)
         {
             if (ComboBox_AddGroup.Text != "Другие")
-            {               
-                foreach(User user in ((UserGroup)ComboBox_AddGroup.SelectedItem).Users)
+            {
+                foreach (User user in ((UserGroup)ComboBox_AddGroup.SelectedItem).Users)
                 {
                     groups[0].AddUser(user);
 
@@ -351,9 +363,9 @@ namespace BreakProjectForTelegramBot
 
         }
 
-        private void UsersinGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void UsersInGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (UsersinGroup.SelectedItem != null)
+            if (UsersInGroup.SelectedItem != null)
             {
                 WriteName.IsEnabled = true;
             }
@@ -416,6 +428,11 @@ namespace BreakProjectForTelegramBot
         {
             _telega.SendQuestion(QuestionMock.getQuestion());
 
+        }
+
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshListOfUsers();
         }
     }
 }
