@@ -19,15 +19,18 @@ namespace BusinessLogicLayer
             _name = name;
             questionList = new List<AbstractQuestion>();
         }
-        
+
         public void AddQuestion(AbstractQuestion question)
         {
             questionList.Add(question);
         }
         public List<AbstractQuestion> GetListQuestion()
         {
-          return questionList;
+            return questionList;
         }
-
+        public override string ToString()
+        {
+            return _name;
+        }
     }
 }

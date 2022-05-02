@@ -15,6 +15,7 @@ using System.Windows.Threading; //для таймера
 using BusinessLogicLayer;
 using System;
 using BusinessLogicLayer.Telegram;
+using System.Collections.ObjectModel;
 
 namespace BreakProjectForTelegramBot
 {
@@ -29,12 +30,12 @@ namespace BreakProjectForTelegramBot
 
         private QuestionMock qm;
 
-        private List<Test> _tests = new List<Test>();
+        private ObservableCollection<Test> _tests = new ObservableCollection<Test>();
         private Test _actual;
         private DispatcherTimer _timer;
         private List<AnswersUser> _answersuser = new List<AnswersUser>();
 
-        List<UserGroup> groups = new List<UserGroup>()
+        private ObservableCollection<UserGroup> groups = new ObservableCollection<UserGroup>()
         {
             new UserGroup("Другие"),
             UsersMock.GetGroupNumberOne(),
@@ -51,6 +52,9 @@ namespace BreakProjectForTelegramBot
             InitializeComponent();
             ListBox_BotMessages.ItemsSource = _labels;
 
+            ComboBoxGroup.ItemsSource = groups;
+            ComboBoxTest.ItemsSource = _tests;
+
 
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
@@ -60,6 +64,7 @@ namespace BreakProjectForTelegramBot
             ComboBox_QuestionType.SelectedIndex = 1;
 
             WriteNamenewGroup.ItemsSource = groups;
+            WriteNamenewGroup.DataContext = this;
         }
 
         /// <summary>
@@ -122,8 +127,6 @@ namespace BreakProjectForTelegramBot
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             CheckBox chk = (CheckBox)sender;
-
-            //string? selectedQuestionType = ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString();
 
             if (ComboBox_QuestionType.SelectedIndex + 1 == (int)QuestionType.QuestionSingleSelect)
             {
@@ -249,7 +252,6 @@ namespace BreakProjectForTelegramBot
                 if (test._name == ComboBox_ChooseTest.SelectedItem)
                 {
                     _actual = test;
-
                 }
             }
             ListQuestionsUpdate();
@@ -324,7 +326,6 @@ namespace BreakProjectForTelegramBot
                 MessageBox.Show("Введите название группы");
             }
 
-            // ComboBox_AddGroup.Items.Add(Group.Text);
             _add = new UserGroup(Group.Text);
             groups.Add(_add);
 
@@ -359,19 +360,36 @@ namespace BreakProjectForTelegramBot
 
         private void ChangeUserName_Click(object sender, RoutedEventArgs e)
         {
-
+            User user = (User)UsersInGroup.SelectedItem;
+            user.LastName = WriteLastName.Text;
+            user.FirstName = WriteFirstName.Text;
+            UsersInGroup.Items.Refresh();
         }
 
         private void AddNewUserInGroup_Click(object sender, RoutedEventArgs e)
         {
-            //DataGridListUser.SelectedItems
+            int index = WriteNamenewGroup.SelectedIndex;
+            foreach (User user in DataGridListUser.SelectedItems)
+            {
+                if (groups[index].Users.Contains(user))
+                {
+                    return;
+                }
+                groups[index].Users.Add(user);
+            }
+            UsersInGroup.Items.Refresh();
         }
 
         private void UsersInGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (UsersInGroup.SelectedItem != null)
             {
-                WriteName.IsEnabled = true;
+                WriteFirstName.IsEnabled = true;
+                WriteLastName.IsEnabled = true;
+
+                User user = (User)UsersInGroup.SelectedItem;
+                WriteLastName.Text = user.LastName;
+                WriteFirstName.Text = user.FirstName;
             }
         }
 
