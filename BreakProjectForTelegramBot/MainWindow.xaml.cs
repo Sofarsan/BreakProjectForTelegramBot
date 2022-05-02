@@ -368,7 +368,7 @@ namespace BreakProjectForTelegramBot
         private void AddNewUserInGroup_Click(object sender, RoutedEventArgs e)
         {
             int index = WriteNamenewGroup.SelectedIndex;
-            foreach (User user in DataGridListUser.Items)
+            foreach (User user in DataGridListUser.SelectedItems)
             {
                 if (groups[index].Users.Contains(user))
                 {
