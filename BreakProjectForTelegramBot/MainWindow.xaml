@@ -89,7 +89,7 @@
                     <Button Content="SEND"  Grid.Row="1" Margin="95, 20, 95, 115" Background="#FFC6ECB6" FontSize="24" FontWeight="Bold" Click="ButtonSend_Click"/>
                     <Button Content="START BOT"  Grid.Row="1" Margin="95, 115, 95, 20" Background="#FFC6ECB6" FontSize="24" FontWeight="Bold" Click="ButtonStart_Click"/>
                     <TextBox x:Name="TextBox_Send" Text="Пишу в бота..." Margin="55,40,55,0" Height="150" VerticalAlignment="Top" HorizontalAlignment="Center" Width="287" FontStyle="Italic" Background="#FFFBE9E9" />
-                    <Button x:Name="Button_SendQuestion" Content="SendQuestion" Margin="323,87,0,0" Grid.Row="1" VerticalAlignment="Top" Height="42" Click="Button_SendQuestion_Click"/>
+                    <Button x:Name="Button_SendQuestion" Content="SendQuestion" Margin="323,87,0,0" Grid.Row="1" VerticalAlignment="Top" Height="42" Click="Button_SendQuestion_Click" HorizontalAlignment="Left" Width="74"/>
                 </Grid>
             </TabItem>
 

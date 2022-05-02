@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading; //для таймера
 using BusinessLogicLayer;
 using System;
+using BusinessLogicLayer.Telegram;
 
 namespace BreakProjectForTelegramBot
 {
@@ -31,7 +32,7 @@ namespace BreakProjectForTelegramBot
         private List<Test> _tests = new List<Test>();
         private Test _actual;
         private DispatcherTimer _timer;
-
+        private List<AnswersUser> _answersuser = new List<AnswersUser>();
 
         List<UserGroup> groups = new List<UserGroup>()
         {
@@ -430,6 +431,7 @@ namespace BreakProjectForTelegramBot
         public async void Button_SendQuestion_Click(object sender, RoutedEventArgs e)
         {
             _telega.SendQuestion(QuestionMock.getQuestion());
+
 
         }
 
