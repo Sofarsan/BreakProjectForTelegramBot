@@ -29,12 +29,11 @@ namespace BreakProjectForTelegramBot
 
         private QuestionMock qm;
 
-        private List<Test> _tests = new List<Test>();
+        private ObservableCollection<Test> _tests = new ObservableCollection<Test>();
         private Test _actual;
         private DispatcherTimer _timer;
 
-
-        ObservableCollection<UserGroup> groups = new ObservableCollection<UserGroup>()
+        private ObservableCollection<UserGroup> groups = new ObservableCollection<UserGroup>()
         {
             new UserGroup("Другие"),
             UsersMock.GetGroupNumberOne(),
@@ -50,6 +49,9 @@ namespace BreakProjectForTelegramBot
             _labels = new List<string>();
             InitializeComponent();
             ListBox_BotMessages.ItemsSource = _labels;
+
+            ComboBoxGroup.ItemsSource = groups;
+            ComboBoxTest.ItemsSource = _tests;
 
 
             _timer = new DispatcherTimer();
@@ -123,8 +125,6 @@ namespace BreakProjectForTelegramBot
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             CheckBox chk = (CheckBox)sender;
-
-            //string? selectedQuestionType = ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString();
 
             if (ComboBox_QuestionType.SelectedIndex + 1 == (int)QuestionType.QuestionSingleSelect)
             {
@@ -324,7 +324,6 @@ namespace BreakProjectForTelegramBot
                 MessageBox.Show("Введите название группы");
             }
 
-            // ComboBox_AddGroup.Items.Add(Group.Text);
             _add = new UserGroup(Group.Text);
             groups.Add(_add);
 
