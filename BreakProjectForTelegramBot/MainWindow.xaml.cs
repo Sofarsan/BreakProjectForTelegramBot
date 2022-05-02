@@ -250,7 +250,6 @@ namespace BreakProjectForTelegramBot
                 if (test._name == ComboBox_ChooseTest.SelectedItem)
                 {
                     _actual = test;
-
                 }
             }
             ListQuestionsUpdate();
@@ -360,15 +359,21 @@ namespace BreakProjectForTelegramBot
 
         private void ChangeUserName_Click(object sender, RoutedEventArgs e)
         {
-
+            User user = (User)UsersInGroup.SelectedItem;
+            user.LastName = WriteLastName.Text;
+            user.FirstName = WriteFirstName.Text;
+            UsersInGroup.Items.Refresh();
         }
 
         private void AddNewUserInGroup_Click(object sender, RoutedEventArgs e)
         {
             int index = WriteNamenewGroup.SelectedIndex;
-
             foreach (User user in DataGridListUser.Items)
             {
+                if (groups[index].Users.Contains(user))
+                {
+                    return;
+                }
                 groups[index].Users.Add(user);
             }
             UsersInGroup.Items.Refresh();
@@ -378,7 +383,12 @@ namespace BreakProjectForTelegramBot
         {
             if (UsersInGroup.SelectedItem != null)
             {
-                WriteName.IsEnabled = true;
+                WriteFirstName.IsEnabled = true;
+                WriteLastName.IsEnabled = true;
+
+                User user = (User)UsersInGroup.SelectedItem;
+                WriteLastName.Text = user.LastName;
+                WriteFirstName.Text = user.FirstName;
             }
         }
 
