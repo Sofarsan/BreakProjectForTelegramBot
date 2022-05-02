@@ -55,11 +55,14 @@ namespace BreakProjectForTelegramBot
             ComboBoxGroup.ItemsSource = groups;
             ComboBoxTest.ItemsSource = _tests;
 
+            BaseBot.NameBase = BaseSerialize.Load();
 
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += OnTick;
             _timer.Start();
+
+            DataGridListUser.ItemsSource = BaseBot.NameBase;
 
             ComboBox_QuestionType.SelectedIndex = 1;
 
@@ -73,11 +76,11 @@ namespace BreakProjectForTelegramBot
         /// </summary>
         public void RefreshListOfUsers()
         {
-            DataGridListUser.Items.Clear();
-            foreach (User user in _telega.UserList)
-            {
-                DataGridListUser.Items.Add(user);
-            }
+            //DataGridListUser.Items.Clear();
+            //foreach (User user in _telega.UserList)
+            //{
+            //    DataGridListUser.Items.Add(user);
+            //}
         }
 
         public void OnMessages(string s)

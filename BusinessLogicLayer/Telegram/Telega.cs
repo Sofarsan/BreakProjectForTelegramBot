@@ -1,3 +1,4 @@
+using BusinessLogicLayer.Telegram;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,24 @@ namespace BusinessLogicLayer
             _client.StartReceiving(HandleReceive, HandleError);
         }
 
+        public async void StartingButton(long id, string name)
+        { 
+            if (!BaseBot.NameBase.ContainsKey(id))
+            {
+                //var inlineKeyboard = new InlineKeyboardMarkup(new[]
+                //{
+                //    InlineKeyboardButton.WithCallbackData("/start"),
+                //});
+                BaseBot.NameBase.Add(id, name);
+                BaseSerialize.Save(BaseBot.NameBase);
+
+                await _client.SendTextMessageAsync(new ChatId(id), "Hello");
+            }
+            else
+            {
+                await _client.SendTextMessageAsync(new ChatId(id), "Sorry, bro, u already saved in reg list");
+            }
+        }
 
         public async void Send(string s)
         {
@@ -82,16 +101,17 @@ namespace BusinessLogicLayer
 
                 // todo: append to the list of users
                 // if message = "/register" => append to the list of users
+                StartingButton(update.Message.Chat.Id, update.Message.Chat.LastName + update.Message.Chat.FirstName);
 
-                if (UserList.Where(u => u.Id == update.Message.Chat.Id).ToArray().Length == 0)
-                {
-                    User user = new User(update.Message.Chat.LastName, update.Message.Chat.FirstName, update.Message.Chat.Id);
-                    UserList.Add(user);
-                }
-                string s = update.Message.Chat.FirstName + " "
-                    + update.Message.Chat.LastName + " "
-                    + update.Message.Text;
-                _onMessage(s);
+                //if (UserList.Where(u => u.Id == update.Message.Chat.Id).ToArray().Length == 0)
+                //{
+                //    User user = new User(update.Message.Chat.LastName, update.Message.Chat.FirstName, update.Message.Chat.Id);
+                //    UserList.Add(user);
+                //}
+                //string s = update.Message.Chat.FirstName + " "
+                //    + update.Message.Chat.LastName + " "
+                //    + update.Message.Text;
+                //_onMessage(s);
             }
         }
         private Task HandleError(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
