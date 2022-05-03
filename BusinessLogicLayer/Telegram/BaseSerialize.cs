@@ -18,7 +18,7 @@ namespace BusinessLogicLayer.Telegram
         {
             if (json == null)
             {
-                throw new ArgumentNullException("Garry.json");
+                throw new ArgumentNullException(userDictionaryJson);
             }
             else
             {
@@ -50,12 +50,12 @@ namespace BusinessLogicLayer.Telegram
         }
 
         private const string testsDictionaryJson = @"Tests.json";
-        public static string testsDictionarySerialize(ObservableCollection<Test>tests)
+        public static string TestsObservableCollectionSerialize(ObservableCollection<Test>tests)
         {
             return JsonSerializer.Serialize<ObservableCollection< Test >> (tests);
         }
 
-        public static ObservableCollection<Test> TestsDictionaryDecerialize(string json)
+        public static ObservableCollection<Test> TestsObservableCollectionDecerialize(string json)
         {
             if (json == null)
             {
@@ -67,9 +67,9 @@ namespace BusinessLogicLayer.Telegram
             }
         }
 
-        public static void SaveTestsDictionary(ObservableCollection<Test> tests)
+        public static void SaveTestsObservableCollection(ObservableCollection<Test> tests)
         {
-            string json = testsDictionarySerialize(tests);
+            string json = TestsObservableCollectionSerialize(tests);
 
             using (StreamWriter sw = new StreamWriter(testsDictionaryJson, false))
             {
@@ -79,13 +79,13 @@ namespace BusinessLogicLayer.Telegram
 
         public static ObservableCollection<Test> LoadTestsDictionary()
         {
-            if (File.Exists(userDictionaryJson))
+            if (File.Exists(testsDictionaryJson))
             {
                 using (StreamReader sr = new StreamReader(testsDictionaryJson))
                 {
                     string json = sr.ReadLine();
 
-                    return TestsDictionaryDecerialize(json);
+                    return TestsObservableCollectionDecerialize(json);
 
                 }
             }

@@ -206,12 +206,14 @@ namespace BreakProjectForTelegramBot
                 _actual.AddQuestion(new Question(
                      ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString(),
                      TextBox_questionText.Text, questionTextList));
+                BaseSerialize.SaveTestsObservableCollection(_tests);
                 ListQuestionsUpdate();
             }
             else
             {
                 MessageBox_Warning();
             }
+            
         }
 
         private void Button_DeleteOptionAnswer_Click(object sender, RoutedEventArgs e)
@@ -420,6 +422,7 @@ namespace BreakProjectForTelegramBot
                 }
 
             }
+            BaseSerialize.SaveTestsObservableCollection(_tests);
             ListQuestionsUpdate();
         }
 
