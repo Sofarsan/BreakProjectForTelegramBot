@@ -43,7 +43,7 @@ namespace BusinessLogicLayer
                 //    InlineKeyboardButton.WithCallbackData("/start"),
                 //});
                 BaseBot.NameBase.Add(id, name);
-                BaseSerialize.Save(BaseBot.NameBase);
+                BaseSerialize.SaveUserDictionary(BaseBot.NameBase);
 
                 await _client.SendTextMessageAsync(new ChatId(id), "Hello");
             }

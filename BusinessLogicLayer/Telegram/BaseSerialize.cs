@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -9,7 +9,7 @@ namespace BusinessLogicLayer.Telegram
     public static class BaseSerialize
     {
         private const string userDictionaryJson = @"Garry.json";
-        public static string UserDictionarySerialize(Dictionary<long,string> dic)
+        public static string UserDictionarySerialize(Dictionary<long, string> dic)
         {
             return JsonSerializer.Serialize<Dictionary<long, string>>(dic);
         }
@@ -24,7 +24,7 @@ namespace BusinessLogicLayer.Telegram
                 return JsonSerializer.Deserialize<Dictionary<long, string>>(json);
             }
         }
-        public static void Save(Dictionary<long, string> dic)
+        public static void SaveUserDictionary(Dictionary<long, string> dic)
         {
             string json = UserDictionarySerialize(dic);
 
@@ -34,12 +34,17 @@ namespace BusinessLogicLayer.Telegram
             }
         }
 
-        public static Dictionary<long, string> Load()
+        public static void LoadUserDictionary()
         {
-            using (StreamReader sr = new StreamReader(userDictionaryJson))
+            if (File.Exists(userDictionaryJson))
             {
-                string json = sr.ReadLine();
-                return UserDictionaryDecerialize(json);
+                using (StreamReader sr = new StreamReader(userDictionaryJson))
+                {
+                    string json = sr.ReadLine();
+
+                    BaseBot.NameBase = UserDictionaryDecerialize(json);
+
+                }
             }
         }
     }
