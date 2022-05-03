@@ -17,7 +17,7 @@ namespace BusinessLogicLayer.Telegram
         {
             if (json == null)
             {
-                throw new ArgumentNullException("json");
+                throw new ArgumentNullException("Garry.json");
             }
             else
             {

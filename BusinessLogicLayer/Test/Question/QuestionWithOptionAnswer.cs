@@ -8,9 +8,6 @@ namespace BusinessLogicLayer
 {
     public class QuestionWithOptionAnswer : AbstractQuestion
     {
-
-        // todo: create class OptionAnswer with isValid parameter and text
-        // public List<OptionAnswer> _optionAnswer;
         public List<OptionAnswer> _optionAnswer;
 
         public QuestionWithOptionAnswer(string type, string questionText, List<OptionAnswer> optionAnswer)
@@ -26,8 +23,6 @@ namespace BusinessLogicLayer
             {
                 OptionAnswerList.Add(optionAnswer.Text);
             }
-
-
             return OptionAnswerList;
         }
     }

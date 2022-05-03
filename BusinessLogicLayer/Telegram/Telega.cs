@@ -18,9 +18,7 @@ namespace BusinessLogicLayer
     {
         private TelegramBotClient _client;
         private Action<string> _onMessage;
-        public List<User> UserList { get; private set; }
-
-
+        public List<User> UserList { get; private set; } //?
 
         public Telega(string token, Action<string> OnMessege)
         {
@@ -38,18 +36,10 @@ namespace BusinessLogicLayer
         { 
             if (!BaseBot.NameBase.ContainsKey(id))
             {
-                //var inlineKeyboard = new InlineKeyboardMarkup(new[]
-                //{
-                //    InlineKeyboardButton.WithCallbackData("/start"),
-                //});
                 BaseBot.NameBase.Add(id, name);
                 BaseSerialize.SaveUserDictionary(BaseBot.NameBase);
 
                 await _client.SendTextMessageAsync(new ChatId(id), "Hello");
-            }
-            else
-            {
-                await _client.SendTextMessageAsync(new ChatId(id), "Sorry, bro, u already saved in reg list");
             }
         }
 
