@@ -23,8 +23,5 @@ namespace BusinessLogicLayer
         {
             return FirstName + ", " + LastName;
         }
-
-
-
     }
 }

@@ -32,13 +32,11 @@ namespace BreakProjectForTelegramBot
         private Telega _telega;
         private const string _token = "5331081992:AAEmEzmU2lWqKLn9mgYCYbcNnPSLVDEHHQM";
         private List<string> _labels;
-
-        private QuestionMock qm;
-
         private ObservableCollection<Test> _tests = new ObservableCollection<Test>();
         private Test _actual;
         private DispatcherTimer _timer;
-        private List<AnswersUser> _answersuser = new List<AnswersUser>();
+        private UserGroup _add;
+        private List<AnswersUser> _answersUser = new List<AnswersUser>();
 
         private ObservableCollection<UserGroup> groups = new ObservableCollection<UserGroup>()
         {
@@ -49,18 +47,21 @@ namespace BreakProjectForTelegramBot
             UsersMock.GetGroupNumberFour()
         };
 
-        private UserGroup _add;
-
         public MainWindow()
         {
             _telega = new Telega(_token, OnMessages);
             _labels = new List<string>();
             InitializeComponent();
+            LoadTestFromJson();
             ListBox_BotMessages.ItemsSource = _labels;
 
             ComboBoxGroup.ItemsSource = groups;
             ComboBoxTest.ItemsSource = _tests;
+            WriteNamenewGroup.ItemsSource = groups;
 
+            BaseSerialize.LoadUserDictionary();
+            DataGridListUser.ItemsSource = BaseBot.NameBase;
+            WriteNamenewGroup.DataContext = this; //разобраться че это
 
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
@@ -68,9 +69,6 @@ namespace BreakProjectForTelegramBot
             _timer.Start();
 
             ComboBox_QuestionType.SelectedIndex = 1;
-
-            WriteNamenewGroup.ItemsSource = groups;
-            WriteNamenewGroup.DataContext = this;
         }
 
         /// <summary>
@@ -79,10 +77,19 @@ namespace BreakProjectForTelegramBot
         /// </summary>
         public void RefreshListOfUsers()
         {
-            DataGridListUser.Items.Clear();
-            foreach (User user in _telega.UserList)
+            DataGridListUser.Items.Refresh();
+            //foreach (User user in _telega.UserList)
+            //{
+            //    DataGridListUser.Items.Add(user);
+            //}
+        }
+
+        public void LoadTestFromJson()
+        {
+            _tests = BaseSerialize.LoadTestsDictionary();
+            foreach(Test test in _tests)
             {
-                DataGridListUser.Items.Add(user);
+                ComboBox_ChooseTest.Items.Add(test.name);
             }
         }
 
@@ -106,12 +113,12 @@ namespace BreakProjectForTelegramBot
             ListBox_BotMessages.Items.Refresh();
         }
 
-        private void ListQuestionsUpdate()
+        private void ListQuestionsUpdate() //попробовать переделать
         {
             ListQuestions.Items.Clear();
             if (_actual is not null && (_actual.GetListQuestion() is not null))
             {
-                List<AbstractQuestion> AqList = _actual.GetListQuestion();
+                List<Question> AqList = _actual.GetListQuestion();
 
                 for (int i = 0; i < AqList.Count; i++)
                 {
@@ -125,12 +132,12 @@ namespace BreakProjectForTelegramBot
             }
         }
 
-        private void newBtn_Click(object sender, RoutedEventArgs e)
+        private void newBtn_Click(object sender, RoutedEventArgs e) //поменять имя
         {
             ListQuestions.SelectedItem = sender;
         }
 
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        private void CheckBox_Checked(object sender, RoutedEventArgs e) 
         {
             CheckBox chk = (CheckBox)sender;
 
@@ -202,15 +209,17 @@ namespace BreakProjectForTelegramBot
                     OptionAnswer oAnswer = new OptionAnswer(tBox.Text, value.Value);
                     questionTextList.Add(oAnswer);
                 }
-                _actual.AddQuestion(new QuestionWithOptionAnswer(
+                _actual.AddQuestion(new Question(
                      ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString(),
                      TextBox_questionText.Text, questionTextList));
+                BaseSerialize.SaveTestsObservableCollection(_tests);
                 ListQuestionsUpdate();
             }
             else
             {
                 MessageBox_Warning();
             }
+            
         }
 
         private void Button_DeleteOptionAnswer_Click(object sender, RoutedEventArgs e)
@@ -221,21 +230,7 @@ namespace BreakProjectForTelegramBot
             }
         }
 
-        //public BindingList<User> _toAddUser;
-
-        private void Window_User(object sender, RoutedEventArgs e)
-        {
-            //_toAddUser = new BindingList<User>()
-            //{
-            //    //new User(){LastName ="Leto",Name="QQQ",Age=232},
-            //    //new User(){LastName ="Человек",Name="Который смеется ",Age=154},
-            //    //new User(){LastName ="Гранде",Name="Евгения",Age=14},
-            //};
-            //ListUser.ItemsSource = _toAddUser;
-        }
-
-
-        private void AddTitleButton_Click(object sender, RoutedEventArgs e)
+        private void AddTitleButton_Click(object sender, RoutedEventArgs e) //переименовать в AddTitleTestButton_Click
         {
             if (TestNameTextBox.Text.Length > 0)
             {
@@ -257,7 +252,7 @@ namespace BreakProjectForTelegramBot
         {
             foreach (Test test in _tests)
             {
-                if (test._name == ComboBox_ChooseTest.SelectedItem)
+                if (test.name == ComboBox_ChooseTest.SelectedItem)
                 {
                     _actual = test;
                 }
@@ -280,10 +275,10 @@ namespace BreakProjectForTelegramBot
         {
             if (ListQuestions.SelectedIndex != -1)
             {
-                List<AbstractQuestion> AqList = _actual.GetListQuestion();
+                List<Question> AqList = _actual.GetListQuestion();
                 ComboBox_QuestionType.Text = AqList[ListQuestions.SelectedIndex]._type.ToString();
                 ListBoxQuestion.Items.Clear();
-                QuestionWithOptionAnswer qwoa = (QuestionWithOptionAnswer)AqList[ListQuestions.SelectedIndex];
+                Question qwoa = (Question)AqList[ListQuestions.SelectedIndex];
                 TextBox_questionText.Text = AqList[ListQuestions.SelectedIndex]._questionText;
 
                 foreach (OptionAnswer oAnswer in qwoa._optionAnswer)
@@ -407,7 +402,7 @@ namespace BreakProjectForTelegramBot
             {
                 return;
             }
-            List<AbstractQuestion> AqList = _actual.GetListQuestion();
+            List<Question> AqList = _actual.GetListQuestion();
 
             ComboBox_QuestionType.Text = AqList[ListQuestions.SelectedIndex]._type.ToString();
             if (AqList[ListQuestions.SelectedIndex]._type == QuestionType.QuestionInput ||
@@ -417,7 +412,7 @@ namespace BreakProjectForTelegramBot
             }
             else
             {
-                QuestionWithOptionAnswer qwoa = (QuestionWithOptionAnswer)AqList[ListQuestions.SelectedIndex];
+                Question qwoa = (Question)AqList[ListQuestions.SelectedIndex];
                 AqList[ListQuestions.SelectedIndex]._questionText = TextBox_questionText.Text;
 
                 qwoa._optionAnswer.Clear();
@@ -435,6 +430,7 @@ namespace BreakProjectForTelegramBot
                 }
 
             }
+            BaseSerialize.SaveTestsObservableCollection(_tests);
             ListQuestionsUpdate();
         }
 
@@ -451,12 +447,12 @@ namespace BreakProjectForTelegramBot
         }
         private void MessageBox_Warning()
         {
-            MessageBox.Show("Ты что дурачек ?", "Stop", MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show("Ты что дурачек ?", "Stop", MessageBoxButton.OK, MessageBoxImage.Warning); //поменять
         }
 
         public async void Button_SendQuestion_Click(object sender, RoutedEventArgs e)
         {
-            _telega.SendQuestion(QuestionMock.getQuestion());
+            _telega.SendQuestion(QuestionMock.getQuestion()); //УДАЛИТЬ
         }
 
         private void Refresh_Click(object sender, RoutedEventArgs e)

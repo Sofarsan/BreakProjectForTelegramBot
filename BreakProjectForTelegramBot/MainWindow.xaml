@@ -81,11 +81,11 @@
                         <ColumnDefinition Width="573*"/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid x:Name="DataGridListUser" Loaded="Window_User" AutoGenerateColumns ="False" Grid.ColumnSpan="3" SelectionMode="Extended" Margin="0,33,462,22">
+                    <DataGrid x:Name="DataGridListUser" AutoGenerateColumns ="False" Grid.ColumnSpan="3" SelectionMode="Extended" Margin="0,33,462,22">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Path=LastName}" IsReadOnly="True" Header="LastName" Width="110"/>
-                            <DataGridTextColumn Binding="{Binding Path=FirstName}" IsReadOnly="True" Header="FirstName" Width="110"/>
-                            <DataGridTextColumn Binding="{Binding Path=Id}" IsReadOnly="True" Header="Id" Width="110"/>
+                           
+                            <DataGridTextColumn Binding="{Binding Path=Value}" IsReadOnly="True" Header="Name" Width="110"/>
+                            <DataGridTextColumn Binding="{Binding Path=Key}" IsReadOnly="True" Header="Id" Width="110"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="Refresh" Content="Refresh" HorizontalAlignment="Left" Height="22" Margin="10,6,0,0" VerticalAlignment="Top" Width="79" Click="Refresh_Click" Grid.Column="1"/>
