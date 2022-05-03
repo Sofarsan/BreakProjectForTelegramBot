@@ -47,5 +47,51 @@ namespace BusinessLogicLayer.Telegram
                 }
             }
         }
+
+        private const string testsDictionaryJson = @"Tests.json";
+        public static string testsDictionarySerialize(List<Test>tests)
+        {
+            return JsonSerializer.Serialize< List < Test >> (tests);
+        }
+
+        public static List<Test> TestsDictionaryDecerialize(string json)
+        {
+            if (json == null)
+            {
+                throw new ArgumentNullException(@"Tests.json");
+            }
+            else
+            {
+                return JsonSerializer.Deserialize <List < Test >> (json);
+            }
+        }
+
+        public static void SaveTestsDictionary(List <Test> tests)
+        {
+            string json = testsDictionarySerialize(tests);
+
+            using (StreamWriter sw = new StreamWriter(testsDictionaryJson, false))
+            {
+                sw.WriteLine(json);
+            }
+        }
+
+        public static  List<Test> LoadTestsDictionary()
+        {
+            if (File.Exists(userDictionaryJson))
+            {
+                using (StreamReader sr = new StreamReader(userDictionaryJson))
+                {
+                    string json = sr.ReadLine();
+
+                    return TestsDictionaryDecerialize(json);
+
+                }
+            }
+            else
+            {
+                return new List<Test>();
+            }
+        }
     }
 }
