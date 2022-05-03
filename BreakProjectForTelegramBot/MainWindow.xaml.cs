@@ -16,6 +16,11 @@ using BusinessLogicLayer;
 using System;
 using BusinessLogicLayer.Telegram;
 using System.Collections.ObjectModel;
+using Telegram.Bot;
+using Telegram.Bot.Exceptions;
+using Telegram.Bot.Extensions.Polling;
+using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace BreakProjectForTelegramBot
 {
@@ -40,7 +45,8 @@ namespace BreakProjectForTelegramBot
             new UserGroup("Другие"),
             UsersMock.GetGroupNumberOne(),
             UsersMock.GetGroupNumberTwo(),
-            UsersMock.GetGroupNumberTree()
+            UsersMock.GetGroupNumberTree(),
+            UsersMock.GetGroupNumberFour()
         };
 
         private UserGroup _add;
@@ -449,8 +455,6 @@ namespace BreakProjectForTelegramBot
         public async void Button_SendQuestion_Click(object sender, RoutedEventArgs e)
         {
             _telega.SendQuestion(QuestionMock.getQuestion());
-
-
         }
 
         private void Refresh_Click(object sender, RoutedEventArgs e)
@@ -464,6 +468,19 @@ namespace BreakProjectForTelegramBot
             if (items.CanRemove)
             {
                 items.Remove(UsersInGroup.SelectedItem);
+            }
+        }
+
+        private void SendTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            UserGroup group = (UserGroup)ComboBoxGroup.SelectedItem;
+            Test test = (Test)ComboBoxTest.SelectedItem;
+
+            foreach (User user in group.Users)
+            {
+                OngoingTest ongoingTest = new OngoingTest(test);
+                user.ongoingTest = ongoingTest;
+                _telega.AskConfirmation(user);
             }
         }
     }

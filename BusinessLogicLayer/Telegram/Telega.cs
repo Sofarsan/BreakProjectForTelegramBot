@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +11,7 @@ using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 
 
+
 namespace BusinessLogicLayer
 {
     public class Telega
@@ -18,7 +19,6 @@ namespace BusinessLogicLayer
         private TelegramBotClient _client;
         private Action<string> _onMessage;
         public List<User> UserList { get; private set; }
-
 
 
         public Telega(string token, Action<string> OnMessege)
@@ -80,9 +80,6 @@ namespace BusinessLogicLayer
             {
                 List<string> users = new List<string>();
 
-                // todo: append to the list of users
-                // if message = "/register" => append to the list of users
-
                 if (UserList.Where(u => u.Id == update.Message.Chat.Id).ToArray().Length == 0)
                 {
                     User user = new User(update.Message.Chat.LastName, update.Message.Chat.FirstName, update.Message.Chat.Id);
@@ -93,11 +90,32 @@ namespace BusinessLogicLayer
                     + update.Message.Text;
                 _onMessage(s);
             }
+            if (update.Message.Text == "Start test")
+            {
+               
+            }
         }
+
         private Task HandleError(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }
+
+        public async void AskConfirmation(User user)
+        {
+            string name = user.ongoingTest.test._name;
+            int count = user.ongoingTest.test.GetListQuestion().Count;
+
+            string message = $"Имя теста : {name} \n Количество вопросов: {count}";
+            ReplyKeyboardMarkup replyKeyboard = new ReplyKeyboardMarkup(
+                  new[]
+                  {
+                       new KeyboardButton("Start "),
+                  });
+            await _client.SendTextMessageAsync(new ChatId(user.Id), message, replyMarkup: replyKeyboard);
+        }
+
     }
+
 
 }

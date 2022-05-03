@@ -136,10 +136,11 @@
                     <TextBox x:Name="TextBox_Send" Text="Write to the bot..." Margin="33,47,0,0" HorizontalAlignment="Left" Width="184" FontStyle="Italic" Background="#FFFBE9E9" Height="29" VerticalAlignment="Top" />
 
                     <Button x:Name="Button_SendQuestion" Content="SendQuestion" Margin="323,291,0,0" VerticalAlignment="Top" Height="42" Click="Button_SendQuestion_Click" HorizontalAlignment="Left" Width="74"/>
-                    <ComboBox x:Name="ComboBoxGroup" Width="92" Margin="43,134,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <ComboBox x:Name="ComboBoxGroup" Width="92" Margin="43,134,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left"  />
                     <ComboBox x:Name="ComboBoxTest" Width="89" Margin="238,134,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" />
                     <TextBlock TextWrapping="Wrap" Text="Choose the group" Margin="43,110,0,0" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="132"/>
                     <TextBlock TextWrapping="Wrap" Margin="239,110,0,0" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="132"><Run Text="Choose the test"/><LineBreak/><Run/></TextBlock>
+                    <Button x:Name="SendTestButton" Content="SEND TEST" Margin="139,185,0,0" Background="#FFC6ECB6" FontSize="15" FontWeight="Bold" Click="SendTestButton_Click" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="93"/>
                 </Grid>
             </TabItem>
 
