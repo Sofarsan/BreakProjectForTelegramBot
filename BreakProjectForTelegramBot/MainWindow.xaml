@@ -83,6 +83,7 @@
 
                     <DataGrid x:Name="DataGridListUser" AutoGenerateColumns ="False" Grid.ColumnSpan="3" SelectionMode="Extended" Margin="0,33,462,22">
                         <DataGrid.Columns>
+                           
                             <DataGridTextColumn Binding="{Binding Path=Value}" IsReadOnly="True" Header="Name" Width="110"/>
                             <DataGridTextColumn Binding="{Binding Path=Key}" IsReadOnly="True" Header="Id" Width="110"/>
                         </DataGrid.Columns>
@@ -141,8 +142,8 @@
                     <TextBlock TextWrapping="Wrap" Margin="239,110,0,0" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="132"><Run Text="Choose the test"/><LineBreak/><Run/></TextBlock>
                 </Grid>
             </TabItem>
+
         </TabControl>
-        <Grid/>
     </Grid>
 
 
