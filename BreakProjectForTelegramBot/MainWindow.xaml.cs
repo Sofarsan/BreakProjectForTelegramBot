@@ -46,6 +46,7 @@ namespace BreakProjectForTelegramBot
             _telega = new Telega(_token, OnMessages);
             _labels = new List<string>();
             InitializeComponent();
+            LoadTestFromJson();
             ListBox_BotMessages.ItemsSource = _labels;
 
             ComboBoxGroup.ItemsSource = groups;
@@ -77,6 +78,15 @@ namespace BreakProjectForTelegramBot
             //}
         }
 
+        public void LoadTestFromJson()
+        {
+            _tests = BaseSerialize.LoadTestsDictionary();
+            foreach(Test test in _tests)
+            {
+                ComboBox_ChooseTest.Items.Add(test.name);
+            }
+        }
+
         public void OnMessages(string s)
         {
             _labels.Add(s);
@@ -102,7 +112,7 @@ namespace BreakProjectForTelegramBot
             ListQuestions.Items.Clear();
             if (_actual is not null && (_actual.GetListQuestion() is not null))
             {
-                List<AbstractQuestion> AqList = _actual.GetListQuestion();
+                List<Question> AqList = _actual.GetListQuestion();
 
                 for (int i = 0; i < AqList.Count; i++)
                 {
@@ -193,7 +203,7 @@ namespace BreakProjectForTelegramBot
                     OptionAnswer oAnswer = new OptionAnswer(tBox.Text, value.Value);
                     questionTextList.Add(oAnswer);
                 }
-                _actual.AddQuestion(new QuestionWithOptionAnswer(
+                _actual.AddQuestion(new Question(
                      ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString(),
                      TextBox_questionText.Text, questionTextList));
                 ListQuestionsUpdate();
@@ -232,7 +242,7 @@ namespace BreakProjectForTelegramBot
         {
             foreach (Test test in _tests)
             {
-                if (test._name == ComboBox_ChooseTest.SelectedItem)
+                if (test.name == ComboBox_ChooseTest.SelectedItem)
                 {
                     _actual = test;
                 }
@@ -255,10 +265,10 @@ namespace BreakProjectForTelegramBot
         {
             if (ListQuestions.SelectedIndex != -1)
             {
-                List<AbstractQuestion> AqList = _actual.GetListQuestion();
+                List<Question> AqList = _actual.GetListQuestion();
                 ComboBox_QuestionType.Text = AqList[ListQuestions.SelectedIndex]._type.ToString();
                 ListBoxQuestion.Items.Clear();
-                QuestionWithOptionAnswer qwoa = (QuestionWithOptionAnswer)AqList[ListQuestions.SelectedIndex];
+                Question qwoa = (Question)AqList[ListQuestions.SelectedIndex];
                 TextBox_questionText.Text = AqList[ListQuestions.SelectedIndex]._questionText;
 
                 foreach (OptionAnswer oAnswer in qwoa._optionAnswer)
@@ -382,7 +392,7 @@ namespace BreakProjectForTelegramBot
             {
                 return;
             }
-            List<AbstractQuestion> AqList = _actual.GetListQuestion();
+            List<Question> AqList = _actual.GetListQuestion();
 
             ComboBox_QuestionType.Text = AqList[ListQuestions.SelectedIndex]._type.ToString();
             if (AqList[ListQuestions.SelectedIndex]._type == QuestionType.QuestionInput ||
@@ -392,7 +402,7 @@ namespace BreakProjectForTelegramBot
             }
             else
             {
-                QuestionWithOptionAnswer qwoa = (QuestionWithOptionAnswer)AqList[ListQuestions.SelectedIndex];
+                Question qwoa = (Question)AqList[ListQuestions.SelectedIndex];
                 AqList[ListQuestions.SelectedIndex]._questionText = TextBox_questionText.Text;
 
                 qwoa._optionAnswer.Clear();

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer
 {
+    [Serializable]
     public enum QuestionType
     {
         QuestionInput=1,
