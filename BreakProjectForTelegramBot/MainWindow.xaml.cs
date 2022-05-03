@@ -27,13 +27,11 @@ namespace BreakProjectForTelegramBot
         private Telega _telega;
         private const string _token = "5331081992:AAEmEzmU2lWqKLn9mgYCYbcNnPSLVDEHHQM";
         private List<string> _labels;
-
-        private QuestionMock qm;
-
         private ObservableCollection<Test> _tests = new ObservableCollection<Test>();
         private Test _actual;
         private DispatcherTimer _timer;
-        private List<AnswersUser> _answersuser = new List<AnswersUser>();
+        private UserGroup _add;
+        private List<AnswersUser> _answersUser = new List<AnswersUser>();
 
         private ObservableCollection<UserGroup> groups = new ObservableCollection<UserGroup>()
         {
@@ -42,8 +40,6 @@ namespace BreakProjectForTelegramBot
             UsersMock.GetGroupNumberTwo(),
             UsersMock.GetGroupNumberTree()
         };
-
-        private UserGroup _add;
 
         public MainWindow()
         {
@@ -54,7 +50,11 @@ namespace BreakProjectForTelegramBot
 
             ComboBoxGroup.ItemsSource = groups;
             ComboBoxTest.ItemsSource = _tests;
+            WriteNamenewGroup.ItemsSource = groups;
 
+            BaseSerialize.LoadUserDictionary();
+            DataGridListUser.ItemsSource = BaseBot.NameBase;
+            WriteNamenewGroup.DataContext = this; //разобраться че это
 
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
@@ -62,9 +62,6 @@ namespace BreakProjectForTelegramBot
             _timer.Start();
 
             ComboBox_QuestionType.SelectedIndex = 1;
-
-            WriteNamenewGroup.ItemsSource = groups;
-            WriteNamenewGroup.DataContext = this;
         }
 
         /// <summary>
@@ -73,11 +70,11 @@ namespace BreakProjectForTelegramBot
         /// </summary>
         public void RefreshListOfUsers()
         {
-            DataGridListUser.Items.Clear();
-            foreach (User user in _telega.UserList)
-            {
-                DataGridListUser.Items.Add(user);
-            }
+            DataGridListUser.Items.Refresh();
+            //foreach (User user in _telega.UserList)
+            //{
+            //    DataGridListUser.Items.Add(user);
+            //}
         }
 
         public void OnMessages(string s)
@@ -100,7 +97,7 @@ namespace BreakProjectForTelegramBot
             ListBox_BotMessages.Items.Refresh();
         }
 
-        private void ListQuestionsUpdate()
+        private void ListQuestionsUpdate() //попробовать переделать
         {
             ListQuestions.Items.Clear();
             if (_actual is not null && (_actual.GetListQuestion() is not null))
@@ -119,12 +116,12 @@ namespace BreakProjectForTelegramBot
             }
         }
 
-        private void newBtn_Click(object sender, RoutedEventArgs e)
+        private void newBtn_Click(object sender, RoutedEventArgs e) //поменять имя
         {
             ListQuestions.SelectedItem = sender;
         }
 
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        private void CheckBox_Checked(object sender, RoutedEventArgs e) 
         {
             CheckBox chk = (CheckBox)sender;
 
@@ -215,21 +212,7 @@ namespace BreakProjectForTelegramBot
             }
         }
 
-        //public BindingList<User> _toAddUser;
-
-        private void Window_User(object sender, RoutedEventArgs e)
-        {
-            //_toAddUser = new BindingList<User>()
-            //{
-            //    //new User(){LastName ="Leto",Name="QQQ",Age=232},
-            //    //new User(){LastName ="Человек",Name="Который смеется ",Age=154},
-            //    //new User(){LastName ="Гранде",Name="Евгения",Age=14},
-            //};
-            //ListUser.ItemsSource = _toAddUser;
-        }
-
-
-        private void AddTitleButton_Click(object sender, RoutedEventArgs e)
+        private void AddTitleButton_Click(object sender, RoutedEventArgs e) //переименовать в AddTitleTestButton_Click
         {
             if (TestNameTextBox.Text.Length > 0)
             {
@@ -443,14 +426,12 @@ namespace BreakProjectForTelegramBot
         }
         private void MessageBox_Warning()
         {
-            MessageBox.Show("Ты что дурачек ?", "Stop", MessageBoxButton.OK, MessageBoxImage.Warning);
+            MessageBox.Show("Ты что дурачек ?", "Stop", MessageBoxButton.OK, MessageBoxImage.Warning); //поменять
         }
 
         public async void Button_SendQuestion_Click(object sender, RoutedEventArgs e)
         {
-            _telega.SendQuestion(QuestionMock.getQuestion());
-
-
+            _telega.SendQuestion(QuestionMock.getQuestion()); //УДАЛИТЬ
         }
 
         private void Refresh_Click(object sender, RoutedEventArgs e)
