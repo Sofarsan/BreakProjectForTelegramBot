@@ -248,6 +248,8 @@ namespace BreakProjectForTelegramBot
             {
                 MessageBox_Warning();
             }
+            _actual._duration = ((ComboBoxItem)ComboBoxTimer.SelectedValue).Content.ToString();
+            //_actual._endTime = (DateTime.Now + _actual._duration);
         }
 
 

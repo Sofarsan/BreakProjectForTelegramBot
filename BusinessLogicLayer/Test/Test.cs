@@ -10,15 +10,15 @@ namespace BusinessLogicLayer
     {
 
         public string _name { get; private set; }
-        public string _duration { get; private set; }
-        public string _endTime { get; private set; }
+        public string _duration { get; set; }
+        public string _endTime { get;set; }
         List<AbstractQuestion> questionList { get; set; }
 
 
         public Test(string name)
         {
             _name = name;
-            questionList = new List<AbstractQuestion>();
+            questionList = new List<AbstractQuestion>();            
         }
 
         public void AddQuestion(AbstractQuestion question)

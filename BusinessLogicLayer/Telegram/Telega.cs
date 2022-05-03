@@ -88,12 +88,8 @@ namespace BusinessLogicLayer
                 string s = update.Message.Chat.FirstName + " "
                     + update.Message.Chat.LastName + " "
                     + update.Message.Text;
-                _onMessage(s);
-            }
-            if (update.Message.Text == "Start test")
-            {
-               
-            }
+                _onMessage(s);                 
+            }         
         }
 
         private Task HandleError(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
@@ -105,8 +101,10 @@ namespace BusinessLogicLayer
         {
             string name = user.ongoingTest.test._name;
             int count = user.ongoingTest.test.GetListQuestion().Count;
+            var duration = user.ongoingTest.test._duration;
+            var endTime = user.ongoingTest.test._endTime;
 
-            string message = $"Имя теста : {name} \n Количество вопросов: {count}";
+            string message = $"Имя теста : {name} \n Количество вопросов: {count} \n Время прохождения: {duration}";
             ReplyKeyboardMarkup replyKeyboard = new ReplyKeyboardMarkup(
                   new[]
                   {
@@ -114,7 +112,6 @@ namespace BusinessLogicLayer
                   });
             await _client.SendTextMessageAsync(new ChatId(user.Id), message, replyMarkup: replyKeyboard);
         }
-
     }
 
 
