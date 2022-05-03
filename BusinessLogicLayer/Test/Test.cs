@@ -8,7 +8,6 @@ namespace BusinessLogicLayer
 {
     public class Test
     {
-
         public string _name { get; private set; }
         public string _duration { get; private set; }
         public string _endTime { get; private set; }
@@ -19,7 +18,6 @@ namespace BusinessLogicLayer
             _name = name;
             questionList = new List<AbstractQuestion>();
         }
-
         public void AddQuestion(AbstractQuestion question)
         {
             questionList.Add(question);
