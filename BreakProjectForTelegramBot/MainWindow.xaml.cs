@@ -44,6 +44,7 @@ namespace BreakProjectForTelegramBot
         public MainWindow()
         {
             _telega = new Telega(_token, OnMessages);
+            _telega.groups = groups;
             _labels = new List<string>();
             InitializeComponent();
             LoadTestFromJson();
