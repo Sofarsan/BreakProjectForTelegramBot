@@ -12,7 +12,7 @@ namespace BusinessLogicLayer
         public string Question { get; set; }
         public List<string> UserAnswer { get; set; }
 
-        public Reply(User user, AbstractQuestion question, AbstractQuestion answer)
+        public Reply(User user, Question question, Question answer)
         {
             Name = user.FirstName+user.LastName;
             Question = question._questionText;

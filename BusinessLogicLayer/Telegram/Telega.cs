@@ -63,7 +63,7 @@ namespace BusinessLogicLayer
             }
         }
 
-        public async void SendQuestion(QuestionWithOptionAnswer question)
+        public async void SendQuestion(Question question)
         {
             List<String> oA = question.GetOptionAnswerStringList();
             List<KeyboardButton> optionAnswers = new List<KeyboardButton>();

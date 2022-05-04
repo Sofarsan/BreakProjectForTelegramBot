@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace BusinessLogicLayer.Telegram
 {
@@ -17,7 +18,7 @@ namespace BusinessLogicLayer.Telegram
         {
             if (json == null)
             {
-                throw new ArgumentNullException("Garry.json");
+                throw new ArgumentNullException(userDictionaryJson);
             }
             else
             {
@@ -49,26 +50,26 @@ namespace BusinessLogicLayer.Telegram
         }
 
         private const string testsDictionaryJson = @"Tests.json";
-        public static string testsDictionarySerialize(List<Test>tests)
+        public static string TestsObservableCollectionSerialize(ObservableCollection<Test>tests)
         {
-            return JsonSerializer.Serialize< List < Test >> (tests);
+            return JsonSerializer.Serialize<ObservableCollection< Test >> (tests);
         }
 
-        public static List<Test> TestsDictionaryDecerialize(string json)
+        public static ObservableCollection<Test> TestsObservableCollectionDecerialize(string json)
         {
             if (json == null)
             {
-                throw new ArgumentNullException(@"Tests.json");
+                throw new ArgumentNullException(testsDictionaryJson);
             }
             else
             {
-                return JsonSerializer.Deserialize <List < Test >> (json);
+                return JsonSerializer.Deserialize <ObservableCollection< Test >> (json);
             }
         }
 
-        public static void SaveTestsDictionary(List <Test> tests)
+        public static void SaveTestsObservableCollection(ObservableCollection<Test> tests)
         {
-            string json = testsDictionarySerialize(tests);
+            string json = TestsObservableCollectionSerialize(tests);
 
             using (StreamWriter sw = new StreamWriter(testsDictionaryJson, false))
             {
@@ -76,21 +77,21 @@ namespace BusinessLogicLayer.Telegram
             }
         }
 
-        public static  List<Test> LoadTestsDictionary()
+        public static ObservableCollection<Test> LoadTestsDictionary()
         {
-            if (File.Exists(userDictionaryJson))
+            if (File.Exists(testsDictionaryJson))
             {
-                using (StreamReader sr = new StreamReader(userDictionaryJson))
+                using (StreamReader sr = new StreamReader(testsDictionaryJson))
                 {
                     string json = sr.ReadLine();
 
-                    return TestsDictionaryDecerialize(json);
+                    return TestsObservableCollectionDecerialize(json);
 
                 }
             }
             else
             {
-                return new List<Test>();
+                return new ObservableCollection<Test>();
             }
         }
     }
