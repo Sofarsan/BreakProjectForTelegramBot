@@ -83,8 +83,8 @@
 
                     <DataGrid x:Name="DataGridListUser" AutoGenerateColumns ="False" Grid.ColumnSpan="3" SelectionMode="Extended" Margin="0,33,462,22">
                         <DataGrid.Columns>
-                           
-                            <DataGridTextColumn Binding="{Binding Path=Value}" IsReadOnly="True" Header="Name" Width="110"/>
+                            <DataGridTextColumn Binding="{Binding Path=Value[0]}" IsReadOnly="True" Header="FirstName" Width="110"/>
+                            <DataGridTextColumn Binding="{Binding Path=Value[1]}" IsReadOnly="True" Header="LastName" Width="110"/>
                             <DataGridTextColumn Binding="{Binding Path=Key}" IsReadOnly="True" Header="Id" Width="110"/>
                         </DataGrid.Columns>
                     </DataGrid>

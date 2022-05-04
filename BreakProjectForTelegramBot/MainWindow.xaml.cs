@@ -75,14 +75,6 @@ namespace BreakProjectForTelegramBot
         /// Refresh list of users in the UI according to the users currently connected
         /// to our bot
         /// </summary>
-        public void RefreshListOfUsers()
-        {
-            DataGridListUser.Items.Refresh();
-            //foreach (User user in _telega.UserList)
-            //{
-            //    DataGridListUser.Items.Add(user);
-            //}
-        }
 
         public void LoadTestFromJson()
         {
@@ -367,19 +359,20 @@ namespace BreakProjectForTelegramBot
             user.LastName = WriteLastName.Text;
             user.FirstName = WriteFirstName.Text;
             UsersInGroup.Items.Refresh();
+            DataGridListUser.Items.Refresh();
         }
 
         private void AddNewUserInGroup_Click(object sender, RoutedEventArgs e)
         {
             int index = WriteNamenewGroup.SelectedIndex;
-            foreach (User user in DataGridListUser.SelectedItems)
+            KeyValuePair<long, List<string>> selectedItem = ((KeyValuePair<long, List<string>>)DataGridListUser.SelectedItem);
+            User user = new User(selectedItem.Value[0], selectedItem.Value[1], selectedItem.Key);
+            if (groups[index].Users.Contains(user))
             {
-                if (groups[index].Users.Contains(user))
-                {
-                    return;
-                }
-                groups[index].Users.Add(user);
+                return;
             }
+            groups[index].Users.Add(user);
+            
             UsersInGroup.Items.Refresh();
         }
 
@@ -457,7 +450,8 @@ namespace BreakProjectForTelegramBot
 
         private void Refresh_Click(object sender, RoutedEventArgs e)
         {
-            RefreshListOfUsers();
+            DataGridListUser.Items.Refresh();
+            //RefreshListOfUsers();
         }
 
         private void DeleteUser_Click(object sender, RoutedEventArgs e)

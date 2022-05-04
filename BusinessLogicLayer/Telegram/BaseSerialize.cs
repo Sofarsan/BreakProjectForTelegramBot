@@ -10,11 +10,11 @@ namespace BusinessLogicLayer.Telegram
     public static class BaseSerialize
     {
         private const string userDictionaryJson = @"Garry.json";
-        public static string UserDictionarySerialize(Dictionary<long, string> dic)
+        public static string UserDictionarySerialize(Dictionary<long, List<string>> dic)
         {
-            return JsonSerializer.Serialize<Dictionary<long, string>>(dic);
+            return JsonSerializer.Serialize<Dictionary<long, List<string>>>(dic);
         }
-        public static Dictionary<long, string> UserDictionaryDecerialize(string json)
+        public static Dictionary<long, List<string>> UserDictionaryDecerialize(string json)
         {
             if (json == null)
             {
@@ -22,10 +22,10 @@ namespace BusinessLogicLayer.Telegram
             }
             else
             {
-                return JsonSerializer.Deserialize<Dictionary<long, string>>(json);
+                return JsonSerializer.Deserialize<Dictionary<long, List<string>>>(json);
             }
         }
-        public static void SaveUserDictionary(Dictionary<long, string> dic)
+        public static void SaveUserDictionary(Dictionary<long, List<string>> dic)
         {
             string json = UserDictionarySerialize(dic);
 
