@@ -6,29 +6,31 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicLayer
 {
+    [Serializable]
     public class Test
     {
-        public string _name { get; private set; }
-        public string _duration { get; private set; }
-        public string _endTime { get; private set; }
-        List<AbstractQuestion> questionList { get; set; }
+        public string name { get; set; }
+        public string _duration { get;  set; }
+        public string _endTime { get;  set; }
+        public List<Question> questionList { get; set; }
 
+        public Test() { }
         public Test(string name)
         {
-            _name = name;
-            questionList = new List<AbstractQuestion>();
+            this.name = name;
+            questionList = new List<Question>();
         }
-        public void AddQuestion(AbstractQuestion question)
+        public void AddQuestion(Question question)
         {
             questionList.Add(question);
         }
-        public List<AbstractQuestion> GetListQuestion()
+        public List<Question> GetListQuestion()
         {
             return questionList;
         }
         public override string ToString()
         {
-            return _name;
+            return name;
         }
     }
 }

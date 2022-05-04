@@ -44,5 +44,13 @@ namespace BusinessLogicLayer
             groupTree.AddUser(user3);
             return groupTree;
         }
+        public static UserGroup GetGroupNumberFour()
+        {
+            User user1 = new User("Di", "Ann", 94889508);
+           
+            UserGroup groupFour = new UserGroup("Мы");
+            groupFour.AddUser(user1);
+            return groupFour;
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace BusinessLogicLayer.Telegram
 {
@@ -17,7 +18,7 @@ namespace BusinessLogicLayer.Telegram
         {
             if (json == null)
             {
-                throw new ArgumentNullException("Garry.json");
+                throw new ArgumentNullException(userDictionaryJson);
             }
             else
             {
@@ -45,6 +46,52 @@ namespace BusinessLogicLayer.Telegram
                     BaseBot.NameBase = UserDictionaryDecerialize(json);
 
                 }
+            }
+        }
+
+        private const string testsDictionaryJson = @"Tests.json";
+        public static string TestsObservableCollectionSerialize(ObservableCollection<Test>tests)
+        {
+            return JsonSerializer.Serialize<ObservableCollection< Test >> (tests);
+        }
+
+        public static ObservableCollection<Test> TestsObservableCollectionDecerialize(string json)
+        {
+            if (json == null)
+            {
+                throw new ArgumentNullException(testsDictionaryJson);
+            }
+            else
+            {
+                return JsonSerializer.Deserialize <ObservableCollection< Test >> (json);
+            }
+        }
+
+        public static void SaveTestsObservableCollection(ObservableCollection<Test> tests)
+        {
+            string json = TestsObservableCollectionSerialize(tests);
+
+            using (StreamWriter sw = new StreamWriter(testsDictionaryJson, false))
+            {
+                sw.WriteLine(json);
+            }
+        }
+
+        public static ObservableCollection<Test> LoadTestsDictionary()
+        {
+            if (File.Exists(testsDictionaryJson))
+            {
+                using (StreamReader sr = new StreamReader(testsDictionaryJson))
+                {
+                    string json = sr.ReadLine();
+
+                    return TestsObservableCollectionDecerialize(json);
+
+                }
+            }
+            else
+            {
+                return new ObservableCollection<Test>();
             }
         }
     }

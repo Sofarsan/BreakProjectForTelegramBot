@@ -16,6 +16,11 @@ using BusinessLogicLayer;
 using System;
 using BusinessLogicLayer.Telegram;
 using System.Collections.ObjectModel;
+using Telegram.Bot;
+using Telegram.Bot.Exceptions;
+using Telegram.Bot.Extensions.Polling;
+using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace BreakProjectForTelegramBot
 {
@@ -38,7 +43,8 @@ namespace BreakProjectForTelegramBot
             new UserGroup("Другие"),
             UsersMock.GetGroupNumberOne(),
             UsersMock.GetGroupNumberTwo(),
-            UsersMock.GetGroupNumberTree()
+            UsersMock.GetGroupNumberTree(),
+            UsersMock.GetGroupNumberFour()
         };
 
         public MainWindow()
@@ -46,6 +52,7 @@ namespace BreakProjectForTelegramBot
             _telega = new Telega(_token, OnMessages);
             _labels = new List<string>();
             InitializeComponent();
+            LoadTestFromJson();
             ListBox_BotMessages.ItemsSource = _labels;
 
             ComboBoxGroup.ItemsSource = groups;
@@ -77,6 +84,15 @@ namespace BreakProjectForTelegramBot
             //}
         }
 
+        public void LoadTestFromJson()
+        {
+            _tests = BaseSerialize.LoadTestsDictionary();
+            foreach(Test test in _tests)
+            {
+                ComboBox_ChooseTest.Items.Add(test.name);
+            }
+        }
+
         public void OnMessages(string s)
         {
             _labels.Add(s);
@@ -102,7 +118,7 @@ namespace BreakProjectForTelegramBot
             ListQuestions.Items.Clear();
             if (_actual is not null && (_actual.GetListQuestion() is not null))
             {
-                List<AbstractQuestion> AqList = _actual.GetListQuestion();
+                List<Question> AqList = _actual.GetListQuestion();
 
                 for (int i = 0; i < AqList.Count; i++)
                 {
@@ -193,15 +209,17 @@ namespace BreakProjectForTelegramBot
                     OptionAnswer oAnswer = new OptionAnswer(tBox.Text, value.Value);
                     questionTextList.Add(oAnswer);
                 }
-                _actual.AddQuestion(new QuestionWithOptionAnswer(
+                _actual.AddQuestion(new Question(
                      ((ComboBoxItem)ComboBox_QuestionType.SelectedValue).Content.ToString(),
                      TextBox_questionText.Text, questionTextList));
+                BaseSerialize.SaveTestsObservableCollection(_tests);
                 ListQuestionsUpdate();
             }
             else
             {
                 MessageBox_Warning();
             }
+            
         }
 
         private void Button_DeleteOptionAnswer_Click(object sender, RoutedEventArgs e)
@@ -225,6 +243,8 @@ namespace BreakProjectForTelegramBot
             {
                 MessageBox_Warning();
             }
+            _actual._duration = ((ComboBoxItem)ComboBoxTimer.SelectedValue).Content.ToString();
+            //_actual._endTime = (DateTime.Now + _actual._duration);
         }
 
 
@@ -232,7 +252,7 @@ namespace BreakProjectForTelegramBot
         {
             foreach (Test test in _tests)
             {
-                if (test._name == ComboBox_ChooseTest.SelectedItem)
+                if (test.name == ComboBox_ChooseTest.SelectedItem)
                 {
                     _actual = test;
                 }
@@ -255,10 +275,10 @@ namespace BreakProjectForTelegramBot
         {
             if (ListQuestions.SelectedIndex != -1)
             {
-                List<AbstractQuestion> AqList = _actual.GetListQuestion();
+                List<Question> AqList = _actual.GetListQuestion();
                 ComboBox_QuestionType.Text = AqList[ListQuestions.SelectedIndex]._type.ToString();
                 ListBoxQuestion.Items.Clear();
-                QuestionWithOptionAnswer qwoa = (QuestionWithOptionAnswer)AqList[ListQuestions.SelectedIndex];
+                Question qwoa = (Question)AqList[ListQuestions.SelectedIndex];
                 TextBox_questionText.Text = AqList[ListQuestions.SelectedIndex]._questionText;
 
                 foreach (OptionAnswer oAnswer in qwoa._optionAnswer)
@@ -382,7 +402,7 @@ namespace BreakProjectForTelegramBot
             {
                 return;
             }
-            List<AbstractQuestion> AqList = _actual.GetListQuestion();
+            List<Question> AqList = _actual.GetListQuestion();
 
             ComboBox_QuestionType.Text = AqList[ListQuestions.SelectedIndex]._type.ToString();
             if (AqList[ListQuestions.SelectedIndex]._type == QuestionType.QuestionInput ||
@@ -392,7 +412,7 @@ namespace BreakProjectForTelegramBot
             }
             else
             {
-                QuestionWithOptionAnswer qwoa = (QuestionWithOptionAnswer)AqList[ListQuestions.SelectedIndex];
+                Question qwoa = (Question)AqList[ListQuestions.SelectedIndex];
                 AqList[ListQuestions.SelectedIndex]._questionText = TextBox_questionText.Text;
 
                 qwoa._optionAnswer.Clear();
@@ -410,6 +430,7 @@ namespace BreakProjectForTelegramBot
                 }
 
             }
+            BaseSerialize.SaveTestsObservableCollection(_tests);
             ListQuestionsUpdate();
         }
 
@@ -445,6 +466,19 @@ namespace BreakProjectForTelegramBot
             if (items.CanRemove)
             {
                 items.Remove(UsersInGroup.SelectedItem);
+            }
+        }
+
+        private void SendTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            UserGroup group = (UserGroup)ComboBoxGroup.SelectedItem;
+            Test test = (Test)ComboBoxTest.SelectedItem;
+
+            foreach (User user in group.Users)
+            {
+                OngoingTest ongoingTest = new OngoingTest(test);
+                user.ongoingTest = ongoingTest;
+                _telega.AskConfirmation(user);
             }
         }
     }

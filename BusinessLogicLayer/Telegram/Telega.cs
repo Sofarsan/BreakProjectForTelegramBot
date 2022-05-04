@@ -12,6 +12,7 @@ using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 
 
+
 namespace BusinessLogicLayer
 {
     public class Telega
@@ -63,7 +64,7 @@ namespace BusinessLogicLayer
             }
         }
 
-        public async void SendQuestion(QuestionWithOptionAnswer question)
+        public async void SendQuestion(Question question)
         {
             List<String> oA = question.GetOptionAnswerStringList();
             List<KeyboardButton> optionAnswers = new List<KeyboardButton>();
@@ -104,10 +105,38 @@ namespace BusinessLogicLayer
                 //_onMessage(s);
             }
         }
+
+
         private Task HandleError(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }
+
+
+
+        public async void AskConfirmation(User user)
+
+        {
+            string name = user.ongoingTest.test.name;
+            int count = user.ongoingTest.test.GetListQuestion().Count;
+            var duration = user.ongoingTest.test._duration;
+            var endTime = user.ongoingTest.test._endTime;
+
+            string message = $"Имя теста : {name} \n Количество вопросов: {count} \n Время прохождения: {duration}";
+
+            ReplyKeyboardMarkup replyKeyboard = new ReplyKeyboardMarkup(
+
+                  new[]
+
+                  {
+                       new KeyboardButton("Start "),
+
+                  });
+
+            await _client.SendTextMessageAsync(new ChatId(user.Id), message, replyMarkup: replyKeyboard);
+
+        }
     }
+
 
 }
