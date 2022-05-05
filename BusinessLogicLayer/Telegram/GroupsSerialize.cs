@@ -27,7 +27,7 @@ namespace BusinessLogicLayer.GroupsSerialize
             }
         }
 
-        public static void SaveTestsObservableCollection(ObservableCollection<UserGroup> groups)
+        public static void SaveGroupsObservableCollection(ObservableCollection<UserGroup> groups)
         {
             string json = GroupsObservableCollectionSerialize(groups);
 
