@@ -29,6 +29,31 @@ namespace BusinessLogicLayer
                 workSheet.Cells[row++, column] = user.FirstName;
                 workSheet.Cells[row++, column] = user.LastName;
                 workSheet.Cells[row++, column] = user.ongoingTest.test.name;
+
+                for(int i=0;i< user.ongoingTest.test.questionList.Count;++i)
+                {
+                    workSheet.Cells[row++, column] = user.ongoingTest.test.questionList[i]._questionText;
+                   foreach(var answer in user.ongoingTest._answers[i])
+                    {
+                        workSheet.Cells[row++, column] = answer;
+                    }
+                }
+                
+                //foreach(var question in user.ongoingTest.test.questionList)
+                //{
+                //    workSheet.Cells[row++, column] = question._questionText;
+
+                //    foreach(var answerList in user.ongoingTest._answers)
+                //    {
+                //        foreach(var answer in answerList)
+                //        {
+                //            workSheet.Cells[row++, column] = answer;
+                           
+                //        }
+                        
+                //    }
+
+                //}
                
 
                 column++;

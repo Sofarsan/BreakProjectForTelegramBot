@@ -431,7 +431,7 @@ namespace BreakProjectForTelegramBot
             MessageBox.Show("Are u stupid?", "Stop it", MessageBoxButton.OK, MessageBoxImage.Warning); //поменять
         }
 
-        public async void Button_SendQuestion_Click(object sender, RoutedEventArgs e)
+        public async void Button_SaveReport_Click(object sender, RoutedEventArgs e)
         {
             Excel.DisplayInExcel((UserGroup)ComboBoxGroup.SelectedItem);
         }
