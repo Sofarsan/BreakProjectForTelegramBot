@@ -127,7 +127,7 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <ListBox x:Name="ListBox_BotMessages" Margin="417,20,0,0" d:ItemsSource="{d:SampleData ItemCount=5}" Background="#FFB2DE9F" Height="136" VerticalAlignment="Top" HorizontalAlignment="Left" Width="169"/>
                     <Button x:Name="ButtonSend" Content="Send message" Margin="238,47,0,0" Background="#FFC6ECB6" FontSize="15" FontWeight="Normal" Click="ButtonSend_Click" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="122"/>

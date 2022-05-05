@@ -5,9 +5,9 @@
         public int _currentQuestion { get; private set; } = 0;
         public Test test { get; set; }
 
-        public OngoingTest(Test _test)
+        public OngoingTest(Test test)
         {
-            test = _test;
+            this.test = test;
         }
     }
 }
