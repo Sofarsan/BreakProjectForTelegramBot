@@ -69,6 +69,7 @@
                             60
                         </ComboBoxItem>
                     </ComboBox>
+                    <Button Grid.Column="1" Content="Delete" HorizontalAlignment="Left" Margin="425,362,0,0" VerticalAlignment="Top" Click="Button_Click"/>
                 </Grid>
             </TabItem>
 

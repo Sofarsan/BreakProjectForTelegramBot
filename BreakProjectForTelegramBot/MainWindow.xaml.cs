@@ -512,5 +512,15 @@ namespace BreakProjectForTelegramBot
                 _telega.AskConfirmation(user);
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (ListQuestions.Items.Count - 1 > 0)
+            {
+                ListQuestions.Items.RemoveAt(ListQuestions.SelectedIndex);
+                //ListQuestions.Items.Remove(ListQuestions.SelectedIndex);
+               // ListQuestions.SelectedIndex.(ListBoxQuestion.Items.Count - 1);
+            }
+        }
     }
 }
