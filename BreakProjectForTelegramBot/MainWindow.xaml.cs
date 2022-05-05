@@ -9,6 +9,7 @@ using System.Windows.Threading; //для таймера
 using System;
 using BusinessLogicLayer.Telegram;
 using System.Collections.ObjectModel;
+using BusinessLogicLayer.GroupsSerialize;
 
 namespace BreakProjectForTelegramBot
 {
@@ -28,16 +29,12 @@ namespace BreakProjectForTelegramBot
 
         private ObservableCollection<UserGroup> groups = new ObservableCollection<UserGroup>()
         {
-            new UserGroup("Другие"),
-            UsersMock.GetGroupNumberOne(),
-            UsersMock.GetGroupNumberTwo(),
-            UsersMock.GetGroupNumberTree(),
-            UsersMock.GetGroupNumberFour()
         };
 
         public MainWindow()
         {
             _telega = new Telega(_token, OnMessages);
+            groups = GroupsSerialize.LoadGroupsObservableCollectionDecerialize();
             _telega.groups = groups;
             _labels = new List<string>();
             InitializeComponent();
@@ -72,6 +69,15 @@ namespace BreakProjectForTelegramBot
                 ComboBox_ChooseTest.Items.Add(test.name);
             }
         }
+        public void LoadUserGroupsFromJson()
+        {
+
+            ObservableCollection<UserGroup> group = GroupsSerialize.LoadGroupsObservableCollectionDecerialize();
+            foreach (Test test in _tests)
+            {
+                ComboBox_ChooseTest.Items.Add(test.name);
+            }
+        }
 
         public void OnMessages(string s)
         {
@@ -85,7 +91,7 @@ namespace BreakProjectForTelegramBot
 
         private void OnTick(object sender, EventArgs e)
         {
-            
+
         }
 
         private void ListQuestionsUpdate() //попробовать переделать
@@ -310,6 +316,10 @@ namespace BreakProjectForTelegramBot
 
             _add = new UserGroup(Group.Text);
             groups.Add(_add);
+            _telega.groups = groups;
+
+            GroupsSerialize.SaveGroupsObservableCollection(groups);
+
 
             UserGroup userNewGroup = new UserGroup(Group.Text);
             WriteNamenewGroup.Items.Refresh();
@@ -335,6 +345,19 @@ namespace BreakProjectForTelegramBot
         private void ChangeNameGroup_Click(object sender, RoutedEventArgs e)
         {
             UserGroup ug = (UserGroup)WriteNamenewGroup.SelectedItem;
+
+            // Update storage
+            foreach (UserGroup group in groups)
+            {
+                if (group.NameGroup == ug.NameGroup)
+                {
+                    group.NameGroup = NewNameGroup.Text;
+                    break;
+                }
+            }
+            GroupsSerialize.SaveGroupsObservableCollection(groups);
+
+            // Update UI
             ug.NameGroup = NewNameGroup.Text;
             WriteNamenewGroup.Items.Refresh();
             NewNameGroup.Clear();
@@ -345,23 +368,32 @@ namespace BreakProjectForTelegramBot
             User user = (User)UsersInGroup.SelectedItem;
             user.LastName = WriteLastName.Text;
             user.FirstName = WriteFirstName.Text;
+
+            BaseBot.NameBase[user.Id].FirstName = user.FirstName;
+            BaseBot.NameBase[user.Id].LastName = user.LastName;
+
             UsersInGroup.Items.Refresh();
             DataGridListUser.Items.Refresh();
+
             BaseSerialize.SaveUserDictionary(BaseBot.NameBase);
+            GroupsSerialize.SaveGroupsObservableCollection(groups);
         }
 
         private void AddNewUserInGroup_Click(object sender, RoutedEventArgs e)
         {
             int index = WriteNamenewGroup.SelectedIndex;
-            KeyValuePair<long, User> selectedItem = ((KeyValuePair<long,User>)DataGridListUser.SelectedItem);
+            KeyValuePair<long, User> selectedItem = ((KeyValuePair<long, User>)DataGridListUser.SelectedItem);
             User user = new User(selectedItem.Value.FirstName, selectedItem.Value.LastName, selectedItem.Key);
             if (index < 0 || groups[index].Users.Contains(user))
             {
                 return;
             }
             groups[index].Users.Add(selectedItem.Value);
+            _telega.groups = groups;
 
-            UsersInGroup.Items.Refresh();           
+            GroupsSerialize.SaveGroupsObservableCollection(groups);
+
+            UsersInGroup.Items.Refresh();
         }
 
         private void UsersInGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -444,11 +476,27 @@ namespace BreakProjectForTelegramBot
 
         private void DeleteUser_Click(object sender, RoutedEventArgs e)
         {
+            // Remove the group from our storage
+            User selectedUser = (User)UsersInGroup.SelectedItem;
+            foreach (UserGroup group in groups)
+            {
+                if (group.Users.Contains(selectedUser))
+                {
+                    group.Users.Remove(selectedUser);
+                    break;
+                }
+            }
+            _telega.groups = groups;
+
+            GroupsSerialize.SaveGroupsObservableCollection(groups);
+
+            // Remove from the UI as well
             IEditableCollectionView items = UsersInGroup.Items;
             if (items.CanRemove)
             {
                 items.Remove(UsersInGroup.SelectedItem);
             }
+            UsersInGroup.Items.Refresh();
         }
 
         private void SendTestButton_Click(object sender, RoutedEventArgs e)
@@ -460,6 +508,7 @@ namespace BreakProjectForTelegramBot
             {
                 OngoingTest ongoingTest = new OngoingTest(test);
                 user.ongoingTest = ongoingTest;
+                BaseSerialize.SaveUserDictionary(BaseBot.NameBase);
                 _telega.AskConfirmation(user);
             }
         }

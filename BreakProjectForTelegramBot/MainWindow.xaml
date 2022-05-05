@@ -72,7 +72,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Users Manager" Height="22" FontSize="12" Margin="0,0,-2,0" VerticalAlignment="Center" HorizontalAlignment="Right" Width="101">
+            <TabItem Header="Users Manager" FontSize="12" Margin="2,0,0,0" HorizontalAlignment="Left" Width="101" Height="20" VerticalAlignment="Top">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="112*"/>
@@ -80,14 +80,14 @@
                         <ColumnDefinition Width="573*"/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid x:Name="DataGridListUser" AutoGenerateColumns ="False" Grid.ColumnSpan="3" SelectionMode="Extended" Margin="0,33,462,192">
+                    <DataGrid x:Name="DataGridListUser" AutoGenerateColumns ="False" Grid.ColumnSpan="3" SelectionMode="Extended" Margin="0,36,462,189">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Path=Value.FirstName}" IsReadOnly="True" Header="FirstName" Width="110"/>
                             <DataGridTextColumn Binding="{Binding Path=Value.LastName}" IsReadOnly="True" Header="LastName" Width="110"/>
                             <DataGridTextColumn Binding="{Binding Path=Key}" IsReadOnly="True" Header="Id" Width="110"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button x:Name="Refresh" Content="Refresh" HorizontalAlignment="Left" Height="22" Margin="10,6,0,0" VerticalAlignment="Top" Width="79" Click="Refresh_Click" Grid.Column="1"/>
+                    <Button x:Name="Refresh" Content="Refresh" HorizontalAlignment="Left" Height="22" Margin="0,6,0,0" VerticalAlignment="Top" Width="79" Click="Refresh_Click" Grid.Column="2"/>
                     <TextBox x:Name="Group" HorizontalAlignment="Left" Margin="121,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="166" Height="25" TextDecorations="{x:Null}" FontWeight="Normal" Grid.Column="2" />
                     <ListBox x:Name="WriteNamenewGroup" HorizontalAlignment="Left" Margin="121,74,0,0" Width="280" d:ItemsSource="{d:SampleData ItemCount=5}" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Height="130" VerticalAlignment="Top" Background="#FF67DE8F" SelectionChanged="WriteNamenewGroup_SelectionChanged" Grid.Column="2"/>
                     <Button x:Name="ChangeUserName" Content="Change User Name" HorizontalAlignment="Left" Height="20" Margin="413,318,0,0" VerticalAlignment="Top" Width="130" Grid.Column="2" Click="ChangeUserName_Click"/>
@@ -107,10 +107,10 @@
                     <Button Content="START BOT" Margin="10,257,0,0" Background="#FFC6ECB6" FontSize="15" FontWeight="Bold" Click="ButtonStart_Click" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="93" Grid.Column="2"/>
                     <Button x:Name="Button_SaveReport" Content="Save Report" Margin="11,335,0,0" VerticalAlignment="Top" Height="42" Click="Button_SaveReport_Click" HorizontalAlignment="Left" Width="93" Grid.Column="2"/>
                     <ComboBox x:Name="ComboBoxGroup" Width="92" Margin="0,258,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Center"  />
-                    <ComboBox x:Name="ComboBoxTest" Width="89" Margin="5,257,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
+                    <ComboBox x:Name="ComboBoxTest" Width="92" Margin="74,257,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="2" />
                     <TextBlock TextWrapping="Wrap" Text="Choose the group" Margin="10,229,0,0" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="132" Grid.ColumnSpan="2"/>
-                    <TextBlock TextWrapping="Wrap" Margin="5,229,0,0" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="132" Grid.Column="1" Grid.ColumnSpan="2"><Run Text="Choose the test"/><LineBreak/><Run/></TextBlock>
-                    <Button x:Name="SendTestButton" Content="SEND TEST" Margin="10,294,0,0" Background="#FFC6ECB6" FontSize="15" FontWeight="Bold" Click="SendTestButton_Click" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="93" Grid.Column="2"/>
+                    <TextBlock TextWrapping="Wrap" Margin="80,229,0,0" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="132" Grid.Column="1" Grid.ColumnSpan="2"><Run Text="Choose the test"/><LineBreak/><Run/></TextBlock>
+                    <Button x:Name="SendTestButton" Content="SEND TEST" Margin="100,303,0,0" Background="#FFC6ECB6" FontSize="15" FontWeight="Bold" Click="SendTestButton_Click" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="92" Grid.ColumnSpan="2"/>
                     <Button x:Name="AddNewUserinGroup" Content="Add to Group" HorizontalAlignment="Left" Height="25" Margin="204,216,0,0" VerticalAlignment="Top" Width="130" Grid.Column="2" Click="AddNewUserInGroup_Click"/>
                     <Button x:Name="DeleteUserinGroup" Content="Delete group" Grid.Column="2"  Height="25" Width="130" HorizontalAlignment="Left" Margin="413,174,0,0" VerticalAlignment="Top" Click="DeleteGroup_Click"/>
                     <Button x:Name="AddNewGroup" Content="Create new Group" Height="25" Margin="301,36,0,0" VerticalAlignment="Top" Grid.Column="2" Click="AddNewGroup_Click" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="99">
