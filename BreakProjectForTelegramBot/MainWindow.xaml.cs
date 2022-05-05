@@ -235,8 +235,12 @@ namespace BreakProjectForTelegramBot
             {
                 MessageBox_Warning();
             }
-            _actual._duration = ((ComboBoxItem)ComboBoxTimer.SelectedValue).Content.ToString();
-            //_actual._endTime = (DateTime.Now + _actual._duration);
+            int minutes = Convert.ToInt32(((ComboBoxItem)ComboBoxTimer.SelectedValue).Content.ToString());
+
+            DateTime now = DateTime.Now;
+            TimeSpan ts = TimeSpan.FromMinutes(minutes);
+            DateTime endTime = now.Add(ts);
+            _actual._endTime = endTime.ToShortTimeString();
         }
 
 

@@ -10,11 +10,11 @@ namespace BusinessLogicLayer.Telegram
     public static class BaseSerialize
     {
         private const string userDictionaryJson = @"Garry.json";
-        public static string UserDictionarySerialize(Dictionary<long, List<string>> dic)
+        public static string UserDictionarySerialize(Dictionary<long, User> dic)
         {
-            return JsonSerializer.Serialize<Dictionary<long, List<string>>>(dic);
+            return JsonSerializer.Serialize<Dictionary<long, User>>(dic);
         }
-        public static Dictionary<long, List<string>> UserDictionaryDecerialize(string json)
+        public static Dictionary<long, User> UserDictionaryDecerialize(string json)
         {
             if (json == null)
             {
@@ -22,10 +22,10 @@ namespace BusinessLogicLayer.Telegram
             }
             else
             {
-                return JsonSerializer.Deserialize<Dictionary<long, List<string>>>(json);
+                return JsonSerializer.Deserialize<Dictionary<long, User>>(json);
             }
         }
-        public static void SaveUserDictionary(Dictionary<long, List<string>> dic)
+        public static void SaveUserDictionary(Dictionary<long, User> dic)
         {
             string json = UserDictionarySerialize(dic);
 
@@ -50,9 +50,9 @@ namespace BusinessLogicLayer.Telegram
         }
 
         private const string testsDictionaryJson = @"Tests.json";
-        public static string TestsObservableCollectionSerialize(ObservableCollection<Test>tests)
+        public static string TestsObservableCollectionSerialize(ObservableCollection<Test> tests)
         {
-            return JsonSerializer.Serialize<ObservableCollection< Test >> (tests);
+            return JsonSerializer.Serialize<ObservableCollection<Test>>(tests);
         }
 
         public static ObservableCollection<Test> TestsObservableCollectionDecerialize(string json)
@@ -63,7 +63,7 @@ namespace BusinessLogicLayer.Telegram
             }
             else
             {
-                return JsonSerializer.Deserialize <ObservableCollection< Test >> (json);
+                return JsonSerializer.Deserialize<ObservableCollection<Test>>(json);
             }
         }
 
