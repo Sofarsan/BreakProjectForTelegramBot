@@ -1,26 +1,14 @@
 using BusinessLogicLayer;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading; //для таймера
-using BusinessLogicLayer;
 using System;
 using BusinessLogicLayer.Telegram;
 using System.Collections.ObjectModel;
-using Telegram.Bot;
-using Telegram.Bot.Exceptions;
-using Telegram.Bot.Extensions.Polling;
-using Telegram.Bot.Types.Enums;
-using Telegram.Bot.Types.ReplyMarkups;
 
 namespace BreakProjectForTelegramBot
 {
@@ -54,7 +42,6 @@ namespace BreakProjectForTelegramBot
             _labels = new List<string>();
             InitializeComponent();
             LoadTestFromJson();
-            ListBox_BotMessages.ItemsSource = _labels;
 
             ComboBoxGroup.ItemsSource = groups;
             ComboBoxTest.ItemsSource = _tests;
@@ -96,14 +83,9 @@ namespace BreakProjectForTelegramBot
             _telega.Start();
         }
 
-        private void ButtonSend_Click(object sender, RoutedEventArgs e)
-        {
-            _telega.Send(TextBox_Send.Text);
-        }
-
         private void OnTick(object sender, EventArgs e)
         {
-            ListBox_BotMessages.Items.Refresh();
+            
         }
 
         private void ListQuestionsUpdate() //попробовать переделать
@@ -446,7 +428,7 @@ namespace BreakProjectForTelegramBot
         }
         private void MessageBox_Warning()
         {
-            MessageBox.Show("Ты что дурачек ?", "Stop", MessageBoxButton.OK, MessageBoxImage.Warning); //поменять
+            MessageBox.Show("Are u stupid?", "Stop it", MessageBoxButton.OK, MessageBoxImage.Warning); //поменять
         }
 
         public async void Button_SendQuestion_Click(object sender, RoutedEventArgs e)

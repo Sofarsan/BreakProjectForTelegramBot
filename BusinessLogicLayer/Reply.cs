@@ -12,7 +12,5 @@ namespace BusinessLogicLayer
         public List<string> Questions { get; set; } = new List<string>();
         public List<string> UserAnswer { get; set; } = new List<string>();
 
-        
-
     }
 }
