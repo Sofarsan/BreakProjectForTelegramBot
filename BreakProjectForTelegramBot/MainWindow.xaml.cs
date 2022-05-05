@@ -433,7 +433,7 @@ namespace BreakProjectForTelegramBot
 
         public async void Button_SendQuestion_Click(object sender, RoutedEventArgs e)
         {
-            _telega.SendQuestion(QuestionMock.getQuestion()); //УДАЛИТЬ
+            Excel.DisplayInExcel((UserGroup)ComboBoxGroup.SelectedItem);
         }
 
         private void Refresh_Click(object sender, RoutedEventArgs e)
