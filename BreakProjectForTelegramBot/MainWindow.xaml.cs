@@ -79,7 +79,7 @@ namespace BreakProjectForTelegramBot
         public void LoadTestFromJson()
         {
             _tests = BaseSerialize.LoadTestsDictionary();
-            foreach(Test test in _tests)
+            foreach (Test test in _tests)
             {
                 ComboBox_ChooseTest.Items.Add(test.name);
             }
@@ -129,7 +129,7 @@ namespace BreakProjectForTelegramBot
             ListQuestions.SelectedItem = sender;
         }
 
-        private void CheckBox_Checked(object sender, RoutedEventArgs e) 
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             CheckBox chk = (CheckBox)sender;
 
@@ -211,7 +211,7 @@ namespace BreakProjectForTelegramBot
             {
                 MessageBox_Warning();
             }
-            
+
         }
 
         private void Button_DeleteOptionAnswer_Click(object sender, RoutedEventArgs e)
@@ -235,8 +235,12 @@ namespace BreakProjectForTelegramBot
             {
                 MessageBox_Warning();
             }
-            _actual._duration = ((ComboBoxItem)ComboBoxTimer.SelectedValue).Content.ToString();
-            //_actual._endTime = (DateTime.Now + _actual._duration);
+            int minutes = Convert.ToInt32(((ComboBoxItem)ComboBoxTimer.SelectedValue).Content.ToString());
+
+            DateTime now = DateTime.Now;
+            TimeSpan ts = TimeSpan.FromMinutes(minutes);
+            DateTime endTime = now.Add(ts);
+            _actual._endTime = endTime.ToShortTimeString();
         }
 
 
@@ -360,20 +364,21 @@ namespace BreakProjectForTelegramBot
             user.FirstName = WriteFirstName.Text;
             UsersInGroup.Items.Refresh();
             DataGridListUser.Items.Refresh();
+            BaseSerialize.SaveUserDictionary(BaseBot.NameBase);
         }
 
         private void AddNewUserInGroup_Click(object sender, RoutedEventArgs e)
         {
             int index = WriteNamenewGroup.SelectedIndex;
-            KeyValuePair<long, List<string>> selectedItem = ((KeyValuePair<long, List<string>>)DataGridListUser.SelectedItem);
-            User user = new User(selectedItem.Value[0], selectedItem.Value[1], selectedItem.Key);
-            if (groups[index].Users.Contains(user))
+            KeyValuePair<long, User> selectedItem = ((KeyValuePair<long, User>)DataGridListUser.SelectedItem);
+            
+            if (groups[index].Users.Contains(selectedItem.Value))
             {
                 return;
             }
-            groups[index].Users.Add(user);
-            
-            UsersInGroup.Items.Refresh();
+            groups[index].Users.Add(selectedItem.Value);
+
+            UsersInGroup.Items.Refresh();           
         }
 
         private void UsersInGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)

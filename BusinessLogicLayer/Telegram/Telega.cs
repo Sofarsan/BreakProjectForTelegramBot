@@ -1,8 +1,8 @@
 using BusinessLogicLayer.Telegram;
+using BusinessLogicLayer;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
-
 
 
 namespace BusinessLogicLayer
@@ -28,7 +28,7 @@ namespace BusinessLogicLayer
         { 
             if (!BaseBot.NameBase.ContainsKey(id))
             {
-                BaseBot.NameBase.Add(id, new List<string> { firstName, lastName });
+                BaseBot.NameBase.Add(id, new User(firstName, lastName, id));
                 BaseSerialize.SaveUserDictionary(BaseBot.NameBase);
 
                 await _client.SendTextMessageAsync(new ChatId(id), "Hello");
@@ -94,6 +94,7 @@ namespace BusinessLogicLayer
                 //    + update.Message.Chat.LastName + " "
                 //    + update.Message.Text;
                 //_onMessage(s);
+                //if (update.Message.Date.CompareTo(user.ongoingTest.test.))
             }
         }
 
@@ -111,7 +112,6 @@ namespace BusinessLogicLayer
             string name = user.ongoingTest.test.name;
             int count = user.ongoingTest.test.GetListQuestion().Count;
             var duration = user.ongoingTest.test._duration;
-            var endTime = user.ongoingTest.test._endTime;
 
             string message = $"Имя теста : {name} \n Количество вопросов: {count} \n Время прохождения: {duration}";
 
