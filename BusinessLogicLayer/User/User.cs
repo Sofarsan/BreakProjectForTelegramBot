@@ -11,13 +11,12 @@ namespace BusinessLogicLayer
         public string? LastName { get; set; }
         public string? FirstName { get; set; }
         public long Id { get; set; }
-        public OngoingTest? ongoingTest { get; set; } = null;
+        public OngoingTest? ongoingTest { get; set; }
         public User(string lastName, string firstName, long id)
         {
             LastName = lastName;
             FirstName = firstName;
             Id = id;
-
         }
         public override string ToString()
         {
