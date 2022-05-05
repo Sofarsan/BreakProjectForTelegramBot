@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
-
+using System.Xml;
+using System.IO;
 
 
 namespace BusinessLogicLayer
@@ -20,18 +21,9 @@ namespace BusinessLogicLayer
         public List<User> UserList { get; private set; } //?
         public ObservableCollection<UserGroup> groups;
 
-        public class UserAnswer
-        {
-            public Question question;
-            public Object answer;
-        }
-
-        private Dictionary<long, List<UserAnswer>> QuestionDict { get; set; }
-
         public Telega(string token, Action<string> OnMessege)
         {
             _client = new TelegramBotClient(token);
-            QuestionDict = new Dictionary<long, List<UserAnswer>>();
             _onMessage = OnMessege;
         }
 
@@ -73,37 +65,133 @@ namespace BusinessLogicLayer
 
         public async void SendQuestion(Question question)
         {
-            List<String> oA = question.GetOptionAnswerStringList();
-            List<KeyboardButton> optionAnswers = new List<KeyboardButton>();
-
-
-            foreach (string str in oA)
+            foreach (UserGroup group in groups)
             {
-                optionAnswers.Add(str);
-            }
-
-            foreach (User user in UserList)
-            {
-                if (QuestionDict.ContainsKey(user.Id))
+                foreach (User user in group.Users)
                 {
-                    UserAnswer answer = new UserAnswer();
-                    answer.question = question;
-                    QuestionDict[user.Id].Add(answer);
+                    SendQuestion(question, user);
                 }
-                else
-                {
-                    QuestionDict.Add(user.Id, new List<UserAnswer>());
-                    UserAnswer answer = new UserAnswer();
-                    answer.question = question;
-                    QuestionDict[user.Id].Add(answer);
-                }
-                ReplyKeyboardMarkup replyKeyboard = new ReplyKeyboardMarkup(optionAnswers);
-
-                //    await _client.SendTextMessageAsync(new ChatId(user.Id), question._questionText, replyMarkup: replyKeyboard);
             }
         }
 
-            private async Task HandleReceive(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
+        public async void SendQuestion(Question question, User user)
+        {
+
+
+            long chatId = 0;
+            foreach (long id in BaseBot.NameBase.Keys)
+            {
+                var fio = BaseBot.NameBase[id];
+                if (fio[1] == user.FirstName && fio[0] == user.LastName)
+                    chatId = id;
+
+            }
+            if (chatId != 0)
+            {
+                switch (question._type)
+                {
+                    case QuestionType.QuestionInput:
+                        {
+                            await _client.SendTextMessageAsync(new ChatId(chatId), question._questionText, replyMarkup: new ReplyKeyboardRemove());
+                        }
+                        break;
+                    case QuestionType.QuestionSingleSelect:
+                        {
+                            List<String> oA = question.GetOptionAnswerStringList();
+                            List<KeyboardButton> optionAnswers = new List<KeyboardButton>();
+
+                            foreach (string str in oA)
+                            {
+                                optionAnswers.Add(str);
+                            }
+                            ReplyKeyboardMarkup replyKeyboard = new ReplyKeyboardMarkup(optionAnswers);
+                            await _client.SendTextMessageAsync(new ChatId(chatId), question._questionText, replyMarkup: replyKeyboard);
+                        }
+                        break;
+                    case QuestionType.QuestionYesNo:
+                        {
+                            List<KeyboardButton> optionAnswers = new List<KeyboardButton>();
+                            optionAnswers.Add("Yes");
+                            optionAnswers.Add("No");
+                            ReplyKeyboardMarkup replyKeyboard = new ReplyKeyboardMarkup(optionAnswers);
+                            await _client.SendTextMessageAsync(new ChatId(chatId), question._questionText, replyMarkup: replyKeyboard);
+                        }
+                        break;
+                    case QuestionType.QuestionSort:
+                        {
+                            List<String> oA = question.GetOptionAnswerStringList();
+                            List<KeyboardButton> optionAnswers = new List<KeyboardButton>();
+
+                            foreach (string str in oA)
+                            {
+                                optionAnswers.Add(str);
+                            }
+                            ReplyKeyboardMarkup replyKeyboard = new ReplyKeyboardMarkup(optionAnswers);
+                            await _client.SendTextMessageAsync(new ChatId(chatId), question._questionText, replyMarkup: replyKeyboard);
+                        }
+                        break;
+                    case QuestionType.QuestionMultiSelect:
+                        {
+                            List<String> oA = question.GetOptionAnswerStringList();
+                            List<KeyboardButton> optionAnswers = new List<KeyboardButton>();
+
+                            foreach (string str in oA)
+                            {
+                                optionAnswers.Add(str);
+                            }
+                            optionAnswers.Add("Ready");
+                            ReplyKeyboardMarkup replyKeyboard = new ReplyKeyboardMarkup(optionAnswers);
+                            await _client.SendTextMessageAsync(new ChatId(chatId), question._questionText, replyMarkup: replyKeyboard);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+        }
+        public async void SendNextQuestion(User user)
+        {
+            user.ongoingTest._currentQuestion += 1;
+            if (user.ongoingTest._currentQuestion >= user.ongoingTest.test.questionList.Count)
+            {
+                saveTestResult(user);
+                await _client.SendTextMessageAsync(new ChatId(user.Id), "Test finished!", replyMarkup: new ReplyKeyboardRemove());
+                return;
+            }
+            SendQuestion(user.ongoingTest.test.questionList[user.ongoingTest._currentQuestion], user);
+        }
+
+        public void saveTestResult(User user)
+        {
+            //save answers to json
+            XmlDocument doc = new XmlDocument();
+            using (XmlWriter writer = doc.CreateNavigator().AppendChild())
+            {
+                // Do this directly 
+                writer.WriteStartDocument();
+                writer.WriteStartElement("test");
+                for(int i = 0; i < user.ongoingTest.test.questionList.Count; i++)
+                {
+                    writer.WriteStartElement("question" + i.ToString());
+
+                    writer.WriteStartElement("text");
+                    writer.WriteValue(user.ongoingTest.test.questionList[i]._questionText);
+                    writer.WriteEndElement();
+
+                    writer.WriteStartElement("answer");
+                    writer.WriteValue(string.Join(";", user.ongoingTest._answers[i]));
+                    writer.WriteEndElement();
+
+                    writer.WriteEndElement();
+                }
+                writer.WriteEndElement();
+                writer.WriteEndDocument();
+            }
+            doc.Save(user.FirstName + "_" + user.LastName + "_" + user.ongoingTest.test.name + ".xml");
+        }
+
+        private async Task HandleReceive(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
             {
                 if (update.Message != null && update.Message.Text != null)
                 {
@@ -113,31 +201,80 @@ namespace BusinessLogicLayer
                     // if message = "/register" => append to the list of users
                     StartingButton(update.Message.Chat.Id, update.Message.Chat.FirstName, update.Message.Chat.LastName);
 
-                    //if (UserList.Where(u => u.Id == update.Message.Chat.Id).ToArray().Length == 0)
-                    //{
-                    //    User user = new User(update.Message.Chat.LastName, update.Message.Chat.FirstName, update.Message.Chat.Id);
-                    //    UserList.Add(user);
-                    //}
-                    //string s = update.Message.Chat.FirstName + " "
-                    //    + update.Message.Chat.LastName + " "
-                    //    + update.Message.Text;
-                    //_onMessage(s);
-
-                    int UserIndex = -1;
-                    foreach (User user in UserList)
+                //if (UserList.Where(u => u.Id == update.Message.Chat.Id).ToArray().Length == 0)
+                //{
+                //    User user = new User(update.Message.Chat.LastName, update.Message.Chat.FirstName, update.Message.Chat.Id);
+                //    UserList.Add(user);
+                //}
+                //string s = update.Message.Chat.FirstName + " "
+                //    + update.Message.Chat.LastName + " "
+                //    + update.Message.Text;
+                //_onMessage(s);
+                foreach(UserGroup group in groups)
+                {
+                    foreach(User user in group.Users)
                     {
                         if (user.Id == update.Message.Chat.Id)
                         {
-                            //foreach (UserGroup group in groups)
-                            //{
-                            //    if (group.Users.Contains(user))
-                            //    {
-
-                            //    }
-                            //}
-                            QuestionDict[user.Id][QuestionDict[user.Id].Count - 1].answer = new Object();//���� ���� �������� ������(��������� ������� ������)� ����� ������� �������� �����
+                            if (user.ongoingTest == null)
+                                return;
+                            if(update.Message.Text == "Start")
+                            {
+                                if (user.ongoingTest._currentQuestion > user.ongoingTest.test.questionList.Count)
+                                {
+                                    await _client.SendTextMessageAsync(new ChatId(user.Id), "Test finished!", replyMarkup: new ReplyKeyboardRemove());
+                                    saveTestResult(user);
+                                    return;
+                                }
+                                SendQuestion(user.ongoingTest.test.questionList[user.ongoingTest._currentQuestion], user);
+                                return;
+                            }
+                            Question question = user.ongoingTest.test.questionList[user.ongoingTest._currentQuestion];
+                            if (user.ongoingTest._answers.Count <= user.ongoingTest._currentQuestion)
+                            {
+                                user.ongoingTest._answers.Add(new List<string>());
+                                
+                            }
+                            user.ongoingTest._answers[user.ongoingTest._answers.Count - 1].Add(update.Message.Text);
+                            switch (question._type)
+                            {
+                                case QuestionType.QuestionInput:
+                                    {
+                                        SendNextQuestion(user);
+                                    }
+                                    break;
+                                case QuestionType.QuestionSingleSelect:
+                                    {
+                                        SendNextQuestion(user);
+                                    }
+                                    break;
+                                case QuestionType.QuestionYesNo:
+                                    {
+                                        SendNextQuestion(user);
+                                    }
+                                    break;
+                                case QuestionType.QuestionSort:
+                                    {
+                                        if (user.ongoingTest._answers.Last().Count == question._optionAnswer.Count)
+                                            SendNextQuestion(user);
+                                    }
+                                    break;
+                                case QuestionType.QuestionMultiSelect:
+                                    {
+                                        if (update.Message.Text == "Ready")
+                                        {
+                                            user.ongoingTest._answers[user.ongoingTest._answers.Count - 1].RemoveAt(user.ongoingTest._answers[user.ongoingTest._answers.Count - 1].Count - 1);
+                                            SendNextQuestion(user);
+                                        }
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                     }
+                }    
+                return;        
                 }
             }
 
@@ -171,6 +308,6 @@ namespace BusinessLogicLayer
                 await _client.SendTextMessageAsync(new ChatId(user.Id), message, replyMarkup: replyKeyboard);
 
             }
-        }   
+    }
 }
 
