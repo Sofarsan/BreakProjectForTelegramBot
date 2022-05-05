@@ -11,7 +11,6 @@ namespace BusinessLogicLayer
     {
         public string _questionText { get; set; }
         public QuestionType _type { get; set; }
-        public List<string> Answer { get; set; }
         public List<OptionAnswer> _optionAnswer{ get; set; }
 
     public Question(){ }

@@ -104,8 +104,8 @@
                             </TransformGroup>
                         </Button.RenderTransform>
                     </Button>
-                    <Button Content="START BOT" Margin="0,5,0,0" Background="#FFC6ECB6" FontSize="15" FontWeight="Bold" Click="ButtonStart_Click" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="93" Grid.Column="1"/>
-                    <Button x:Name="Button_SendQuestion" Content="SendQuestion" Margin="10,328,0,0" VerticalAlignment="Top" Height="42" Click="Button_SendQuestion_Click" HorizontalAlignment="Left" Width="93" Grid.Column="2"/>
+                    <Button Content="START BOT" Margin="10,257,0,0" Background="#FFC6ECB6" FontSize="15" FontWeight="Bold" Click="ButtonStart_Click" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="93" Grid.Column="2"/>
+                    <Button x:Name="Button_SaveReport" Content="Save Report" Margin="11,335,0,0" VerticalAlignment="Top" Height="42" Click="Button_SaveReport_Click" HorizontalAlignment="Left" Width="93" Grid.Column="2"/>
                     <ComboBox x:Name="ComboBoxGroup" Width="92" Margin="0,258,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Center"  />
                     <ComboBox x:Name="ComboBoxTest" Width="92" Margin="74,257,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="2" />
                     <TextBlock TextWrapping="Wrap" Text="Choose the group" Margin="10,229,0,0" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="132" Grid.ColumnSpan="2"/>

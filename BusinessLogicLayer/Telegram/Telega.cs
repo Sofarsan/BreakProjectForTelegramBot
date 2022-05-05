@@ -61,16 +61,16 @@ namespace BusinessLogicLayer
             //}
         }
 
-        public async void SendQuestion(Question question)
-        {
-            foreach (UserGroup group in groups)
-            {
-                foreach (User user in group.Users)
-                {
-                    SendQuestion(question, user);
-                }
-            }
-        }
+        //public async void SendQuestion(Question question)
+        //{
+        //    foreach (UserGroup group in groups)
+        //    {
+        //        foreach (User user in group.Users)
+        //        {
+        //            SendQuestion(question, user);
+        //        }
+        //    }
+        //}
 
         public async void SendQuestion(Question question, User user)
         {
@@ -162,6 +162,9 @@ namespace BusinessLogicLayer
 
         public void saveTestResult(User user)
         {
+
+            //Excel.DisplayInExcel(user.ongoingTest.test);
+
             //save answers to json
             XmlDocument doc = new XmlDocument();
             using (XmlWriter writer = doc.CreateNavigator().AppendChild())
