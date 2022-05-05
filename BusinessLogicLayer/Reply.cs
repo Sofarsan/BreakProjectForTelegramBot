@@ -16,7 +16,7 @@ namespace BusinessLogicLayer
         {
             Name = user.FirstName+user.LastName;
             Question = question._questionText;
-            UserAnswer = answer.Answer;
+            UserAnswer = answer.Answers;
         }
 
     }

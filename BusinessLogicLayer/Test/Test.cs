@@ -28,9 +28,20 @@ namespace BusinessLogicLayer
         {
             return questionList;
         }
-        public override string ToString()
+        public Test GetClone()
         {
-            return name;
+            List<Question> newQ = new List<Question>();
+            foreach (Question question in questionList)
+            {
+                newQ.Add(question.Clone());
+            }
+            return new Test()
+            {
+                name = this.name,
+                questionList = newQ,
+                _duration = this._duration,
+                _endTime = this._endTime
+            };
         }
     }
 }
