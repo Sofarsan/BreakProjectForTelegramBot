@@ -460,6 +460,7 @@ namespace BreakProjectForTelegramBot
             {
                 OngoingTest ongoingTest = new OngoingTest(test);
                 user.ongoingTest = ongoingTest;
+                BaseSerialize.SaveUserDictionary(BaseBot.NameBase);
                 _telega.AskConfirmation(user);
             }
         }
