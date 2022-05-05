@@ -17,14 +17,12 @@ namespace BusinessLogicLayer
     public class Telega
     {
         private TelegramBotClient _client;
-        private Action<string> _onMessage;
         public List<User> UserList { get; private set; } //?
         public ObservableCollection<UserGroup> groups;
 
         public Telega(string token, Action<string> OnMessege)
         {
             _client = new TelegramBotClient(token);
-            _onMessage = OnMessege;
         }
 
         public void Start()

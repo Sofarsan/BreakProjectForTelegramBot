@@ -80,7 +80,7 @@
                         <ColumnDefinition Width="573*"/>
                     </Grid.ColumnDefinitions>
 
-                    <DataGrid x:Name="DataGridListUser" AutoGenerateColumns ="False" Grid.ColumnSpan="3" SelectionMode="Extended" Margin="0,33,462,22">
+                    <DataGrid x:Name="DataGridListUser" AutoGenerateColumns ="False" Grid.ColumnSpan="3" SelectionMode="Extended" Margin="0,33,462,192">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Path=Value.FirstName}" IsReadOnly="True" Header="FirstName" Width="110"/>
                             <DataGridTextColumn Binding="{Binding Path=Value.LastName}" IsReadOnly="True" Header="LastName" Width="110"/>
@@ -104,6 +104,13 @@
                             </TransformGroup>
                         </Button.RenderTransform>
                     </Button>
+                    <Button Content="START BOT" Margin="10,257,0,0" Background="#FFC6ECB6" FontSize="15" FontWeight="Bold" Click="ButtonStart_Click" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="93" Grid.Column="2"/>
+                    <Button x:Name="Button_SendQuestion" Content="SendQuestion" Margin="37,328,0,0" VerticalAlignment="Top" Height="42" Click="Button_SendQuestion_Click" HorizontalAlignment="Left" Width="74" Grid.Column="2"/>
+                    <ComboBox x:Name="ComboBoxGroup" Width="92" Margin="0,258,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Center"  />
+                    <ComboBox x:Name="ComboBoxTest" Width="89" Margin="5,257,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" />
+                    <TextBlock TextWrapping="Wrap" Text="Choose the group" Margin="10,229,0,0" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="132" Grid.ColumnSpan="2"/>
+                    <TextBlock TextWrapping="Wrap" Margin="5,229,0,0" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="132" Grid.Column="1" Grid.ColumnSpan="2"><Run Text="Choose the test"/><LineBreak/><Run/></TextBlock>
+                    <Button x:Name="SendTestButton" Content="SEND TEST" Margin="10,294,0,0" Background="#FFC6ECB6" FontSize="15" FontWeight="Bold" Click="SendTestButton_Click" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="93" Grid.Column="2"/>
                     <Button x:Name="AddNewUserinGroup" Content="Add to Group" HorizontalAlignment="Left" Height="25" Margin="204,216,0,0" VerticalAlignment="Top" Width="130" Grid.Column="2" Click="AddNewUserInGroup_Click"/>
                     <Button x:Name="DeleteUserinGroup" Content="Delete group" Grid.Column="2"  Height="25" Width="130" HorizontalAlignment="Left" Margin="413,174,0,0" VerticalAlignment="Top" Click="DeleteGroup_Click"/>
                     <Button x:Name="AddNewGroup" Content="Create new Group" Height="25" Margin="301,36,0,0" VerticalAlignment="Top" Grid.Column="2" Click="AddNewGroup_Click" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="99">
@@ -118,33 +125,8 @@
                     </Button>
                     <Button x:Name="DeleteUserinGroup_Copy" Content="Delete user" Grid.Column="2"  Height="25" Width="130" HorizontalAlignment="Left" Margin="413,358,0,0" VerticalAlignment="Top" Click="DeleteUser_Click"/>
                     <TextBox Text="Write first name..." x:Name="WriteFirstName" HorizontalAlignment="Left" Margin="413,288,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" Height="25" TextDecorations="{x:Null}" FontWeight="Normal" Grid.Column="2"/>
-
                 </Grid>
             </TabItem>
-            <TabItem Header="Bot/Test Manager" Height="22" Margin="-2,0,-2,0" VerticalAlignment="Bottom">
-                <Grid HorizontalAlignment="Right" Width="794">
-                    <Grid.RowDefinitions>
-                        <RowDefinition></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <ListBox x:Name="ListBox_BotMessages" Margin="417,20,0,0" d:ItemsSource="{d:SampleData ItemCount=5}" Background="#FFB2DE9F" Height="136" VerticalAlignment="Top" HorizontalAlignment="Left" Width="169"/>
-                    <Button x:Name="ButtonSend" Content="Send message" Margin="238,47,0,0" Background="#FFC6ECB6" FontSize="15" FontWeight="Normal" Click="ButtonSend_Click" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="122"/>
-                    <Button Content="START BOT" Margin="267,7,0,0" Background="#FFC6ECB6" FontSize="15" FontWeight="Bold" Click="ButtonStart_Click" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="93"/>
-                    <TextBox x:Name="TextBox_Send" Text="Write to the bot..." Margin="33,47,0,0" HorizontalAlignment="Left" Width="184" FontStyle="Italic" Background="#FFFBE9E9" Height="29" VerticalAlignment="Top" />
-
-                    <Button x:Name="Button_SendQuestion" Content="SendQuestion" Margin="323,291,0,0" VerticalAlignment="Top" Height="42" Click="Button_SendQuestion_Click" HorizontalAlignment="Left" Width="74"/>
-                    <ComboBox x:Name="ComboBoxGroup" Width="92" Margin="43,134,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left"  />
-                    <ComboBox x:Name="ComboBoxTest" Width="89" Margin="238,134,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <TextBlock TextWrapping="Wrap" Text="Choose the group" Margin="43,110,0,0" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="132"/>
-                    <TextBlock TextWrapping="Wrap" Margin="239,110,0,0" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="132"><Run Text="Choose the test"/><LineBreak/><Run/></TextBlock>
-                    <Button x:Name="SendTestButton" Content="SEND TEST" Margin="139,185,0,0" Background="#FFC6ECB6" FontSize="15" FontWeight="Bold" Click="SendTestButton_Click" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="93"/>
-                </Grid>
-            </TabItem>
-
         </TabControl>
     </Grid>
-
-
 </Window>

@@ -25,6 +25,5 @@ namespace BusinessLogicLayer
         {
             return NameGroup;
         }
-        
     }
 }
