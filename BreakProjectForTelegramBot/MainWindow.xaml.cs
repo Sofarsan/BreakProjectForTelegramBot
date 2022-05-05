@@ -16,6 +16,11 @@ using BusinessLogicLayer;
 using System;
 using BusinessLogicLayer.Telegram;
 using System.Collections.ObjectModel;
+using Telegram.Bot;
+using Telegram.Bot.Exceptions;
+using Telegram.Bot.Extensions.Polling;
+using Telegram.Bot.Types.Enums;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace BreakProjectForTelegramBot
 {
@@ -38,7 +43,8 @@ namespace BreakProjectForTelegramBot
             new UserGroup("Другие"),
             UsersMock.GetGroupNumberOne(),
             UsersMock.GetGroupNumberTwo(),
-            UsersMock.GetGroupNumberTree()
+            UsersMock.GetGroupNumberTree(),
+            UsersMock.GetGroupNumberFour()
         };
 
         public MainWindow()
@@ -70,14 +76,6 @@ namespace BreakProjectForTelegramBot
         /// Refresh list of users in the UI according to the users currently connected
         /// to our bot
         /// </summary>
-        public void RefreshListOfUsers()
-        {
-            DataGridListUser.Items.Refresh();
-            //foreach (User user in _telega.UserList)
-            //{
-            //    DataGridListUser.Items.Add(user);
-            //}
-        }
 
         public void LoadTestFromJson()
         {
@@ -238,6 +236,8 @@ namespace BreakProjectForTelegramBot
             {
                 MessageBox_Warning();
             }
+            _actual._duration = ((ComboBoxItem)ComboBoxTimer.SelectedValue).Content.ToString();
+            //_actual._endTime = (DateTime.Now + _actual._duration);
         }
 
 
@@ -360,19 +360,20 @@ namespace BreakProjectForTelegramBot
             user.LastName = WriteLastName.Text;
             user.FirstName = WriteFirstName.Text;
             UsersInGroup.Items.Refresh();
+            DataGridListUser.Items.Refresh();
         }
 
         private void AddNewUserInGroup_Click(object sender, RoutedEventArgs e)
         {
             int index = WriteNamenewGroup.SelectedIndex;
-            foreach (User user in DataGridListUser.SelectedItems)
+            KeyValuePair<long, List<string>> selectedItem = ((KeyValuePair<long, List<string>>)DataGridListUser.SelectedItem);
+            User user = new User(selectedItem.Value[0], selectedItem.Value[1], selectedItem.Key);
+            if (groups[index].Users.Contains(user))
             {
-                if (groups[index].Users.Contains(user))
-                {
-                    return;
-                }
-                groups[index].Users.Add(user);
+                return;
             }
+            groups[index].Users.Add(user);
+            
             UsersInGroup.Items.Refresh();
         }
 
@@ -450,7 +451,8 @@ namespace BreakProjectForTelegramBot
 
         private void Refresh_Click(object sender, RoutedEventArgs e)
         {
-            RefreshListOfUsers();
+            DataGridListUser.Items.Refresh();
+            //RefreshListOfUsers();
         }
 
         private void DeleteUser_Click(object sender, RoutedEventArgs e)
@@ -459,6 +461,19 @@ namespace BreakProjectForTelegramBot
             if (items.CanRemove)
             {
                 items.Remove(UsersInGroup.SelectedItem);
+            }
+        }
+
+        private void SendTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            UserGroup group = (UserGroup)ComboBoxGroup.SelectedItem;
+            Test test = (Test)ComboBoxTest.SelectedItem;
+
+            foreach (User user in group.Users)
+            {
+                OngoingTest ongoingTest = new OngoingTest(test);
+                user.ongoingTest = ongoingTest;
+                _telega.AskConfirmation(user);
             }
         }
     }

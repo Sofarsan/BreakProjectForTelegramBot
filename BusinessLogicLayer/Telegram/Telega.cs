@@ -6,11 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Telegram.Bot;
-using Telegram.Bot.Exceptions;
-using Telegram.Bot.Extensions.Polling;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
+
 
 
 namespace BusinessLogicLayer
@@ -35,7 +33,6 @@ namespace BusinessLogicLayer
             _client = new TelegramBotClient(token);
            QuestionDict = new Dictionary<long, List<UserAnswer>>();
             _onMessage = OnMessege;
-            UserList = new List<User>();
         }
 
         public void Start()
@@ -43,11 +40,11 @@ namespace BusinessLogicLayer
             _client.StartReceiving(HandleReceive, HandleError);
         }
 
-        public async void StartingButton(long id, string name)
+        public async void StartingButton(long id, string firstName, string lastName)
         { 
             if (!BaseBot.NameBase.ContainsKey(id))
             {
-                BaseBot.NameBase.Add(id, name);
+                BaseBot.NameBase.Add(id, new List<string> { firstName, lastName });
                 BaseSerialize.SaveUserDictionary(BaseBot.NameBase);
 
                 await _client.SendTextMessageAsync(new ChatId(id), "Hello");
@@ -56,34 +53,34 @@ namespace BusinessLogicLayer
 
         public async void Send(string s)
         {
-            foreach (User user in UserList)
-            {
-                ReplyKeyboardMarkup replyKeyboard = new ReplyKeyboardMarkup(
-                      new[]
-                      {
-                            new []
-                            {
-                                new KeyboardButton("Yes"),
-                            },
-                            new []
-                            {
-                                 new KeyboardButton("No"),
-                            }
-                      });
-                await _client.SendTextMessageAsync(new ChatId(user.Id), s, replyMarkup: replyKeyboard);
-            }
+            //foreach (User user in UserList)
+            //{
+            //    ReplyKeyboardMarkup replyKeyboard = new ReplyKeyboardMarkup(
+            //          new[]
+            //          {
+            //                new []
+            //                {
+            //                    new KeyboardButton("Yes"),
+            //                },
+            //                new []
+            //                {
+            //                     new KeyboardButton("No"),
+            //                }
+            //          });
+            //    await _client.SendTextMessageAsync(new ChatId(user.Id), s, replyMarkup: replyKeyboard);
+            //}
         }
 
         public async void SendQuestion(Question question)
         {
-            List<String> oA = question.GetOptionAnswerStringList();
-            List<KeyboardButton> optionAnswers = new List<KeyboardButton>();
+            //List<String> oA = question.GetOptionAnswerStringList();
+            //List<KeyboardButton> optionAnswers = new List<KeyboardButton>();
 
 
-            foreach (string str in oA)
-            {
-                optionAnswers.Add(str);
-            }
+            //foreach (string str in oA)
+            //{
+            //    optionAnswers.Add(str);
+            //}
 
             foreach (User user in UserList)
             {
@@ -102,8 +99,8 @@ namespace BusinessLogicLayer
                 }
                 ReplyKeyboardMarkup replyKeyboard = new ReplyKeyboardMarkup(optionAnswers);
 
-                await _client.SendTextMessageAsync(new ChatId(user.Id), question._questionText, replyMarkup: replyKeyboard);
-            }
+            //    await _client.SendTextMessageAsync(new ChatId(user.Id), question._questionText, replyMarkup: replyKeyboard);
+            //}
         }
 
         private async Task HandleReceive(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
@@ -138,15 +135,43 @@ namespace BusinessLogicLayer
 
                         //    }
                         //}
-                        QuestionDict[user.Id][QuestionDict[user.Id].Count - 1].answer = new Object();//ищем куда записали вопрос(последний элемент списка)к этому вопросу записали ответ
+                        QuestionDict[user.Id][QuestionDict[user.Id].Count - 1].answer = new Object();//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ(пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
                     }
                 }
             }
         }
+
+
         private Task HandleError(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
         }
+
+
+
+        public async void AskConfirmation(User user)
+
+        {
+            string name = user.ongoingTest.test.name;
+            int count = user.ongoingTest.test.GetListQuestion().Count;
+            var duration = user.ongoingTest.test._duration;
+            var endTime = user.ongoingTest.test._endTime;
+
+            string message = $"РРјСЏ С‚РµСЃС‚Р° : {name} \n РљРѕР»РёС‡РµСЃС‚РІРѕ РІРѕРїСЂРѕСЃРѕРІ: {count} \n Р’СЂРµРјСЏ РїСЂРѕС…РѕР¶РґРµРЅРёСЏ: {duration}";
+
+            ReplyKeyboardMarkup replyKeyboard = new ReplyKeyboardMarkup(
+
+                  new[]
+
+                  {
+                       new KeyboardButton("Start "),
+
+                  });
+
+            await _client.SendTextMessageAsync(new ChatId(user.Id), message, replyMarkup: replyKeyboard);
+
+        }
     }
+
 
 }

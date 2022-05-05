@@ -9,7 +9,7 @@ namespace BusinessLogicLayer.Telegram
 {
     public static class BaseBot
     {
-        public static Dictionary<long, string> NameBase { get; set; } = new Dictionary<long, string>();
+        public static Dictionary<long, List<string>> NameBase { get; set; } = new Dictionary<long, List<string>>();
         public static Dictionary<long, List<string>> AnswerBase { get; set; } = new Dictionary<long, List <string>>();
     }
     public class AnswersUser //перенести

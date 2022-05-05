@@ -33,15 +33,15 @@
                         <ComboBoxItem Content="QuestionSort"/>
                     </ComboBox>
                     <TextBox x:Name="TextBox_questionText" HorizontalAlignment="Left" Margin="0,101,0,0" TextWrapping="Wrap" Text="Write the question..." VerticalAlignment="Top" Width="397" Height="84" TextDecorations="{x:Null}" FontStyle="Italic" FontWeight="Normal" PreviewMouseLeftButtonDown="TextBox_questionText_PreviewMouseLeftButtonDown"/>
-                    <TextBox x:Name="TestNameTextBox" HorizontalAlignment="Left" Height="29" Margin="93,10,0,0" TextWrapping="Wrap" Text="Write test name..." VerticalAlignment="Top" Width="192" FontSize="17"  FontStyle="Italic" PreviewMouseLeftButtonDown="TestNameTextBox_PreviewMouseLeftButtonDown" />
+                    <TextBox x:Name="TestNameTextBox" HorizontalAlignment="Left" Height="29" Margin="10,12,0,0" TextWrapping="Wrap" Text="Write test name..." VerticalAlignment="Top" Width="192" FontSize="17"  FontStyle="Italic" PreviewMouseLeftButtonDown="TestNameTextBox_PreviewMouseLeftButtonDown" />
                     <Button x:Name="Button_Create" Content="Create" HorizontalAlignment="Left" Margin="423,313,0,0" VerticalAlignment="Top" Height="42" Width="59" Click="Button_Create_Click"/>
                     <TextBlock TextWrapping="Wrap" Margin="10,58,0,0" FontSize="15" HorizontalAlignment="Left" Width="114" Height="27" VerticalAlignment="Top" Text="Choose type Q:"/>
-                    <Button Content="AddTitle" x:Name="AddTitleButton" HorizontalAlignment="Left" Height="27" Margin="299,12,0,0" VerticalAlignment="Top" Width="78" Click="AddTitleButton_Click"/>
+                    <Button Content="Add test" x:Name="AddTitleButton" HorizontalAlignment="Center" Height="27" Margin="0,13,0,0" VerticalAlignment="Top" Width="78" Click="AddTitleButton_Click"/>
                     <ComboBox x:Name="ComboBox_ChooseTest" HorizontalAlignment="Left" Margin="357,58,0,0" VerticalAlignment="Top" Width="124" SelectionChanged="ComboBox_ChooseTest_SelectionChanged" Height="25"/>
                     <TextBlock TextWrapping="Wrap" Margin="261,57,0,0" FontSize="15" HorizontalAlignment="Left" Width="91" Height="27" VerticalAlignment="Top" Text="Choose test:"/>
                     <ListBox x:Name="ListQuestions" HorizontalAlignment="Left" Height="273" Margin="557,82,0,0" VerticalAlignment="Top" Width="214" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ListQuestions_SelectionChanged"/>
-                    <TextBlock TextWrapping="Wrap" Margin="397,88,0,0" FontSize="15" HorizontalAlignment="Left" Width="111" Height="56" VerticalAlignment="Top" Text="Choose test's time:" TextAlignment="Center"/>
-                    <ComboBox x:Name="ComboBoxTimer" Margin="419,132,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="79">
+                    <TextBlock TextWrapping="Wrap" Margin="198,7,0,0" HorizontalAlignment="Left" Width="84" Height="43" VerticalAlignment="Top" Text="Set test's time:" TextAlignment="Center" FontSize="14"/>
+                    <ComboBox x:Name="ComboBoxTimer" Margin="276,16,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="61">
                         <ComboBoxItem>
                             None
                         </ComboBoxItem>
@@ -83,8 +83,8 @@
 
                     <DataGrid x:Name="DataGridListUser" AutoGenerateColumns ="False" Grid.ColumnSpan="3" SelectionMode="Extended" Margin="0,33,462,22">
                         <DataGrid.Columns>
-                           
-                            <DataGridTextColumn Binding="{Binding Path=Value}" IsReadOnly="True" Header="Name" Width="110"/>
+                            <DataGridTextColumn Binding="{Binding Path=Value[0]}" IsReadOnly="True" Header="FirstName" Width="110"/>
+                            <DataGridTextColumn Binding="{Binding Path=Value[1]}" IsReadOnly="True" Header="LastName" Width="110"/>
                             <DataGridTextColumn Binding="{Binding Path=Key}" IsReadOnly="True" Header="Id" Width="110"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -136,10 +136,11 @@
                     <TextBox x:Name="TextBox_Send" Text="Write to the bot..." Margin="33,47,0,0" HorizontalAlignment="Left" Width="184" FontStyle="Italic" Background="#FFFBE9E9" Height="29" VerticalAlignment="Top" />
 
                     <Button x:Name="Button_SendQuestion" Content="SendQuestion" Margin="323,291,0,0" VerticalAlignment="Top" Height="42" Click="Button_SendQuestion_Click" HorizontalAlignment="Left" Width="74"/>
-                    <ComboBox x:Name="ComboBoxGroup" Width="92" Margin="43,134,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <ComboBox x:Name="ComboBoxGroup" Width="92" Margin="43,134,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left"  />
                     <ComboBox x:Name="ComboBoxTest" Width="89" Margin="238,134,0,0" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" />
                     <TextBlock TextWrapping="Wrap" Text="Choose the group" Margin="43,110,0,0" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="132"/>
                     <TextBlock TextWrapping="Wrap" Margin="239,110,0,0" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="132"><Run Text="Choose the test"/><LineBreak/><Run/></TextBlock>
+                    <Button x:Name="SendTestButton" Content="SEND TEST" Margin="139,185,0,0" Background="#FFC6ECB6" FontSize="15" FontWeight="Bold" Click="SendTestButton_Click" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Width="93"/>
                 </Grid>
             </TabItem>
 
