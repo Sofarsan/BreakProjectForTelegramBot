@@ -82,7 +82,7 @@ namespace BusinessLogicLayer
             foreach (long id in BaseBot.NameBase.Keys)
             {
                 var fio = BaseBot.NameBase[id];
-                if (fio[1] == user.FirstName && fio[0] == user.LastName)
+                if (fio.FirstName == user.FirstName && fio.LastName == user.LastName)
                     chatId = id;
 
             }
