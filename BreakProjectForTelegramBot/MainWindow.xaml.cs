@@ -50,6 +50,7 @@ namespace BreakProjectForTelegramBot
         public MainWindow()
         {
             _telega = new Telega(_token, OnMessages);
+            _telega.groups = groups;
             _labels = new List<string>();
             InitializeComponent();
             LoadTestFromJson();
@@ -370,9 +371,9 @@ namespace BreakProjectForTelegramBot
         private void AddNewUserInGroup_Click(object sender, RoutedEventArgs e)
         {
             int index = WriteNamenewGroup.SelectedIndex;
-            KeyValuePair<long, User> selectedItem = ((KeyValuePair<long, User>)DataGridListUser.SelectedItem);
-            
-            if (groups[index].Users.Contains(selectedItem.Value))
+            KeyValuePair<long, List<string>> selectedItem = ((KeyValuePair<long, List<string>>)DataGridListUser.SelectedItem);
+            User user = new User(selectedItem.Value[0], selectedItem.Value[1], selectedItem.Key);
+            if (index < 0 ||  groups[index].Users.Contains(user))
             {
                 return;
             }

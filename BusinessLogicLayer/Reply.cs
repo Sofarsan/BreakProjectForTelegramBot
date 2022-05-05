@@ -9,15 +9,10 @@ namespace BusinessLogicLayer
     public class Reply
     {
         public string Name { get; set; }
-        public string Question { get; set; }
-        public List<string> UserAnswer { get; set; }
+        public List<string> Questions { get; set; } = new List<string>();
+        public List<string> UserAnswer { get; set; } = new List<string>();
 
-        public Reply(User user, Question question, Question answer)
-        {
-            Name = user.FirstName+user.LastName;
-            Question = question._questionText;
-            UserAnswer = answer.Answer;
-        }
+        
 
     }
 }
