@@ -6,9 +6,9 @@
         public Test test { get; set; }
         public List<List<string>> _answers = new List<List<string>>();
 
-        public OngoingTest(Test _test)
+        public OngoingTest(Test test)
         {
-            test = _test;
+            this.test = test;
         }
     }
 }

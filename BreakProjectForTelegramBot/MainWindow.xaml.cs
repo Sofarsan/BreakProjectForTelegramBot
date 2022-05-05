@@ -373,7 +373,7 @@ namespace BreakProjectForTelegramBot
             int index = WriteNamenewGroup.SelectedIndex;
             KeyValuePair<long, User> selectedItem = ((KeyValuePair<long,User>)DataGridListUser.SelectedItem);
             User user = new User(selectedItem.Value.FirstName, selectedItem.Value.LastName, selectedItem.Key);
-            if (index < 0 ||  groups[index].Users.Contains(user))
+            if (index < 0 || groups[index].Users.Contains(user))
             {
                 return;
             }

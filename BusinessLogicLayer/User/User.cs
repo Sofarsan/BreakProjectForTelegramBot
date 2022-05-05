@@ -23,5 +23,13 @@ namespace BusinessLogicLayer
         {
             return FirstName + ", " + LastName;
         }
+
+        public override bool Equals(Object obj)
+        {
+            if (obj == null) return false;
+            User other = (User)obj;
+
+            return other.Id == this.Id;
+        }
     }
 }
