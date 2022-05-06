@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Threading; //для таймера
+using System.Windows.Threading;
 using System;
 using BusinessLogicLayer.Telegram;
 using System.Collections.ObjectModel;
@@ -25,7 +25,6 @@ namespace BreakProjectForTelegramBot
         private Test _actual;
         private DispatcherTimer _timer;
         private UserGroup _add;
-        private List<AnswersUser> _answersUser = new List<AnswersUser>();
 
         private ObservableCollection<UserGroup> groups = new ObservableCollection<UserGroup>()
         {
@@ -33,7 +32,7 @@ namespace BreakProjectForTelegramBot
 
         public MainWindow()
         {
-            _telega = new Telega(_token, OnMessages);
+            _telega = new Telega(_token);
             groups = GroupsSerialize.LoadGroupsObservableCollectionDecerialize();
             _telega.groups = groups;
             _labels = new List<string>();
@@ -47,11 +46,6 @@ namespace BreakProjectForTelegramBot
             BaseSerialize.LoadUserDictionary();
             DataGridListUser.ItemsSource = BaseBot.NameBase;
             WriteNamenewGroup.DataContext = this; //разобраться че это
-
-            _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromSeconds(1);
-            _timer.Tick += OnTick;
-            _timer.Start();
 
             ComboBox_QuestionType.SelectedIndex = 1;
         }
@@ -79,19 +73,9 @@ namespace BreakProjectForTelegramBot
             }
         }
 
-        public void OnMessages(string s)
-        {
-            _labels.Add(s);
-        }
-
         private void ButtonStart_Click(object sender, RoutedEventArgs e)
         {
             _telega.Start();
-        }
-
-        private void OnTick(object sender, EventArgs e)
-        {
-
         }
 
         private void ListQuestionsUpdate() //попробовать переделать

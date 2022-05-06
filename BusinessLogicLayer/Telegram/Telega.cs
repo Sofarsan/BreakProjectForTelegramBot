@@ -17,10 +17,10 @@ namespace BusinessLogicLayer
     public class Telega
     {
         private TelegramBotClient _client;
-        public List<User> UserList { get; private set; } //?
+        public List<User> UserList { get; private set; }
         public ObservableCollection<UserGroup> groups;
 
-        public Telega(string token, Action<string> OnMessege)
+        public Telega(string token)
         {
             _client = new TelegramBotClient(token);
         }
@@ -41,48 +41,14 @@ namespace BusinessLogicLayer
             }
         }
 
-        public async void Send(string s)
-        {
-            //foreach (User user in UserList)
-            //{
-            //    ReplyKeyboardMarkup replyKeyboard = new ReplyKeyboardMarkup(
-            //          new[]
-            //          {
-            //                new []
-            //                {
-            //                    new KeyboardButton("Yes"),
-            //                },
-            //                new []
-            //                {
-            //                     new KeyboardButton("No"),
-            //                }
-            //          });
-            //    await _client.SendTextMessageAsync(new ChatId(user.Id), s, replyMarkup: replyKeyboard);
-            //}
-        }
-
-        //public async void SendQuestion(Question question)
-        //{
-        //    foreach (UserGroup group in groups)
-        //    {
-        //        foreach (User user in group.Users)
-        //        {
-        //            SendQuestion(question, user);
-        //        }
-        //    }
-        //}
-
         public async void SendQuestion(Question question, User user)
         {
-
-
             long chatId = 0;
             foreach (long id in BaseBot.NameBase.Keys)
             {
                 var fio = BaseBot.NameBase[id];
                 if (fio.FirstName == user.FirstName && fio.LastName == user.LastName)
                     chatId = id;
-
             }
             if (chatId != 0)
             {
@@ -145,7 +111,6 @@ namespace BusinessLogicLayer
                     default:
                         break;
                 }
-
             }
         }
         public async void SendNextQuestion(User user)
@@ -202,15 +167,6 @@ namespace BusinessLogicLayer
                     // if message = "/register" => append to the list of users
                     StartingButton(update.Message.Chat.Id, update.Message.Chat.FirstName, update.Message.Chat.LastName);
 
-                //if (UserList.Where(u => u.Id == update.Message.Chat.Id).ToArray().Length == 0)
-                //{
-                //    User user = new User(update.Message.Chat.LastName, update.Message.Chat.FirstName, update.Message.Chat.Id);
-                //    UserList.Add(user);
-                //}
-                //string s = update.Message.Chat.FirstName + " "
-                //    + update.Message.Chat.LastName + " "
-                //    + update.Message.Text;
-                //_onMessage(s);
                 foreach(UserGroup group in groups)
                 {
                     foreach(User user in group.Users)
@@ -234,7 +190,6 @@ namespace BusinessLogicLayer
                             if (user.ongoingTest._answers.Count <= user.ongoingTest._currentQuestion)
                             {
                                 user.ongoingTest._answers.Add(new List<string>());
-                                
                             }
                             user.ongoingTest._answers[user.ongoingTest._answers.Count - 1].Add(update.Message.Text);
                             switch (question._type)
@@ -279,13 +234,10 @@ namespace BusinessLogicLayer
                 }
             }
 
-
             private Task HandleError(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
             {
                 return Task.CompletedTask;
             }
-
-
 
             public async void AskConfirmation(User user)
 
@@ -307,7 +259,6 @@ namespace BusinessLogicLayer
                       });
 
                 await _client.SendTextMessageAsync(new ChatId(user.Id), message, replyMarkup: replyKeyboard);
-
             }
     }
 }

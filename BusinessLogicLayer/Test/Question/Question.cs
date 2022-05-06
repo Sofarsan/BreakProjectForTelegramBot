@@ -12,8 +12,7 @@ namespace BusinessLogicLayer
         public string _questionText { get; set; }
         public QuestionType _type { get; set; }
         public List<OptionAnswer> _optionAnswer{ get; set; }
-
-    public Question(){ }
+        public Question(){ }
         public Question(string type, string questionText, List<OptionAnswer> optionAnswer)
         {
             _type = (QuestionType)Enum.Parse(typeof(QuestionType), type, true);
