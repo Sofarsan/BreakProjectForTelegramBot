@@ -20,7 +20,6 @@ namespace BusinessLogicLayer
         {
             Users.Add(user);
         }
-
         public override string ToString()
         {
             return NameGroup;
