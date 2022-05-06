@@ -295,7 +295,7 @@ namespace BreakProjectForTelegramBot
         {
             if (Group.Text == "")
             {
-                MessageBox.Show("Введите название группы");
+                MessageBox.Show("Enter name of group");
             }
 
             _add = new UserGroup(Group.Text);
@@ -310,7 +310,7 @@ namespace BreakProjectForTelegramBot
         }
         private void DeleteGroup_Click(object sender, RoutedEventArgs e)
         {
-            if (((UserGroup)WriteNamenewGroup.SelectedItem).NameGroup != "Другие")
+            if (((UserGroup)WriteNamenewGroup.SelectedItem).NameGroup != "Other")
             {
                 foreach (User user in ((UserGroup)WriteNamenewGroup.SelectedItem).Users)
                 {
